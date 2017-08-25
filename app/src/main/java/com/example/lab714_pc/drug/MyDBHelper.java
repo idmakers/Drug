@@ -1,0 +1,25 @@
+package com.example.lab714_pc.drug;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+
+public class MyDBHelper extends SQLiteOpenHelper  {
+
+    public MyDBHelper(Context context, String name,
+                      SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, name, factory, version);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("(_id INTEGER PRIMARY KEY  NOT NULL, " + "CREATE  TABLE main.exp " + "name VARCHAR   , " +"method VAR,"+ "amount INTEGER" +"day INTEGER)");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db,
+                          int oldVersion, int newVersion) {
+
+    }
+}
