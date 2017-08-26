@@ -21,23 +21,24 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         setContentView(R.layout.activity_main);
         btadd = (Button) findViewById(R.id.addh);
         btadd.setOnClickListener(this);
-
     }
+
         @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case  R.id.addh:
+        public void onClick(View v){
+            switch (v.getId()) {
+                case R.id.addh:
                     Intent intent = new Intent();
-                    intent.setClass(MainActivity.this,AddByHand.class);
+                    intent.setClass(this, AddByHand.class);
                     startActivity(intent);
                     break;
 
+
+            }
 
         }
 
 
 
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

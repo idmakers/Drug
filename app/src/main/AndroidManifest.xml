@@ -22,7 +22,6 @@
         <activity
             android:name=".AddByHand"
             android:theme="@style/AppTheme.NoActionBar" />
-
     </application>
 
 </manifest>
