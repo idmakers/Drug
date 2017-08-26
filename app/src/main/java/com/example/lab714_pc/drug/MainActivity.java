@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         setContentView(R.layout.activity_main);
         btadd = (Button) findViewById(R.id.addh);
         btadd.setOnClickListener(this);
+        btitem =(Button)findViewById(R.id.item);
+        btitem.setOnClickListener(this);
     }
 
         @Override
@@ -30,6 +32,11 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                     Intent intent = new Intent();
                     intent.setClass(this, AddByHand.class);
                     startActivity(intent);
+                    break;
+                case R.id.item:
+                    Intent intenti = new Intent();
+                    intenti.setClass(this, ItemListView.class);
+                    startActivity(intenti);
                     break;
 
 
