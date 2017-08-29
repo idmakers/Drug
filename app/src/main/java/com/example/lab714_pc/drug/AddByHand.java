@@ -37,13 +37,13 @@ public class AddByHand extends MainActivity  {
                 Intent intent = new Intent();
                 String mname = name.getText().toString();
                 String mmethod = method.getText().toString();
-               // int mday = Integer.parseInt(day.getText().toString());
+                int mday = Integer.parseInt(day.getText().toString());
                 int mamount = Integer.parseInt(amount.getText().toString());
                 ContentValues values = new ContentValues();
                 values.put("name",mname);
                 values.put("method",mmethod);
                 values.put("amount",mamount);
-               // values.put("day",mday);
+                values.put("day",mday);
                 long id = helper.getWritableDatabase().insert("exp", null, values);
                 Log.d("ADD", id+"");
                 intent.setClass(AddByHand.this,MainActivity.class);
@@ -57,7 +57,7 @@ public class AddByHand extends MainActivity  {
         name = (EditText)findViewById(R.id.name);
         amount = (EditText)findViewById(R.id.amount);
         method = (EditText)findViewById(R.id.method);
-       // day =(EditText)findViewById(R.id.day);
+        day =(EditText)findViewById(R.id.day);
     }
 
 
