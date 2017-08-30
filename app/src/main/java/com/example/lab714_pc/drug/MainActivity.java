@@ -12,7 +12,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
 
-    private Button btadd ,btitem;
+    private Button btadd ,btitem,btOCR;
     private Context context  = this;
 
     @Override
@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         btadd.setOnClickListener(this);
         btitem =(Button)findViewById(R.id.item);
         btitem.setOnClickListener(this);
+        btOCR =(Button)findViewById(R.id.auto);
+        btOCR.setOnClickListener(this);
+
     }
 
         @Override
@@ -37,6 +40,11 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                     Intent intenti = new Intent();
                     intenti.setClass(this, ItemListView.class);
                     startActivity(intenti);
+                    break;
+                case R.id.auto:
+                    Intent intentO = new Intent();
+                    intentO.setClass(this, OCR.class);
+                    startActivity(intentO);
                     break;
 
 

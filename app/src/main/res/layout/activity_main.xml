@@ -46,7 +46,7 @@
                 </TableRow>
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/auto"
                     android:layout_width="108dp"
                     android:layout_height="121dp"
                     android:text="Button"
