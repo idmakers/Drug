@@ -1,78 +1,140 @@
 package com.example.lab714_pc.drug;
+
+
+import android.app.AlertDialog;
+import android.content.ContentResolver;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
-import android.os.Bundle;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.googlecode.tesseract.android.TessBaseAPI;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class OCR extends AppCompatActivity {
-    //训练数据路径，必须包含tesseract文件夹
-    static final String TESSBASE_PATH = "/storage/emulated/0/Download/tesseract/";
-    //识别语言英文
-    //识别语言简体中文
-    static final String CHINESE_LANGUAGE = "chi_sim";
-    private android.widget.ImageView english;
-    private android.widget.TextView englishtext;
-    private android.widget.ImageView simplechinese;
-    private android.widget.TextView simplechinesetext;
+
+    Bitmap image;
+    private TessBaseAPI mTess;
+    String datapath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocr);
-        this.simplechinesetext = (TextView) findViewById(R.id.simple_chinese_text);
-        this.simplechinese = (ImageView) findViewById(R.id.simple_chinese);
-        this.englishtext = (TextView) findViewById(R.id.english_text);
-        this.english = (ImageView) findViewById(R.id.english);
-        Button bt =(Button)findViewById(R.id.ocr);
-        bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //英文识别
-            //    EnglishOCR();
-                //简体中文识别
-                SimpleChineseOCR();
+
+        //init image
+
+
+        //initialize Tesseract API
+        String language = "chi_tra";
+        datapath = getFilesDir()+ "/tesseract/";
+        mTess = new TessBaseAPI();
+
+        checkFile(new File(datapath + "tessdata/"));
+
+        mTess.init(datapath, language);
+        Button button = (Button)findViewById(R.id.b01);
+        button.setText("選擇圖片");
+        button.setOnClickListener(new Button.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+        /* 開啟Pictures畫面Type設定為image */
+                        intent.setType("image/*");
+        /* 使用Intent.ACTION_GET_CONTENT這個Action */
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+        /* 取得相片後返回本畫面 */
+                        startActivityForResult(intent, 1);
+                    }
+
+
+                });
+
+    }
+
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if (resultCode == RESULT_OK) {
+                Uri uri = data.getData();
+                Log.e("uri", uri.toString());
+                ContentResolver cr = this.getContentResolver();
+                try {
+                    this.image = BitmapFactory.decodeStream(cr.openInputStream(uri));
+                    ImageView imageView = (ImageView) findViewById(R.id.iv01);
+    /* 將Bitmap設定到ImageView */
+                    imageView.setImageBitmap(this.image);
+                } catch (FileNotFoundException e) {
+                    Log.e("Exception", e.getMessage(),e);
+                }
             }
-        });
+            super.onActivityResult(requestCode, resultCode, data);
+        }
 
+    public void processImage(View view){
+        String OCRresult = null;
+        mTess.setImage(this.image);
+        OCRresult = mTess.getUTF8Text();
+        TextView OCRTextView = (TextView) findViewById(R.id.OCRTextView);
+        OCRTextView.setText(OCRresult);
+        mTess.clear();
+        mTess.end();
     }
 
-    public void EnglishOCR(){
-        //设置图片可以缓存
-        english.setDrawingCacheEnabled(true);
-        //获取缓存的bitmap
-        final Bitmap bmp = english.getDrawingCache();
-        final TessBaseAPI baseApi = new TessBaseAPI();
-        //初始化OCR的训练数据路径与语言
-        baseApi.init(TESSBASE_PATH, "eng");
-        //设置识别模式
-        baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
-        //设置要识别的图片
-        baseApi.setImage(bmp);
-        english.setImageBitmap(bmp);
-        englishtext.setText(baseApi.getUTF8Text());
-        baseApi.clear();
-        baseApi.end();
+    private void checkFile(File dir) {
+        if (!dir.exists()&& dir.mkdirs()){
+            copyFiles();
+        }
+        if(dir.exists()) {
+            String datafilepath = datapath+ "/tessdata/chi_tra.traineddata";
+            File datafile = new File(datafilepath);
+
+            if (!datafile.exists()) {
+                copyFiles();
+            }
+        }
     }
-    public void SimpleChineseOCR(){
-        //设置图片可以缓存
-        simplechinese.setDrawingCacheEnabled(true);
-        //获取缓存的bitmap
-        final Bitmap bmp = simplechinese.getDrawingCache();
-        final TessBaseAPI baseApi = new TessBaseAPI();
-        //初始化OCR的训练数据路径与语言
-        baseApi.init(TESSBASE_PATH, CHINESE_LANGUAGE);
-        //设置识别模式
-        baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
-        //设置要识别的图片
-        baseApi.setImage(bmp);
-        simplechinese.setImageBitmap(bmp);
-        simplechinesetext.setText(baseApi.getUTF8Text());
-        baseApi.clear();
-        baseApi.end();
+
+    private void copyFiles() {
+        try {
+            String filepath = datapath + "/tessdata/chi_tra.traineddata";
+            AssetManager assetManager = getAssets();
+
+            InputStream instream = assetManager.open("tessdata/chi_tra.traineddata");
+            OutputStream outstream = new FileOutputStream(filepath);
+
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = instream.read(buffer)) != -1) {
+                outstream.write(buffer, 0, read);
+            }
+
+
+            outstream.flush();
+            outstream.close();
+            instream.close();
+
+            File file = new File(filepath);
+            if (!file.exists()) {
+                throw new FileNotFoundException();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
