@@ -30,6 +30,8 @@ public class OCR extends AppCompatActivity {
     Bitmap image;
     private TessBaseAPI mTess;
     String datapath = "";
+    private static final int GUI_OK = 0x101;
+    private static String ResultMsg ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,30 +41,39 @@ public class OCR extends AppCompatActivity {
         //init image
 
 
-        //initialize Tesseract API
-        String language = "chi_tra";
-        datapath = getFilesDir()+ "/tesseract/";
-        mTess = new TessBaseAPI();
+            //initialize Tesseract API
+            String language = "eng";
+            datapath = getFilesDir()+ "/tesseract/";
+            mTess = new TessBaseAPI();
 
-        checkFile(new File(datapath + "tessdata/"));
+            checkFile(new File(datapath + "tessdata/"));
 
-        mTess.init(datapath, language);
-        Button button = (Button)findViewById(R.id.b01);
-        button.setText("選擇圖片");
-        button.setOnClickListener(new Button.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent();
-        /* 開啟Pictures畫面Type設定為image */
-                        intent.setType("image/*");
-        /* 使用Intent.ACTION_GET_CONTENT這個Action */
-                        intent.setAction(Intent.ACTION_GET_CONTENT);
-        /* 取得相片後返回本畫面 */
-                        startActivityForResult(intent, 1);
-                    }
+            mTess.init(datapath, language);
+            Button button = (Button)findViewById(R.id.b01);
+            button.setText("選擇圖片");
+            Button btOCR = (Button)findViewById(R.id.OCRbutton);
+            btOCR.setText("RUN OCR");
+            btOCR.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                processImage();
+            }
+        });
+            button.setOnClickListener(new Button.OnClickListener()
+            {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent();
+                            /* 開啟Pictures畫面Type設定為image */
+                            intent.setType("image/*");
+                            /* 使用Intent.ACTION_GET_CONTENT這個Action */
+                            intent.setAction(Intent.ACTION_GET_CONTENT);
+                            /* 取得相片後返回本畫面 */
+                            startActivityForResult(intent, 1);
+                        }
 
 
-                });
+            });
 
     }
 
@@ -75,7 +86,7 @@ public class OCR extends AppCompatActivity {
                 try {
                     this.image = BitmapFactory.decodeStream(cr.openInputStream(uri));
                     ImageView imageView = (ImageView) findViewById(R.id.iv01);
-    /* 將Bitmap設定到ImageView */
+                /* 將Bitmap設定到ImageView */
                     imageView.setImageBitmap(this.image);
                 } catch (FileNotFoundException e) {
                     Log.e("Exception", e.getMessage(),e);
@@ -84,7 +95,7 @@ public class OCR extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
 
-    public void processImage(View view){
+    public void processImage(){
         String OCRresult = null;
         mTess.setImage(this.image);
         OCRresult = mTess.getUTF8Text();
@@ -99,7 +110,7 @@ public class OCR extends AppCompatActivity {
             copyFiles();
         }
         if(dir.exists()) {
-            String datafilepath = datapath+ "/tessdata/chi_tra.traineddata";
+            String datafilepath = datapath+ "/tessdata/eng.traineddata";
             File datafile = new File(datafilepath);
 
             if (!datafile.exists()) {
@@ -110,10 +121,10 @@ public class OCR extends AppCompatActivity {
 
     private void copyFiles() {
         try {
-            String filepath = datapath + "/tessdata/chi_tra.traineddata";
+            String filepath = datapath + "/tessdata/eng.traineddata";
             AssetManager assetManager = getAssets();
 
-            InputStream instream = assetManager.open("tessdata/chi_tra.traineddata");
+            InputStream instream = assetManager.open("tessdata/eng.traineddata");
             OutputStream outstream = new FileOutputStream(filepath);
 
             byte[] buffer = new byte[1024];
