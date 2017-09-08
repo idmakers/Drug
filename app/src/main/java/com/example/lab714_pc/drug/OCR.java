@@ -43,7 +43,7 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
 
 
         //initialize Tesseract API
-        String language = "eng";
+        String language = "eng+chi_tra";
         datapath = getFilesDir() + "/tesseract/";
         mTess = new TessBaseAPI();
 
@@ -70,69 +70,67 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
                 startActivityForResult(intent, 1);
                 break;
             case R.id.OCRbutton:
-               new ProcessImage().execute("");
+                new ProcessImage().execute("");
 
 
 
         }
 
     }
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            if (resultCode == RESULT_OK) {
-                Uri uri = data.getData();
-                Log.e("uri", uri.toString());
-                ContentResolver cr = this.getContentResolver();
-                try {
-                    this.image = BitmapFactory.decodeStream(cr.openInputStream(uri));
-                    ImageView imageView = (ImageView) findViewById(R.id.iv01);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            Uri uri = data.getData();
+            Log.e("uri", uri.toString());
+            ContentResolver cr = this.getContentResolver();
+            try {
+                this.image = BitmapFactory.decodeStream(cr.openInputStream(uri));
+                ImageView imageView = (ImageView) findViewById(R.id.iv01);
                 /* 將Bitmap設定到ImageView */
-                    imageView.setImageBitmap(this.image);
-                } catch (FileNotFoundException e) {
-                    Log.e("Exception", e.getMessage(),e);
-                }
+                imageView.setImageBitmap(this.image);
+            } catch (FileNotFoundException e) {
+                Log.e("Exception", e.getMessage(),e);
             }
-            super.onActivityResult(requestCode, resultCode, data);
         }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
 
 
     private void checkFile(File dir) {
-        if (!dir.exists()&& dir.mkdirs()){
-            copyFiles();
+        if (!dir.exists()) {
+            dir.mkdirs();
         }
-        if(dir.exists()) {
-            String datafilepath = datapath+ "/tessdata/eng.traineddata";
-            File datafile = new File(datafilepath);
-
-            if (!datafile.exists()) {
-                copyFiles();
-            }
+        if (dir.exists()) {
+            copyFiles("/tessdata/eng.traineddata");
+           // copyFiles("/tessdata/chi_tra.traineddata");
         }
     }
 
-    private void copyFiles() {
+    private void copyFiles(String path) {
         try {
-            String filepath = datapath + "/tessdata/eng.traineddata";
-            AssetManager assetManager = getAssets();
+            String filepath = datapath + path;
+            if (!new File(filepath).exists()) {
+                AssetManager assetManager = getAssets();
 
-            InputStream instream = assetManager.open("tessdata/eng.traineddata");
-            OutputStream outstream = new FileOutputStream(filepath);
+                InputStream instream = assetManager.open(path);
+                OutputStream outstream = new FileOutputStream(filepath);
 
-            byte[] buffer = new byte[1024];
-            int read;
-            while ((read = instream.read(buffer)) != -1) {
-                outstream.write(buffer, 0, read);
-            }
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = instream.read(buffer)) != -1) {
+                    outstream.write(buffer, 0, read);
+                }
 
 
-            outstream.flush();
-            outstream.close();
-            instream.close();
+                outstream.flush();
+                outstream.close();
+                instream.close();
 
-            File file = new File(filepath);
-            if (!file.exists()) {
-                throw new FileNotFoundException();
+                File file = new File(filepath);
+                if (!file.exists()) {
+                    throw new FileNotFoundException();
+                }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -147,23 +145,24 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
         protected String doInBackground(String... args) {
 
 
+            try {
+
+                mTess.setImage(OCR.image);
+                OCRresult = mTess.getUTF8Text();
+                mTess.end();
+                mTess.clear();
+            } catch (RuntimeException e) {
+                Log.e("OcrRecognizeAsyncTask",
+                        "Caught RuntimeException in request to Tesseract. Setting state to CONTINUOUS_STOPPED.",
+                        e);
+
                 try {
 
-                    mTess.setImage(OCR.image);
-                    OCRresult = mTess.getUTF8Text();
-                    mTess.end();
-                } catch (RuntimeException e) {
-                    Log.e("OcrRecognizeAsyncTask",
-                            "Caught RuntimeException in request to Tesseract. Setting state to CONTINUOUS_STOPPED.",
-                            e);
-
-                    try {
-                        mTess.clear();
-                    } catch (NullPointerException e1) {
-                        // Continue
-                    }
-                    return null;
+                } catch (NullPointerException e1) {
+                    // Continue
                 }
+                return null;
+            }
 
             return "Executed";
         }
@@ -171,7 +170,7 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
         @Override
         protected void onPostExecute(String result) {
             TextView txt = (TextView) findViewById(OCRTextView);
-            txt.setText("Executed"); // txt.setText(result);
+            txt.setText("請按返回"); // txt.setText(result);
             if(OCRresult!=null) {
                 txt.setText(OCRresult);
             }
