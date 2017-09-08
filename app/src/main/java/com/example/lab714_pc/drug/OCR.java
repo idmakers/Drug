@@ -98,12 +98,13 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
 
 
     private void checkFile(File dir) {
-        if (!dir.exists()) {
-            dir.mkdirs();
+        if (!dir.exists()&& dir.mkdirs()) {
+            copyFiles("tessdata/eng.traineddata");
+           copyFiles("tessdata/chi_tra.traineddata");
         }
         if (dir.exists()) {
-            copyFiles("/tessdata/eng.traineddata");
-           // copyFiles("/tessdata/chi_tra.traineddata");
+            copyFiles("tessdata/eng.traineddata");
+            copyFiles("tessdata/chi_tra.traineddata");
         }
     }
 
