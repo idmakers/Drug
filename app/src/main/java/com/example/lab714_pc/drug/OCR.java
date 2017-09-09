@@ -31,6 +31,7 @@ import static com.example.lab714_pc.drug.R.id.OCRTextView;
 public class OCR extends AppCompatActivity implements View.OnClickListener {
 
     static Bitmap image;
+    public int count = 0;
     private TessBaseAPI mTess;
     String datapath = "";
     private  Button button,btOCR;
@@ -49,7 +50,7 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
 
         checkFile(new File(datapath + "tessdata/"));
 
-        mTess.init(datapath, language);
+       mTess.init(datapath, language);
         button = (Button) findViewById(R.id.b01);
         button.setOnClickListener(this);
         button.setText("選擇圖片");
@@ -98,47 +99,78 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
 
 
     private void checkFile(File dir) {
+        copyFiles Copy =new copyFiles();
         if (!dir.exists()&& dir.mkdirs()) {
-            copyFiles("tessdata/eng.traineddata");
-           copyFiles("tessdata/chi_tra.traineddata");
+            Copy.execute("tessdata/eng.traineddata","tessdata/chi_tra.traineddata");
         }
         if (dir.exists()) {
-            copyFiles("tessdata/eng.traineddata");
-            copyFiles("tessdata/chi_tra.traineddata");
+           Copy.execute("tessdata/eng.traineddata","tessdata/chi_tra.traineddata");
+
         }
     }
+    public class copyFiles extends  AsyncTask<String,String,String>{
+        @Override
+        protected void onPreExecute() {
+            //執行前 設定可以在這邊設定
+            super.onPreExecute();
+        }
 
-    private void copyFiles(String path) {
-        try {
-            String filepath = datapath + path;
-            if (!new File(filepath).exists()) {
-                AssetManager assetManager = getAssets();
+        @Override
+        protected String doInBackground(String... params) {
+            //執行中 在背景做事情
 
-                InputStream instream = assetManager.open(path);
-                OutputStream outstream = new FileOutputStream(filepath);
+            try {
+                for(int i =0;i<params.length;i++) {
 
-                byte[] buffer = new byte[1024];
-                int read;
-                while ((read = instream.read(buffer)) != -1) {
-                    outstream.write(buffer, 0, read);
+
+                    String filepath = datapath + params[i];
+                    if (!new File(filepath).exists()) {
+                        AssetManager assetManager = getAssets();
+
+                        InputStream instream = assetManager.open(params[i]);
+                        OutputStream outstream = new FileOutputStream(filepath);
+
+                        byte[] buffer = new byte[1024];
+                        int read;
+                        while ((read = instream.read(buffer)) != -1) {
+                            outstream.write(buffer, 0, read);
+                        }
+
+
+                        outstream.flush();
+                        outstream.close();
+                        instream.close();
+
+                        File file = new File(filepath);
+                        if (!file.exists()) {
+                            throw new FileNotFoundException();
+                        }
+                    }
                 }
-
-
-                outstream.flush();
-                outstream.close();
-                instream.close();
-
-                File file = new File(filepath);
-                if (!file.exists()) {
-                    throw new FileNotFoundException();
-                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+
+            return "Executed";
         }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            //執行中 可以在這邊告知使用者進度
+
+        }
+
+        @Override
+        protected void onPostExecute(String bitmap) {
+            //執行後 完成背景任務
+
+        }
+
     }
+
     public class ProcessImage extends AsyncTask<String,String, String> {
         String OCRresult = null;
 
@@ -152,6 +184,7 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
                 OCRresult = mTess.getUTF8Text();
                 mTess.end();
                 mTess.clear();
+
             } catch (RuntimeException e) {
                 Log.e("OcrRecognizeAsyncTask",
                         "Caught RuntimeException in request to Tesseract. Setting state to CONTINUOUS_STOPPED.",
