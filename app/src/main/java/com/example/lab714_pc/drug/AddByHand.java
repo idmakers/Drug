@@ -59,8 +59,11 @@ public class AddByHand extends MainActivity {
 
 
 
-            btn1=(Button)findViewById(R.id.button);
+            btn1=(Button)findViewById(R.id.button4);
             btn1.setOnClickListener(new View.OnClickListener() {
+                LayoutInflater inflater =AddByHand.this.getLayoutInflater();
+                View mView = inflater.inflate(R.layout.activity_addbyhand, null);
+                EditText time = (EditText) mView.findViewById(R.id.time_eat);
                 @Override
                 public void onClick(View v) {
                     new AlertDialog.Builder(AddByHand.this)
@@ -72,6 +75,7 @@ public class AddByHand extends MainActivity {
                                     String[] Item=getResources().getStringArray(
                                             R.array.item
                                     );
+                                    time.getText().toString();
                                     Toast.makeText(AddByHand.this,""+which+","+
                                             Item[which],Toast.LENGTH_LONG).show();
                                 }
@@ -82,28 +86,31 @@ public class AddByHand extends MainActivity {
 
 
 
-        btn=(Button)findViewById(R.id.button9);
+        btn=(Button)findViewById(R.id.button8);
         btn.setOnClickListener(new View.OnClickListener() {
 
             LayoutInflater inflater =AddByHand.this.getLayoutInflater();
             View mView = inflater.inflate(R.layout.activity_addbyhand, null);
-            EditText time = (EditText)mView.findViewById(R.id.time_rise);
+            TextView time = (TextView) mView.findViewById(R.id.time_rise);
             @Override
             public void onClick(View v) {
+                setContentView(R.layout.activity_addbyhand);
                 new AlertDialog.Builder(AddByHand.this)
 
 
                         .setTitle("飯前飯後")
                         .setItems(R.array.dialog_rise, new DialogInterface.OnClickListener() {
-                            String a = "test";
+
 
                             @Override
+
                             public void onClick(DialogInterface dialog, int which) {
                                 String[] Item=getResources().getStringArray(
                                         R.array.dialog_rise
 
                                 );
-                                time.setText(a);
+                                time.getText().toString();
+
 
 
                                  }
