@@ -1,5 +1,8 @@
 package com.example.lab714_pc.drug;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +12,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.app.Dialog;
 import android.widget.Button;
+import android.widget.TimePicker;
+import android.widget.Toast;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
 
     private Button btadd ,btitem,btOCR;
     private Context context  = this;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,8 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
             }
 
+
+
         }
 
 
@@ -75,4 +85,15 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
         return super.onOptionsItemSelected(item);
     }
+     //鬧鐘
+
+
+
+
+
+
+
+
+
+
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="item">
+        <item>早上</item>
+        <item>中午</item>
+        <item>晚上</item>
+        <item>早上/中午</item>
+        <item>中午/晚上</item>
+        <item>早上/晚上</item>
+        <item>早上/中午/晚上</item>
+    </string-array>
+
+
+</resources>
