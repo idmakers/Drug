@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 /**
  * Created by 714B on 2017/9/9.
  */
+
 public class ClockActivity extends MainActivity {
 
     private MediaPlayer mediaPlayer;
