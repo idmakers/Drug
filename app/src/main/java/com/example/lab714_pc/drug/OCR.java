@@ -50,7 +50,7 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
 
         checkFile(new File(datapath + "tessdata/"));
 
-       mTess.init(datapath, language);
+        mTess.init(datapath, language);
         button = (Button) findViewById(R.id.b01);
         button.setOnClickListener(this);
         button.setText("選擇圖片");
@@ -104,7 +104,7 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
             Copy.execute("tessdata/eng.traineddata","tessdata/chi_tra.traineddata");
         }
         if (dir.exists()) {
-           Copy.execute("tessdata/eng.traineddata","tessdata/chi_tra.traineddata");
+            Copy.execute("tessdata/eng.traineddata","tessdata/chi_tra.traineddata");
 
         }
     }

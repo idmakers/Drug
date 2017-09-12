@@ -8,244 +8,257 @@
     tools:context="com.example.lab714_pc.drug.AddByHand">
 
     <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="400dp"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true">
+            android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.65">
+                android:layout_weight="0.65"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="藥物學名"
-                    android:layout_width="230dp"
-                    android:layout_height="37dp"
                     android:id="@+id/textView7"
-                    android:layout_weight="1" />
+                    android:layout_width="68dp"
+                    android:layout_height="37dp"
+                    android:text="藥物學名" />
 
                 <EditText
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:text="請輸入學名"
-                    android:ems="10"
-                    android:id="@+id/name"
+                    android:layout_column="1"
                     android:layout_row="0"
-                    android:layout_column="1"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="請輸入學名" />
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.65">
+                android:layout_weight="0.65"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="藥物用法"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textView8"
-                    android:layout_weight="1" />
-
-                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:text="Name"
-                    android:ems="10"
+                    android:layout_weight="0.15"
+                    android:text="藥物用法" />
+
+                <EditText
                     android:id="@+id/method"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
                     android:layout_row="1"
-                    android:layout_column="1"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="Name" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.65">
+                android:layout_weight="0.65"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textView9"
-                    android:layout_weight="1" />
-
-                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
+                    android:layout_weight="0.15"
+                    android:text="服藥次數" />
+
+                <EditText
                     android:id="@+id/amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
                     android:layout_row="2"
-                    android:layout_column="1"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="number" />
+
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.65">
+                android:layout_weight="0.65"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textView10"
-                    android:layout_weight="1" />
-
-                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
+                    android:layout_weight="0.11"
+                    android:text="服藥天數" />
+
+                <EditText
                     android:id="@+id/day"
-                    android:layout_row="3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_column="1"
-                    android:layout_weight="1" />
+                    android:layout_row="3"
+                    android:layout_weight="0.87"
+                    android:ems="10"
+                    android:inputType="number" />
+
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.65">
+                android:layout_weight="0.65"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
                 <TextView
-                    android:text="TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textView11"
-                    android:layout_weight="1" />
+                    android:layout_width="69dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.02"
+                    android:text="服藥時間" />
 
                 <EditText
+                    android:id="@+id/time_eat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:text="Name"
+                    android:layout_weight="0.02"
                     android:ems="10"
-                    android:id="@+id/editText"
-                    android:layout_weight="1" />
+                    android:inputType="textPersonName" />
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.07"
+                    android:text="選擇" />
+
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.65">
+                android:layout_weight="0.65"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textView12"
-                    android:layout_weight="1" />
-
-                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:text="Name"
-                    android:ems="10"
-                    android:id="@+id/editText2"
-                    android:layout_weight="1" />
+                    android:layout_weight="0.48"
+                    android:text="飯前飯後" />
+
+                <TextView
+                    android:id="@+id/time_rise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="8.81" />
+
+                <Button
+                    android:id="@+id/button8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.45"
+                    android:text="Button" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.65">
+                android:layout_weight="0.65"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textView13"
-                    android:layout_weight="1" />
-
-                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:text="Name"
-                    android:ems="10"
+                    android:layout_weight="0.13"
+                    android:text="TextView" />
+
+                <EditText
                     android:id="@+id/editText3"
-                    android:layout_weight="1" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="Name" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.65">
+                android:layout_weight="0.65"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textView14"
-                    android:layout_weight="1" />
-
-                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:text="Name"
-                    android:ems="10"
+                    android:layout_weight="1"
+                    android:text="TextView" />
+
+                <EditText
                     android:id="@+id/editText4"
-                    android:layout_weight="1" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="Name" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.65">
+                android:layout_weight="0.65"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="TextView"
+                    android:id="@+id/textView15"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView15"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:text="TextView" />
 
                 <EditText
+                    android:id="@+id/editText5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:text="Name"
+                    android:layout_weight="1"
                     android:ems="10"
-                    android:id="@+id/editText5"
-                    android:layout_weight="1" />
+                    android:inputType="textPersonName"
+                    android:text="Name" />
 
             </LinearLayout>
 
         </LinearLayout>
 
         <Button
-                        android:text="Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/add"
-            android:layout_weight="1"
+            android:id="@+id/add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_weight="1"
+            android:text="確認" />
 
     </RelativeLayout>
 
