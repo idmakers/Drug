@@ -141,7 +141,7 @@
                     android:inputType="textPersonName" />
 
                 <Button
-                    android:id="@+id/button4"
+                    android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.07"
@@ -169,7 +169,7 @@
                     android:layout_weight="8.81" />
 
                 <Button
-                    android:id="@+id/button8"
+                    android:id="@+id/befaf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.45"

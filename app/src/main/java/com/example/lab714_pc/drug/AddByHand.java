@@ -12,7 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 
+import static com.example.lab714_pc.drug.R.id.add;
+import static com.example.lab714_pc.drug.R.id.befaf;
 import static com.example.lab714_pc.drug.R.id.item;
+import static com.example.lab714_pc.drug.R.id.time;
 
 
 public class AddByHand extends MainActivity {
@@ -25,17 +28,70 @@ public class AddByHand extends MainActivity {
     private TextView displayedText;
     Button btn,btn1;
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addbyhand);
         findViews();
 
-        helper = new MyDBHelper(this,"expense.db",null,1);
-        Button btOK = (Button) findViewById(R.id.add);
-        btOK.setOnClickListener(new View.OnClickListener(){
+        helper = new MyDBHelper(this, "expense.db", null, 1);
+        Button btOK = (Button) findViewById(add);
+        btOK.setOnClickListener(this);
+        btn1 = (Button) findViewById(time);
+        btn1.setOnClickListener(this);
+        btn=(Button)findViewById(R.id.befaf);
+        btn.setOnClickListener(this);
+        LayoutInflater inflater =AddByHand.this.getLayoutInflater();
+        View mView = inflater.inflate(R.layout.activity_addbyhand, null);
+        EditText time = (EditText) mView.findViewById(R.id.time_eat);
+        LayoutInflater inflatera =AddByHand.this.getLayoutInflater();
+        View maView = inflatera.inflate(R.layout.activity_addbyhand, null);
+        TextView timer = (TextView) mView.findViewById(R.id.time_rise);
+    }
+
             @Override
-            public void onClick (View v){
-                add();
+            public void onClick (View v) {
+                switch (v.getId()) {
+                    case add:add();
+                             break;
+                    case time:
+                         new AlertDialog.Builder(AddByHand.this)
+
+                                .setTitle("時間")
+                                .setItems(R.array.item, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String[] Item=getResources().getStringArray(
+                                                R.array.item
+                                        );
+                                        Toast.makeText(AddByHand.this,""+which+","+
+                                                Item[which],Toast.LENGTH_LONG).show();
+                                    }
+                                }).create().show();
+                                break;
+                    case befaf:
+                        setContentView(R.layout.activity_addbyhand);
+                        new AlertDialog.Builder(AddByHand.this)
+
+
+                                .setTitle("飯前飯後")
+                                .setItems(R.array.dialog_rise, new DialogInterface.OnClickListener() {
+
+
+                                    @Override
+
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String[] Item=getResources().getStringArray(
+                                                R.array.dialog_rise
+
+                                        );
+
+                                    }
+                                }).create().show();
+
+
+
+
+                }
             }
 
             private void add() {
@@ -54,76 +110,10 @@ public class AddByHand extends MainActivity {
                 intent.setClass(AddByHand.this,MainActivity.class);
                 startActivity(intent);
             }
-        });
 
 
 
 
-            btn1=(Button)findViewById(R.id.button4);
-            btn1.setOnClickListener(new View.OnClickListener() {
-                LayoutInflater inflater =AddByHand.this.getLayoutInflater();
-                View mView = inflater.inflate(R.layout.activity_addbyhand, null);
-                EditText time = (EditText) mView.findViewById(R.id.time_eat);
-                @Override
-                public void onClick(View v) {
-                    new AlertDialog.Builder(AddByHand.this)
-
-                            .setTitle("時間")
-                            .setItems(R.array.item, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    String[] Item=getResources().getStringArray(
-                                            R.array.item
-                                    );
-                                    time.getText().toString();
-                                    Toast.makeText(AddByHand.this,""+which+","+
-                                            Item[which],Toast.LENGTH_LONG).show();
-                                }
-                            }).create().show();
-
-                }
-            });
-
-
-
-        btn=(Button)findViewById(R.id.button8);
-        btn.setOnClickListener(new View.OnClickListener() {
-
-            LayoutInflater inflater =AddByHand.this.getLayoutInflater();
-            View mView = inflater.inflate(R.layout.activity_addbyhand, null);
-            TextView time = (TextView) mView.findViewById(R.id.time_rise);
-            @Override
-            public void onClick(View v) {
-                setContentView(R.layout.activity_addbyhand);
-                new AlertDialog.Builder(AddByHand.this)
-
-
-                        .setTitle("飯前飯後")
-                        .setItems(R.array.dialog_rise, new DialogInterface.OnClickListener() {
-
-
-                            @Override
-
-                            public void onClick(DialogInterface dialog, int which) {
-                                String[] Item=getResources().getStringArray(
-                                        R.array.dialog_rise
-
-                                );
-                                time.getText().toString();
-
-
-
-                                 }
-                        }).create().show();
-
-            }
-        });
-
-
-
-
-
-        }
 
 
 

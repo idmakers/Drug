@@ -8,6 +8,14 @@
     tools:context="com.example.lab714_pc.drug.MainActivity"
     android:id="@+id/activity_main">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="437dp" />
+
     <FrameLayout
         android:layout_width="344dp"
         android:layout_height="551dp"
@@ -15,7 +23,7 @@
         tools:layout_editor_absoluteX="8dp">
 
         <TableLayout
-            android:layout_width="331dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:layout_editor_absoluteX="69dp"
             tools:layout_editor_absoluteY="77dp">
@@ -89,6 +97,7 @@
             </TableRow>
 
         </TableLayout>
+
     </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
