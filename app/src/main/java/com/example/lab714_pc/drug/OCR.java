@@ -27,10 +27,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import static com.example.lab714_pc.drug.R.id.OCRTextView;
+import static com.example.lab714_pc.drug.R.id.edit_query;
 
 public class OCR extends AppCompatActivity implements View.OnClickListener {
 
     static Bitmap image;
+    static Bitmap part;
     public int count = 0;
     private TessBaseAPI mTess;
     String datapath = "";
@@ -89,6 +91,8 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
                 ImageView imageView = (ImageView) findViewById(R.id.iv01);
                 /* 將Bitmap設定到ImageView */
                 imageView.setImageBitmap(this.image);
+                part = Bitmap.createBitmap(this.image, 0, 0, 200, 200, null, true);
+                imageView.setImageBitmap(this.part);
             } catch (FileNotFoundException e) {
                 Log.e("Exception", e.getMessage(),e);
             }
@@ -180,10 +184,9 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
 
             try {
 
-                mTess.setImage(OCR.image);
+                mTess.setImage(OCR.part);
                 OCRresult = mTess.getUTF8Text();
                 mTess.end();
-                mTess.clear();
 
             } catch (RuntimeException e) {
                 Log.e("OcrRecognizeAsyncTask",
