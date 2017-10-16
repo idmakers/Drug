@@ -10,11 +10,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 import static com.example.lab714_pc.drug.R.id.OCRTextView;
 import static com.example.lab714_pc.drug.R.id.edit_query;
@@ -32,8 +35,11 @@ import static com.example.lab714_pc.drug.R.id.edit_query;
 public class OCR extends AppCompatActivity implements View.OnClickListener {
 
     static Bitmap image;
-    static Bitmap part;
-    public int count = 0;
+    static  ArrayList<Bitmap> BitmapPart = new ArrayList<Bitmap>();
+    public int countPx = 0;
+    public int countPy = 0;
+    public int count =0;
+
     private TessBaseAPI mTess;
     String datapath = "";
     private  Button button,btOCR;
@@ -91,8 +97,6 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
                 ImageView imageView = (ImageView) findViewById(R.id.iv01);
                 /* 將Bitmap設定到ImageView */
                 imageView.setImageBitmap(this.image);
-                part = Bitmap.createBitmap(this.image, 0, 0, 200, 200, null, true);
-                imageView.setImageBitmap(this.part);
             } catch (FileNotFoundException e) {
                 Log.e("Exception", e.getMessage(),e);
             }
@@ -175,6 +179,7 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+
     public class ProcessImage extends AsyncTask<String,String, String> {
         String OCRresult = null;
 
@@ -184,9 +189,21 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
 
             try {
 
-                mTess.setImage(OCR.part);
-                OCRresult = mTess.getUTF8Text();
-                mTess.end();
+                    while (count * 1000 < image.getHeight()) {
+                        BitmapPart.add(Bitmap.createBitmap(OCR.image, countPx, countPy, countPx + 400, countPy +900 ));
+                        count++;
+                        countPx+=400;
+                        countPy+=900;
+                    }
+                        for(int i=0 ;i<=count ;i++){
+                            mTess.setImage(OCR.BitmapPart.get(i));
+                            OCRresult = mTess.getUTF8Text();
+                            mTess.end();
+                        }
+
+
+
+
 
             } catch (RuntimeException e) {
                 Log.e("OcrRecognizeAsyncTask",
