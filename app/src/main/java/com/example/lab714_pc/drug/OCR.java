@@ -40,6 +40,8 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
     public int countPy = 0;
     public int count =0;
 
+
+
     private TessBaseAPI mTess;
     String datapath = "";
     private  Button button,btOCR;
@@ -188,22 +190,35 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
 
 
             try {
-
-                    while (count * 1000 < image.getHeight()) {
-                        BitmapPart.add(Bitmap.createBitmap(OCR.image, countPx, countPy, countPx + 400, countPy +900 ));
+                long startTime = System.currentTimeMillis();
+                    while (countPy < image.getHeight()) {
+                        BitmapPart.add(Bitmap.createBitmap(OCR.image, countPx, countPy,1080, 960 ));
                         count++;
-                        countPx+=400;
-                        countPy+=900;
+                        countPy+=960;
                     }
-                        for(int i=0 ;i<=count ;i++){
+                long stopTime = System.currentTimeMillis();
+                long elapsedTime = stopTime - startTime;
+                Log.d("Cut Pic:" , + elapsedTime + "");
+
+                        for(int i=0 ;i<count ;i++){
                             mTess.setImage(OCR.BitmapPart.get(i));
+                            long startTime0 = System.currentTimeMillis();
                             OCRresult = mTess.getUTF8Text();
-                            mTess.end();
+                            long stopTime0 = System.currentTimeMillis();
+                            long elapsedTime0 = stopTime0 - startTime0;
+                            Log.d("part Pic:" , + elapsedTime0 + "");
+                            this.publishProgress(OCRresult);
                         }
 
-
-
-
+                long startTime1 = System.currentTimeMillis();
+                    mTess.setImage(OCR.image);
+                    OCRresult = mTess.getUTF8Text();
+                long stopTime1 = System.currentTimeMillis();
+                long elapsedTime1 = stopTime1 - startTime1;
+                Log.d("Whole Pic:" , + elapsedTime1 + "");
+                this.publishProgress(OCRresult);
+                BitmapPart.clear();
+                mTess.end();
 
             } catch (RuntimeException e) {
                 Log.e("OcrRecognizeAsyncTask",
@@ -221,21 +236,26 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
             return "Executed";
         }
 
+
+        @Override
+        protected void  onProgressUpdate(String...  values){
+            super.onProgressUpdate(values);
+            TextView txt = (TextView) findViewById(OCRTextView);
+            if(OCRresult!=null) {
+                txt.setText(values[0]);
+            }
+            else txt.setText("請按返回");
+        }
         @Override
         protected void onPostExecute(String result) {
             TextView txt = (TextView) findViewById(OCRTextView);
             txt.setText("請按返回"); // txt.setText(result);
-            if(OCRresult!=null) {
-                txt.setText(OCRresult);
-            }
             // might want to change "executed" for the returned string passed
             // into onPostExecute() but that is upto you
         }
 
-        @Override
-        protected void onPreExecute() {}
 
-
-
+        }
     }
-}
+
+
