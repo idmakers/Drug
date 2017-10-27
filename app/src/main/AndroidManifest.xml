@@ -33,10 +33,11 @@
         <activity android:name=".OCR"></activity>
 
         <!--register receiver for alarm -->
-        <receiver android:name=".PlayReceiver">
+        <!--定義鬧鐘接收器-->
+        <receiver android:name="PlayReceiver" >
             <intent-filter>
-            <action android:name="play_hskay" />
-             </intent-filter>
+                <action android:name="play_voice" />
+            </intent-filter>
         </receiver>
 
     </application>

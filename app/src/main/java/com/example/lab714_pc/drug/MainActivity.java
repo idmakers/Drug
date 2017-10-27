@@ -6,7 +6,11 @@ import android.app.TimePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Menu;
@@ -18,15 +22,21 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static android.media.RingtoneManager.TYPE_ALARM;
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
 
-    private Button btadd ,btitem,btOCR,bt;
-    private Context context  = this;
+    private Button btadd, btitem, btOCR, bt;
+    private Context context = this;
     private static TextView textView2;
+
     public static TextView getTextView2() {
         return textView2;
     }
+
     AlarmManager alarm;
 
     @Override
@@ -35,58 +45,54 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         setContentView(R.layout.activity_main);
         btadd = (Button) findViewById(R.id.addh);
         btadd.setOnClickListener(this);
-        btitem =(Button)findViewById(R.id.item);
+        btitem = (Button) findViewById(R.id.item);
         btitem.setOnClickListener(this);
-        btOCR =(Button)findViewById(R.id.auto);
+        btOCR = (Button) findViewById(R.id.auto);
         btOCR.setOnClickListener(this);
-        bt = (Button)findViewById(R.id.button2);
+        bt = (Button) findViewById(R.id.alarm);
         bt.setOnClickListener(this);
 
     }
 
-        @Override
-        public void onClick(View v){
-            switch (v.getId()) {
-                case R.id.addh:
-                    Intent intent = new Intent();
-                    intent.setClass(this, AddByHand.class);
-                    startActivity(intent);
-                    break;
-                case R.id.item:
-                    Intent intenti = new Intent();
-                    intenti.setClass(this, ItemListView.class);
-                    startActivity(intenti);
-                    break;
-                case R.id.auto:
-                    Intent intentO = new Intent();
-                    intentO.setClass(this, OCR.class);
-                    startActivity(intentO);
-                    break;
-                case R.id.button2:
-                    Calendar cal = Calendar.getInstance();
-                    // 設定於 3 分鐘後執行
-                    cal.add(Calendar.HOUR_OF_DAY, 18);
-                    cal.add(Calendar.MINUTE,51);
-                    cal.add(Calendar.SECOND,00);
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.addh:
+                Intent intent = new Intent();
+                intent.setClass(this, AddByHand.class);
+                startActivity(intent);
+                break;
+            case R.id.item:
+                Intent intenti = new Intent();
+                intenti.setClass(this, ItemListView.class);
+                startActivity(intenti);
+                break;
+            case R.id.auto:
+                Intent intentO = new Intent();
+                intentO.setClass(this, OCR.class);
+                startActivity(intentO);
+                break;
+            case R.id.alarm:
+                Intent intent11 = new Intent(MainActivity.this, PlayReceiver.class);
+                intent11.putExtra("msg", "play_voice");
+                intent11.addCategory(String.valueOf(SystemClock.elapsedRealtime()));
+                //SystemClock.elapsedRealtime()會回傳從開機到現在當下所花的時間,手機進入睡眠時間也算在內(單位milliseconds)
+                long elapsed = SystemClock.elapsedRealtime() + 60 * 1000; //60秒
+                // 發送一個broadcast,類似 Context.sendBroadcast()
+                // PendingIntent.FLAG_UPDATE_CURRENT參數表示,如果已存在 PendingIntent,就更新 extra data.
+                PendingIntent pi = PendingIntent.getBroadcast(MainActivity.this, 1, intent11,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
 
-                    Intent intenta = new Intent(this, PlayReceiver.class);
-                    intenta.putExtra("msg", "play_hskay");
+                AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+                am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, elapsed , pi);
 
-                    PendingIntent pi = PendingIntent.getBroadcast(this, 1, intenta, PendingIntent.FLAG_ONE_SHOT);
-
-                    AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                    am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
-                    break;
-
-
-
-            }
 
 
 
         }
 
 
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -109,13 +115,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
         return super.onOptionsItemSelected(item);
     }
-     //鬧鐘
-
-
-
-
-
-
-
+    //鬧鐘
 
 }
+

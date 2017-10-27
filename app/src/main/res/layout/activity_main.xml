@@ -67,10 +67,10 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/alarm"
                     android:layout_width="108dp"
                     android:layout_height="121dp"
-                    android:text="Button"
+                    android:text="alarm"
                     tools:layout_editor_absoluteX="33dp"
                     tools:layout_editor_absoluteY="46dp" />
 
