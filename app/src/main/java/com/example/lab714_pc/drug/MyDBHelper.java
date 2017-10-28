@@ -14,7 +14,7 @@ public class MyDBHelper extends SQLiteOpenHelper  {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE  TABLE main.exp " +"(_id INTEGER PRIMARY KEY  NOT NULL, " + "name VARCHAR   , " +"method VAR,"+ "amount  INTEGER," +"day  INTEGER )");
+        db.execSQL("CREATE  TABLE main.exp " +"(_id INTEGER PRIMARY KEY  NOT NULL, " + "name VARCHAR   , " +"method VAR,"+ "amount  INTEGER," +"day  INTEGER ," + "tvTime TIME)");
     }
 
     @Override
