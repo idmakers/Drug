@@ -16,6 +16,7 @@ import android.widget.*;
 
 import static com.example.lab714_pc.drug.R.id.add;
 import static com.example.lab714_pc.drug.R.id.befaf;
+import static com.example.lab714_pc.drug.R.id.eat;
 import static com.example.lab714_pc.drug.R.id.item;
 import static com.example.lab714_pc.drug.R.id.time;
 import static com.example.lab714_pc.drug.R.id.time_eat;
@@ -30,8 +31,8 @@ public class AddByHand extends MainActivity {
     private EditText day;
     private TextView displayedText;
     Button btn, btn1;
-    private EditText tvTime;
-    private Button btTime, btAdd;
+    private EditText tvTime ,afbf;
+    private Button btTime, btAdd,btAf;
     private int mHour, mMinute;
 
 
@@ -42,8 +43,11 @@ public class AddByHand extends MainActivity {
         findViews();
         helper = new MyDBHelper(this,"expense.db",null,1);
         tvTime = (EditText)findViewById(R.id.time_eat);
+        afbf = (EditText)findViewById(R.id.eat);
         btTime = (Button) findViewById(R.id.time);
         btTime.setOnClickListener(this);
+        btAf = (Button) findViewById(R.id.befaf);
+        btAf.setOnClickListener(this);
         btAdd = (Button) findViewById(R.id.add);
         btAdd.setOnClickListener(this);
 
@@ -52,6 +56,7 @@ public class AddByHand extends MainActivity {
 
 
     }
+    /*
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -64,55 +69,54 @@ public class AddByHand extends MainActivity {
         }
 
     }
-
-       /*     @Override
+*/
+          @Override
             public void onClick (View v) {
-                switch (v.getId()) {
-                    case add:add();
-                             break;
-                    case time:
-                         new AlertDialog.Builder(AddByHand.this)
+              switch (v.getId()) {
+                  case add:
+                      add();
+                      break;
+                  case time:
+                      new AlertDialog.Builder(AddByHand.this)
 
-                                .setTitle("時間")
-                                .setItems(R.array.item, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        String[] Item=getResources().getStringArray(
-                                                R.array.item
-                                        );
-                                        Toast.makeText(AddByHand.this,""+which+","+
-                                                Item[which],Toast.LENGTH_LONG).show();
-                                    }
-                                }).create().show();
-                                break;
-                    case befaf:
-                        setContentView(R.layout.activity_addbyhand);
-                        new AlertDialog.Builder(AddByHand.this)
+                              .setTitle("時間")
+                              .setItems(R.array.item, new DialogInterface.OnClickListener() {
+                                  @Override
+                                  public void onClick(DialogInterface dialog, int which) {
+                                      String[] Item = getResources().getStringArray(
+                                              R.array.item
+                                      );
 
-
-                                .setTitle("飯前飯後")
-                                .setItems(R.array.dialog_rise, new DialogInterface.OnClickListener() {
+                                      tvTime.setText(Item[which]);
+                                  }
+                              }).create().show();
+                      break;
+                  case befaf:
+                      new AlertDialog.Builder(AddByHand.this)
 
 
-                                    @Override
-
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        String[] Item=getResources().getStringArray(
-                                                R.array.dialog_rise
-
-                                        );
-
-                                    }
-                                }).create().show();
+                              .setTitle("飯前飯後")
+                              .setItems(R.array.dialog_rise, new DialogInterface.OnClickListener() {
 
 
+                                  @Override
+
+                                  public void onClick(DialogInterface dialog, int which) {
+                                      String[] AF = getResources().getStringArray(
+                                              R.array.dialog_rise
+                                      );
+                                      afbf.setText(AF[which]);
 
 
-                }
-            }*/
+                                  }
+                              }).create().show();
+
+
+              }
+          }
 
     //輸入時間
-
+/*
     public void showTimePickerDialog() {
         // 設定初始時間
         final Calendar c = Calendar.getInstance();
@@ -130,7 +134,7 @@ public class AddByHand extends MainActivity {
                 }, mHour, mMinute, false);
         tpd.show();
     }
-
+*/
     private void add() {
         Intent intent = new Intent();
         String mname = name.getText().toString();

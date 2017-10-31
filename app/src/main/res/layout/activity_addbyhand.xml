@@ -162,11 +162,13 @@
                     android:layout_weight="0.48"
                     android:text="飯前飯後" />
 
-                <TextView
-                    android:id="@+id/time_rise"
+                <EditText
+                    android:id="@+id/eat"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="8.81" />
+                    android:layout_weight="0.48"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
 
                 <Button
                     android:id="@+id/befaf"

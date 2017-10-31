@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,7 +38,9 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         return textView2;
     }
 
-    AlarmManager alarm;
+    AlarmManager am;
+    PendingIntent pi;
+    Calendar cal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,23 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         btOCR.setOnClickListener(this);
         bt = (Button) findViewById(R.id.alarm);
         bt.setOnClickListener(this);
+
+
+        int n =30;
+        for(int i=0; i<n;i++){
+            cal = Calendar.getInstance();
+            cal.set(2017,10,31,10,10,0);
+
+            Intent intent = new Intent(this, AlarmTime.class);
+
+            am =(AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+
+            pi = PendingIntent.getBroadcast(this, i , intent , PendingIntent.FLAG_ONE_SHOT);
+
+            am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),pi);
+
+        }
+
 
     }
 
@@ -73,6 +93,11 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                 startActivity(intentO);
                 break;
             case R.id.alarm:
+                Intent intenta = new Intent();
+                intenta.setClass(this, AlarmTime.class);
+                startActivity(intenta);
+                break;
+                /*
                 Intent intent11 = new Intent(MainActivity.this, PlayReceiver.class);
                 intent11.putExtra("msg", "play_voice");
                 intent11.addCategory(String.valueOf(SystemClock.elapsedRealtime()));
@@ -82,12 +107,12 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                 // PendingIntent.FLAG_UPDATE_CURRENT參數表示,如果已存在 PendingIntent,就更新 extra data.
                 PendingIntent pi = PendingIntent.getBroadcast(MainActivity.this, 1, intent11,
                         PendingIntent.FLAG_UPDATE_CURRENT);
-
                 AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
                 am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, elapsed , pi);
 
+                break;
 
-
+*/
 
         }
 
