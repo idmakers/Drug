@@ -31,6 +31,7 @@
             android:label="@string/title_activity_item_list_view"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".OCR"></activity>
+        <activity android:name=".AlarmTime"></activity>
 
         <!--register receiver for alarm -->
         <!--定義鬧鐘接收器-->

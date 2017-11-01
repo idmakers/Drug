@@ -3,23 +3,15 @@ package com.example.lab714_pc.drug;
 /**
  * Created by 714B on 2017/10/30.
  */
-import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 
-import static com.example.lab714_pc.drug.R.id.add;
-import static com.example.lab714_pc.drug.R.id.befaf;
-import static com.example.lab714_pc.drug.R.id.time;
+import java.util.ArrayList;
+
 import static com.example.lab714_pc.drug.R.id.update;
 
 
@@ -28,18 +20,18 @@ public class AlarmTime extends MainActivity {
     private AlarmDBHelper helper;
     private EditText day;
     private TextView displayedText;
-    private EditText moring ,noon,night;
+    private EditText morning ,noon,night;
     private Button btUP;
     private int mHour, mMinute;
-
+    static long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.alarmtime);
+        setContentView(R.layout.activity_alarmtime);
         findViews();
         helper = new AlarmDBHelper(this,"expense.db",null,1);
-        moring = (EditText)findViewById(R.id.morining);
+        morning = (EditText)findViewById(R.id.morining);
         noon = (EditText)findViewById(R.id.noon);
         night = (EditText)findViewById(R.id.night);
         btUP = (Button) findViewById(R.id.update);
@@ -91,14 +83,17 @@ public class AlarmTime extends MainActivity {
 */
     private void add() {
         Intent intent = new Intent();
-        String mmoring = moring.getText().toString();
+        String mmoring = morning.getText().toString();
         String mnoon = noon.getText().toString();
         String mnight = night.getText().toString();
         ContentValues values = new ContentValues();
-        values.put("moring", mmoring);
-        values.put("mnoon", mnoon);
-        values.put("mnight", mnight);
-
+        values.put("Aname","morning");
+        values.put("Atime", mmoring);
+       /* values.put("name","noon");
+        values.put("time", mnoon);
+        values.put("name","night");
+        values.put("time", mnight);
+        */
         long id = helper.getWritableDatabase().insert("exp", null, values);
         Log.d("ADD", id + "");
         intent.setClass(AlarmTime.this, MainActivity.class);
@@ -107,7 +102,7 @@ public class AlarmTime extends MainActivity {
 
 
     private void findViews() {
-        moring = (EditText) findViewById(R.id.morining);
+        morning = (EditText) findViewById(R.id.morining);
         noon = (EditText) findViewById(R.id.noon);
         night = (EditText) findViewById(R.id.night);
 

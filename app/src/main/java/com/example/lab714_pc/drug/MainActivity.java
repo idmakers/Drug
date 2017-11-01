@@ -30,7 +30,7 @@ import static android.media.RingtoneManager.TYPE_ALARM;
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
 
-    private Button btadd, btitem, btOCR, bt;
+    private Button btadd, btitem, btOCR, btalarm;
     private Context context = this;
     private static TextView textView2;
 
@@ -52,10 +52,10 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         btitem.setOnClickListener(this);
         btOCR = (Button) findViewById(R.id.auto);
         btOCR.setOnClickListener(this);
-        bt = (Button) findViewById(R.id.alarm);
-        bt.setOnClickListener(this);
+        btalarm = (Button) findViewById(R.id.alarm);
+        btalarm.setOnClickListener(this);
 
-
+/*
         int n =30;
         for(int i=0; i<n;i++){
             cal = Calendar.getInstance();
@@ -71,16 +71,16 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
         }
 
-
+*/
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.addh:
-                Intent intent = new Intent();
-                intent.setClass(this, AddByHand.class);
-                startActivity(intent);
+                Intent intent4 = new Intent();
+                intent4.setClass(this, AddByHand.class);
+                startActivity(intent4);
                 break;
             case R.id.item:
                 Intent intenti = new Intent();
@@ -93,11 +93,12 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                 startActivity(intentO);
                 break;
             case R.id.alarm:
-                Intent intenta = new Intent();
-                intenta.setClass(this, AlarmTime.class);
-                startActivity(intenta);
+                Intent intent1 = new Intent();
+                intent1.setClass(this, AlarmTime.class);
+                startActivity(intent1);
                 break;
-                /*
+
+          /*
                 Intent intent11 = new Intent(MainActivity.this, PlayReceiver.class);
                 intent11.putExtra("msg", "play_voice");
                 intent11.addCategory(String.valueOf(SystemClock.elapsedRealtime()));
@@ -109,8 +110,6 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                         PendingIntent.FLAG_UPDATE_CURRENT);
                 AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
                 am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, elapsed , pi);
-
-                break;
 
 */
 
