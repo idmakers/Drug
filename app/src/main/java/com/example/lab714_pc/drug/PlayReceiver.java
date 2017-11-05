@@ -3,9 +3,14 @@ package com.example.lab714_pc.drug;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+
+import static android.media.AudioAttributes.USAGE_NOTIFICATION;
 
 /**
  * Created by idmakers on 2017/10/26.
@@ -15,6 +20,7 @@ import android.os.Bundle;
 public class PlayReceiver extends BroadcastReceiver {
 
     private SoundPool sp;
+    private boolean spLoader = false;
     private int sourceid;
 
     @Override
@@ -23,10 +29,38 @@ public class PlayReceiver extends BroadcastReceiver {
         Bundle bData = intent.getExtras();
 
         if (bData.get("msg").equals("play_voice")) {
-            sp = new SoundPool(10, AudioManager.STREAM_MUSIC, 5);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                AudioAttributes audioAttrib = new AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_GAME)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .build();
+               sp= new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(6).build();
+                Log.e("TEST","TEST");
+            }
+            else {
+
+                sp = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
+                Log.e("TEST","TEST");
+            }
+            sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                @Override
+                public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                    if (sampleId == R.raw.test) {
+                       spLoader = true;
+                    }
+                }
+            });
+
+
+
+
             sourceid = sp.load(context, R.raw.test, 1);
 
+
             playSounds(1, context);
+
         }
 
     }
