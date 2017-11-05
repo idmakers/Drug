@@ -30,7 +30,7 @@ import static android.media.RingtoneManager.TYPE_ALARM;
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
 
-    private Button btadd, btitem, btOCR, btalarm;
+    private Button btadd, btitem, btOCR, btalarm,btalarmL,btring;
     private Context context = this;
     private static TextView textView2;
 
@@ -54,6 +54,10 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         btOCR.setOnClickListener(this);
         btalarm = (Button) findViewById(R.id.alarm);
         btalarm.setOnClickListener(this);
+        btalarmL = (Button) findViewById(R.id.AlarmList);
+        btalarmL.setOnClickListener(this);
+        btring = (Button) findViewById(R.id.AlarmRing );
+        btring.setOnClickListener(this);
 
 /*
         int n =30;
@@ -97,8 +101,12 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                 intent1.setClass(this, AlarmTime.class);
                 startActivity(intent1);
                 break;
-
-          /*
+            case R.id.AlarmList:
+                Intent intentAL = new Intent();
+                intentAL.setClass(this, AlarmList.class);
+                startActivity(intentAL);
+                break;
+            case R.id.AlarmRing :
                 Intent intent11 = new Intent(MainActivity.this, PlayReceiver.class);
                 intent11.putExtra("msg", "play_voice");
                 intent11.addCategory(String.valueOf(SystemClock.elapsedRealtime()));
@@ -110,8 +118,8 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                         PendingIntent.FLAG_UPDATE_CURRENT);
                 AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
                 am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, elapsed , pi);
+                break;
 
-*/
 
         }
 

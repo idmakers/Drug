@@ -17,7 +17,7 @@ import static com.example.lab714_pc.drug.R.id.update;
 
 public class AlarmTime extends MainActivity {
 
-    private AlarmDBHelper helper;
+    private MyDBHelper helper;
     private EditText day;
     private TextView displayedText;
     private EditText morning ,noon,night;
@@ -30,7 +30,7 @@ public class AlarmTime extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarmtime);
         findViews();
-        helper = new AlarmDBHelper(this,"expense.db",null,1);
+        helper = new MyDBHelper(this,"expense.db",null,1);
         morning = (EditText)findViewById(R.id.morining);
         noon = (EditText)findViewById(R.id.noon);
         night = (EditText)findViewById(R.id.night);
@@ -87,14 +87,15 @@ public class AlarmTime extends MainActivity {
         String mnoon = noon.getText().toString();
         String mnight = night.getText().toString();
         ContentValues values = new ContentValues();
+
         values.put("Aname","morning");
         values.put("Atime", mmoring);
-       /* values.put("name","noon");
-        values.put("time", mnoon);
-        values.put("name","night");
-        values.put("time", mnight);
-        */
-        long id = helper.getWritableDatabase().insert("exp", null, values);
+        values.put("Aname","noon");
+        values.put("Atime", mnoon);
+        values.put("Aname","night");
+        values.put("Atime", mnight);
+
+        long id = helper.getWritableDatabase().insert("ALARM", null, values);
         Log.d("ADD", id + "");
         intent.setClass(AlarmTime.this, MainActivity.class);
         startActivity(intent);

@@ -148,7 +148,7 @@ public class AddByHand extends MainActivity {
         values.put("amount", mamount);
         values.put("day", mday);
         values.put("tvTime", mtime);
-        long id = helper.getWritableDatabase().insert("exp", null, values);
+        long id = helper.getWritableDatabase().insert("MEDINFO", null, values);
         Log.d("ADD", id + "" + mtime  +"");
         intent.setClass(AddByHand.this, MainActivity.class);
         startActivity(intent);

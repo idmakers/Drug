@@ -57,7 +57,7 @@
                     android:id="@+id/auto"
                     android:layout_width="108dp"
                     android:layout_height="121dp"
-                    android:text="Button"
+                    android:text="OCR"
                     tools:layout_editor_absoluteX="33dp"
                     tools:layout_editor_absoluteY="46dp" />
             </TableRow>
@@ -75,10 +75,10 @@
                     tools:layout_editor_absoluteY="46dp" />
 
                 <Button
-                    android:id="@+id/button5"
+                    android:id="@+id/AlarmList"
                     android:layout_width="108dp"
                     android:layout_height="121dp"
-                    android:text="Button"
+                    android:text="AlarmList"
                     tools:layout_editor_absoluteX="33dp"
                     tools:layout_editor_absoluteY="46dp" />
 
@@ -87,10 +87,10 @@
                     android:layout_height="match_parent">
 
                     <Button
-                        android:id="@+id/button6"
+                        android:id="@+id/AlarmRing "
                         android:layout_width="108dp"
                         android:layout_height="121dp"
-                        android:text="Button"
+                        android:text="RING"
                         tools:layout_editor_absoluteX="33dp"
                         tools:layout_editor_absoluteY="46dp" />
                 </TableRow>
