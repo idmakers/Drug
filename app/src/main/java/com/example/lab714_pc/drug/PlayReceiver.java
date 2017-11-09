@@ -44,22 +44,24 @@ public class PlayReceiver extends BroadcastReceiver {
                 sp = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
                 Log.e("TEST","TEST");
             }
-            sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+           sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                 @Override
-                public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                    if (sampleId == R.raw.test) {
-                       spLoader = true;
-                    }
+                public void onLoadComplete(SoundPool soundPool, int sampleId,
+                                           int status) {
+                    spLoader = true;
                 }
             });
+            if(spLoader){
+                playSounds(1,context);
+                Log.e("Test", "Played sound");
+            }
 
 
 
 
-            sourceid = sp.load(context, R.raw.test, 1);
 
 
-            playSounds(1, context);
+
 
         }
 
@@ -75,6 +77,6 @@ public class PlayReceiver extends BroadcastReceiver {
         // 左右聲道值範圍為 0.0 - 1.0
         float volRatio = audCurrentVolumn / audMaxVolumn;
         // 下面參數分別為播放音頻，左聲道,右聲道，設置優先級，重撥次數，速率(速率最低0.5，最高為2，1代表正常速度)
-        sp.play(sourceid, volRatio, volRatio, 1, repeatTime, 1);
+        sp.play(R.raw.test, volRatio, volRatio, 1, repeatTime, 1);
     }
 }

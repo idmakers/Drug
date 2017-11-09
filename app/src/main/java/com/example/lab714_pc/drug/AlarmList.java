@@ -16,11 +16,11 @@ public class AlarmList extends AppCompatActivity {
         MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
         Cursor c = helper.getReadableDatabase().query("ALARM", null, null,null,null,null,null);
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-                R.layout.content_itemlistview,
+                R.layout.content_alarmlistview,
                 c,
 
               new String[] {"_id","Aname", "Atime"},
-              new int[] {R.id.item_id, R.id.item_info, R.id.item_amount}, 0);
+              new int[] {R.id.item_id, R.id.item_info, R.id.item_cdate}, 0);
 
         list.setAdapter(adapter);
 

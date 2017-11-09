@@ -40,7 +40,11 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".AlarmList"></activity>
+        <activity android:name=".AlarmList" />
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
