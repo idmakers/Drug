@@ -20,7 +20,7 @@ public class MyDBHelper extends SQLiteOpenHelper  {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE  TABLE MEDINFO " +"(_id INTEGER PRIMARY KEY  NOT NULL, " + "name VARCHAR   , " +"method VAR,"+ "amount  INTEGER," +"day  INTEGER ," + "tvTime TIME)");
-        db.execSQL("CREATE  TABLE ALARM " +"(_id INTEGER PRIMARY KEY , " + "Aname VAR UNIQUE   , " +"Atime TIME)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS"+  " ALARM " +"(_id INTEGER PRIMARY KEY , " + "Aname VAR UNIQUE   , " +"Atime TIME)");
 
 
     }
@@ -50,6 +50,25 @@ public class MyDBHelper extends SQLiteOpenHelper  {
                 "_id=" + rowId,			//WHERE
                 null				//WHERE的參數
         );
+    }
+
+    public boolean isEmpty(){
+        db.execSQL("CREATE TABLE IF NOT EXISTS"+  " ALARM " +"(_id INTEGER PRIMARY KEY , " + "Aname VAR UNIQUE   , " +"Atime TIME)");
+        Cursor cursor = db.query(
+                "ALARM",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        if (cursor.getCount() ==0) {
+            return  false;	//將指標移到第一筆資料
+        }
+        else
+            return  true;
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

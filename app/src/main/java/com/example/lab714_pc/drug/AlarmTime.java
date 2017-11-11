@@ -58,16 +58,22 @@ public class AlarmTime extends MainActivity {
         btnMIDNIGHT = (Button)findViewById(R.id.btnmidnight);
         btnMIDNIGHT.setOnClickListener(this);
 
+
+    if(helper.isEmpty()){
         Cursor morn = helper.filList(1);
         Cursor noo = helper.filList(2);
         Cursor ni = helper.filList(3);
         Cursor mid = helper.filList(4);
 
 
+
         morning.setText(morn.getString(1));
         noon.setText(noo.getString(1));
         night.setText(ni.getString(1));
         midnight.setText(mid.getString(1));
+
+    }
+
 
 
 
@@ -166,7 +172,8 @@ public class AlarmTime extends MainActivity {
         //java.util.Date mmidnight= new java.util.Date();
        // java.util.Date mnight= new java.util.Date();
         // java.util.Date mnoon= new java.util.Date();
-        /*
+
+    if(!helper.isEmpty()){
         values.put("Aname","morning");
         values.put("Atime", mmoring);
         long id = helper.getWritableDatabase().insert("ALARM", null, values);
@@ -187,12 +194,15 @@ public class AlarmTime extends MainActivity {
         id = helper.getWritableDatabase().insert("ALARM", null, values);
         Log.d("ADD", id + "");
         values.clear();
-*/
-        long id = helper.update(1,mmoring);
-        Log.d("ADD", id + "");
+    }
+    else
+    {
+        id = helper.update(1,mmoring);
         id = helper.update(2,mnoon);
         id = helper.update(3,mnight);
         id = helper.update(4,mmidnight);
+
+    }
 
         intent.setClass(AlarmTime.this, MainActivity.class);
         startActivity(intent);

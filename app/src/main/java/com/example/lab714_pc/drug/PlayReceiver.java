@@ -21,12 +21,14 @@ public class PlayReceiver extends BroadcastReceiver {
 
     private SoundPool sp;
     private boolean spLoader = false;
-    private int sourceid;
+    private int mySoundId;
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
         Bundle bData = intent.getExtras();
+
+        mySoundId = sp.load("R.raw.test",1);
 
         if (bData.get("msg").equals("play_voice")) {
 
@@ -46,7 +48,7 @@ public class PlayReceiver extends BroadcastReceiver {
             }
            sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                 @Override
-                public void onLoadComplete(SoundPool soundPool, int sampleId,
+                public void onLoadComplete(SoundPool soundPool, int mySoundId,
                                            int status) {
                     spLoader = true;
                 }
@@ -77,6 +79,6 @@ public class PlayReceiver extends BroadcastReceiver {
         // 左右聲道值範圍為 0.0 - 1.0
         float volRatio = audCurrentVolumn / audMaxVolumn;
         // 下面參數分別為播放音頻，左聲道,右聲道，設置優先級，重撥次數，速率(速率最低0.5，最高為2，1代表正常速度)
-        sp.play(R.raw.test, volRatio, volRatio, 1, repeatTime, 1);
+        sp.play(mySoundId, volRatio, volRatio, 1, repeatTime, 1);
     }
 }
