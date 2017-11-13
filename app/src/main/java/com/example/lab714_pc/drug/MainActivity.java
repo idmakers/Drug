@@ -32,11 +32,8 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
     private Button btadd, btitem, btOCR, btalarm,btalarmL,btring;
     private Context context = this;
-    private static TextView textView2;
+    private  TextView txt_hello = (TextView)findViewById(R.id.textView2);
 
-    public static TextView getTextView2() {
-        return textView2;
-    }
 
     AlarmManager am;
     PendingIntent pi;
@@ -54,7 +51,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         btOCR.setOnClickListener(this);
         btalarm = (Button) findViewById(R.id.alarm);
         btalarm.setOnClickListener(this);
-        btalarmL = (Button) findViewById(R.id.AlarmList);
+        btalarmL = (Button) findViewById(R.id.QRcode);
         btalarmL.setOnClickListener(this);
         btring = (Button) findViewById(R.id.AlarmRing );
         btring.setOnClickListener(this);
@@ -101,10 +98,10 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                 intent1.setClass(this, AlarmTime.class);
                 startActivity(intent1);
                 break;
-            case R.id.AlarmList:
-                Intent intentAL = new Intent();
-                intentAL.setClass(this, AlarmList.class);
-                startActivity(intentAL);
+            case R.id.QRcode:
+                Intent intent = new Intent("com.google.zxing.client.android.SCAN");	//開啟條碼掃描器
+                intent.putExtra("SCAN_MODE", "QR_CODE_MODE");	//設定QR Code參數
+                startActivityForResult(intent, 1);	//要求回傳1
                 break;
             case R.id.AlarmRing :
                 Intent intent11 = new Intent(MainActivity.this, PlayReceiver.class);
@@ -124,6 +121,18 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         }
 
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {	//startActivityForResult回傳值
+            if (resultCode == RESULT_OK) {
+                String contents = data.getStringExtra("SCAN_RESULT");	//取得QR Code內容
+                txt_hello.setText(contents);
+            }
+        }
     }
 
     @Override
