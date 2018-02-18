@@ -28,11 +28,11 @@ import java.util.TimerTask;
 
 import static android.media.RingtoneManager.TYPE_ALARM;
 
-public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
+public class MainActivity extends Base  {
 
     private Button btadd, btitem, btOCR, btalarm,btalarmL,btring;
     private Context context = this;
-    private  TextView txt_hello = (TextView)findViewById(R.id.textView2);
+    //private  TextView txt_hello = (TextView)findViewById(R.id.textView2);
 
 
     AlarmManager am;
@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        btadd = (Button) findViewById(R.id.addh);
+        setContentView(R.layout.activity_base);
+      /* btadd = (Button) findViewById(R.id.addh);
         btadd.setOnClickListener(this);
         btitem = (Button) findViewById(R.id.item);
         btitem.setOnClickListener(this);
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         btring = (Button) findViewById(R.id.AlarmRing );
         btring.setOnClickListener(this);
 
-/*
+
         int n =30;
         for(int i=0; i<n;i++){
             cal = Calendar.getInstance();
@@ -69,59 +69,14 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
             pi = PendingIntent.getBroadcast(this, i , intent , PendingIntent.FLAG_ONE_SHOT);
 
             am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),pi);
-
-        }
-
-*/
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.addh:
-                Intent intent4 = new Intent();
-                intent4.setClass(this, AddByHand.class);
-                startActivity(intent4);
-                break;
-            case R.id.item:
-                Intent intenti = new Intent();
-                intenti.setClass(this, ItemListView.class);
-                startActivity(intenti);
-                break;
-            case R.id.auto:
-                Intent intentO = new Intent();
-                intentO.setClass(this, OCR.class);
-                startActivity(intentO);
-                break;
-            case R.id.alarm:
-                Intent intent1 = new Intent();
-                intent1.setClass(this, AlarmTime.class);
-                startActivity(intent1);
-                break;
-            case R.id.QRcode:
-                Intent intent = new Intent("com.google.zxing.client.android.SCAN");	//開啟條碼掃描器
-                intent.putExtra("SCAN_MODE", "QR_CODE_MODE");	//設定QR Code參數
-                startActivityForResult(intent, 1);	//要求回傳1
-                break;
-            case R.id.AlarmRing :
-                Intent intent11 = new Intent(MainActivity.this, PlayReceiver.class);
-                intent11.putExtra("msg", "play_voice");
-                intent11.addCategory(String.valueOf(SystemClock.elapsedRealtime()));
-                //SystemClock.elapsedRealtime()會回傳從開機到現在當下所花的時間,手機進入睡眠時間也算在內(單位milliseconds)
-                long elapsed = SystemClock.elapsedRealtime() + 60 * 1000; //60秒
-                // 發送一個broadcast,類似 Context.sendBroadcast()
-                // PendingIntent.FLAG_UPDATE_CURRENT參數表示,如果已存在 PendingIntent,就更新 extra data.
-                PendingIntent pi = PendingIntent.getBroadcast(MainActivity.this, 1, intent11,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
-                AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-                am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, elapsed , pi);
-                break;
-
+            */
 
         }
 
 
-    }
+
+
+    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
@@ -133,7 +88,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                 txt_hello.setText(contents);
             }
         }
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

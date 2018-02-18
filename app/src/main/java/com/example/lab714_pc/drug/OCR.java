@@ -12,6 +12,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,7 +36,7 @@ import java.util.ArrayList;
 import static com.example.lab714_pc.drug.R.id.OCRTextView;
 import static com.example.lab714_pc.drug.R.id.edit_query;
 
-public class OCR extends AppCompatActivity implements View.OnClickListener {
+public class OCR extends Base implements View.OnClickListener {
 
     static Bitmap image;
     static  ArrayList<Bitmap> BitmapPart = new ArrayList<Bitmap>();
@@ -67,6 +71,10 @@ public class OCR extends AppCompatActivity implements View.OnClickListener {
         btOCR = (Button) findViewById(R.id.OCRbutton);
         btOCR.setText("RUN OCR");
         btOCR.setOnClickListener(this);
+
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
 
     }
 

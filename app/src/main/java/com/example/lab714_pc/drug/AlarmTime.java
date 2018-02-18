@@ -9,9 +9,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.*;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
+import android.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,19 +29,20 @@ import static com.example.lab714_pc.drug.R.id.btnnoon;
 import static com.example.lab714_pc.drug.R.id.update;
 
 
-public class AlarmTime extends MainActivity {
+public class AlarmTime extends Base
+        implements View.OnClickListener{
 
     private MyDBHelper helper;
     private EditText day;
     private TextView displayedText;
     private EditText morning ,noon,night,midnight;
     private Button btUP,btnMORNING,btnNOON,btnNIGHT,btnMIDNIGHT;
-    private int mHour, mMinute;
+    private int mHour, mMinute , mSecoond;
 
     static long id;
 
 
-
+    private Button btadd, btitem, btOCR, btalarm,btalarmL,btring;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +64,36 @@ public class AlarmTime extends MainActivity {
         btnNIGHT.setOnClickListener(this);
         btnMIDNIGHT = (Button)findViewById(R.id.btnmidnight);
         btnMIDNIGHT.setOnClickListener(this);
+        btadd = (Button) findViewById(R.id.addh);
+        btadd.setOnClickListener(onClickListener);
+        btitem = (Button) findViewById(R.id.item);
+        btitem.setOnClickListener(onClickListener);
+        btOCR = (Button) findViewById(R.id.auto);
+        btOCR.setOnClickListener(onClickListener);
+        btalarm = (Button) findViewById(R.id.alarm);
+        btalarm.setOnClickListener(onClickListener);
+        btalarmL = (Button) findViewById(R.id.QRcode);
+        btalarmL.setOnClickListener(onClickListener);
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
 
-    if(helper.isEmpty()){
+
+        if(helper.isEmpty()){
         Cursor morn = helper.filList(1);
         Cursor noo = helper.filList(2);
         Cursor ni = helper.filList(3);
@@ -86,21 +120,65 @@ public class AlarmTime extends MainActivity {
     @Override
     public void onClick (View v) {
         switch (v.getId()) {
+            case R.id.addh:
+                Intent intent4 = new Intent();
+                intent4.setClass(this, AddByHand.class);
+                startActivity(intent4);
+                onBackPressed();
+                break;
+            case R.id.item:
+                Intent intenti = new Intent();
+                intenti.setClass(this, ItemListView.class);
+                startActivity(intenti);
+                onBackPressed();
+                break;
+            case R.id.auto:
+                Intent intentO = new Intent();
+                intentO.setClass(this, OCR.class);
+                startActivity(intentO);
+                onBackPressed();
+                break;
+            case R.id.alarm:
+                Intent intent1 = new Intent();
+                intent1.setClass(this, AlarmTime.class);
+                startActivity(intent1);
+                onBackPressed();
+                break;
+//                  case R.id.QRcode:
+//                 Intent intent = new Intent("com.google.zxing.client.android.SCAN");	//開啟條碼掃描器
+//                   intent.putExtra("SCAN_MODE", "QR_CODE_MODE");	//設定QR Code參數
+//                   startActivityForResult(intent, 1);	//要求回傳1
+//                   break;
+//
+//              case R.id.AlarmRing :
+//                   Intent intent11 = new Intent(Main2Activity.context, PlayReceiver.class);
+//                   intent11.putExtra("msg", "play_voice");
+//                   intent11.addCategory(String.valueOf(SystemClock.elapsedRealtime()));
+//                   //SystemClock.elapsedRealtime()會回傳從開機到現在當下所花的時間,手機進入睡眠時間也算在內(單位milliseconds)
+//                   long elapsed = SystemClock.elapsedRealtime() + 60 * 1000; //60秒
+//                   // 發送一個broadcast,類似 Context.sendBroadcast()
+//                   // PendingIntent.FLAG_UPDATE_CURRENT參數表示,如果已存在 PendingIntent,就更新 extra data.
+//                   PendingIntent pi = PendingIntent.getBroadcast(Main2Activity.context, 1, intent11,
+//                           PendingIntent.FLAG_UPDATE_CURRENT);
+//                   AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+//                   am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, elapsed , pi);
+//                   break;
             case btnmorning:
                 // 設定初始時間
                 final Calendar c = Calendar.getInstance();
                 mHour = c.get(Calendar.HOUR_OF_DAY);
                 mMinute = c.get(Calendar.MINUTE);
+                mSecoond = c.get(Calendar.SECOND);
 
                 // 跳出時間選擇器
                 TimePickerDialog tpd = new TimePickerDialog(this,
                         new TimePickerDialog.OnTimeSetListener() {
                             public void onTimeSet(TimePicker view, int hourOfDay,
-                                                  int minute) {
+                                                  int minute ) {
                                 // 完成選擇，顯示時間
-                                morning.setText(hourOfDay + ":" + minute);
+                                morning.setText(hourOfDay + ":" + minute );
                             }
-                        }, mHour, mMinute, false);
+                        }, mHour, mMinute, true);
                 tpd.show();
                 break;
             case btnnoon:
@@ -204,7 +282,7 @@ public class AlarmTime extends MainActivity {
 
     }
 
-        intent.setClass(AlarmTime.this, MainActivity.class);
+        intent.setClass(AlarmTime.this, Base.class);
         startActivity(intent);
     }
 

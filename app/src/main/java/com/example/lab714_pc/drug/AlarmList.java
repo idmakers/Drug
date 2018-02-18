@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-public class AlarmList extends AppCompatActivity {
+public class AlarmList extends Base{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
