@@ -24,7 +24,6 @@ public class PlayReceiver extends BroadcastReceiver {
     private boolean spLoader = false;
 
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -43,8 +42,16 @@ public class PlayReceiver extends BroadcastReceiver {
 
             MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.test); // in 2nd param u have to pass your desire ringtone
             //mPlayer.prepare();
+            long tstart = System.currentTimeMillis();
+            long time  = tstart;
+            long timepass = 0;
             mPlayer.start();
-
+            while (time < tstart+30000){
+                time = System.currentTimeMillis();
+                timepass = time-tstart;
+                Log.d("time","value "+timepass);
+            }
+            mPlayer.stop();
 
 
 
