@@ -1,5 +1,7 @@
 package com.example.lab714_pc.drug;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +15,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-
+import android.app.Notification;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -22,9 +24,11 @@ public class Base extends AppCompatActivity
 
         implements NavigationView.OnNavigationItemSelectedListener {
     public static Toolbar toolbar;
-    private Button btadd, btitem, btOCR, btalarm,btalarmL,btring;
+    private Button btadd, btitem, btOCR, btalarm,btalarmL,btnotify;
     private Context context = this;
-
+    private NotificationManager notificationManger;
+    private Notification notification;
+    private static final int NOTIFICATION_ID = 0;
 
 
 
@@ -42,8 +46,26 @@ public class Base extends AppCompatActivity
         btalarm.setOnClickListener(onClickListener);
         btalarmL = (Button) findViewById(R.id.QRcode);
         btalarmL.setOnClickListener(onClickListener);
+        btnotify = (Button) findViewById(R.id.Notification);
+        btnotify.setOnClickListener(onClickListener);
+        notificationManger = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Intent intent = new Intent();
+        intent.setClass(Base.this, Notification.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(this, NOTIFICATION_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        notification = new Notification.Builder(this)
+                .setSmallIcon(android.R.drawable.sym_def_app_icon)
+                .setContentTitle("Hi")
+                .setContentText("Nice to meet you.")
+                .setContentIntent(pendingIntent)
+                .build(); // available from API level 11 and onwards
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +105,9 @@ public class Base extends AppCompatActivity
                     intentO.setClass(context, OCR.class);
                     startActivity(intentO);
                     onBackPressed();
+                    break;
+                case R.id.Notification:
+                    notificationManger.notify(0, notification);
                     break;
                 case R.id.alarm:
                     Intent intent1 = new Intent();
