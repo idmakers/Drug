@@ -4,10 +4,12 @@
         <item>早上</item>
         <item>中午</item>
         <item>晚上</item>
+        <item>睡前</item>
         <item>早上/中午</item>
         <item>中午/晚上</item>
         <item>早上/晚上</item>
         <item>早上/中午/晚上</item>
+        <item>早上/中午/晚上/睡前</item>
     </string-array>
 
 

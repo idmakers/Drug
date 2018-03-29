@@ -52,8 +52,9 @@ public class AddByHand extends Base
     private EditText tvTime ,afbf;
     private Button btTime, btAdd,btAf;
     private int mHour, mMinute;
-    private Button btadd, btitem, btOCR, btalarm,btalarmL,btring;
+    private Button btadd, btitem, btOCR, btalarm,btalarmL,btnotify;
     Intent intent = new Intent();
+
 
 
     @Override
@@ -82,6 +83,8 @@ public class AddByHand extends Base
         btalarm.setOnClickListener(onClickListener);
         btalarmL = (Button) findViewById(R.id.QRcode);
         btalarmL.setOnClickListener(onClickListener);
+        btnotify = (Button) findViewById(R.id.Notification);
+        btnotify.setOnClickListener(onClickListener);
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -139,19 +142,11 @@ public class AddByHand extends Base
                       break;
                   case add:
                       add();
-                      if(helper.isEmpty()){
-                          Cursor morn = helper.filList(1);
-                          Cursor noo = helper.filList(2);
-                          Cursor ni = helper.filList(3);
-                          Cursor mid = helper.filList(4);
-                          alarm(morn.getString(1));
-                          alarm(noo.getString(1));
-                          alarm(ni.getString(1));
-                          alarm(mid.getString(1));
-
-                      }
                       intent.setClass(AddByHand.this, Base.class);
                       startActivity(intent);
+                      break;
+                  case R.id.Notification:
+                      notificationManger.notify(0, notification);
                       break;
                   case time:
                       new AlertDialog.Builder(AddByHand.this)
@@ -212,7 +207,7 @@ public class AddByHand extends Base
         tpd.show();
     }
 */
-    private void add() {
+    public void add() {
         String mname = name.getText().toString();
         String mmethod = method.getText().toString();
         String mtime = tvTime.getText().toString();
@@ -226,6 +221,44 @@ public class AddByHand extends Base
         values.put("tvTime", mtime);
         long id = helper.getWritableDatabase().insert("MEDINFO", null, values);
         Log.d("ADD", id + "" + mtime  +"");
+        if(helper.isEmpty()){
+            Cursor morn = helper.filList(1);
+            Cursor noo = helper.filList(2);
+            Cursor ni = helper.filList(3);
+            Cursor mid = helper.filList(4);
+            if(tvTime.getText().toString().equals("早上")){
+                alarm(morn.getString(1));
+            }
+            else if(tvTime.getText().toString().equals("中午")){
+                alarm(noo.getString(1));
+            }
+            else if(tvTime.getText().toString().equals("晚上")){
+                alarm(ni.getString(1));
+            }
+
+            else if(tvTime.getText().toString().equals("睡前")){
+                alarm(mid.getString(1));
+            }
+
+            else if(tvTime.getText().toString().equals("早上/晚上")){
+                alarm(morn.getString(1));
+                alarm(ni.getString(1));
+
+            }
+
+            else if(tvTime.getText().toString().equals("早上/中午/晚上")){
+                alarm(morn.getString(1));
+                alarm(noo.getString(1));
+                alarm(ni.getString(1));
+            }
+
+            else if(tvTime.getText().toString().equals("早上/中午/晚上/睡前")){
+                alarm(morn.getString(1));
+                alarm(noo.getString(1));
+                alarm(ni.getString(1));
+                alarm(mid.getString(1));
+            }
+        }
 
     }
 
@@ -249,7 +282,6 @@ public class AddByHand extends Base
 
         SimpleDateFormat time = new SimpleDateFormat("yyyy MM dd HH:mm");
         SimpleDateFormat date = new SimpleDateFormat("yyyy MM dd");
-//        SimpleDateFormat time = new SimpleDateFormat("HH:mm");
         try {
             Intent intent11 = new Intent(getApplicationContext(), PlayReceiver.class);
             Date today  = new Date();
@@ -258,14 +290,11 @@ public class AddByHand extends Base
             Date alarmtimeout = time.parse(times);
             long milliseconds = alarmtimeout.getTime();
         intent11.putExtra("msg", "play_voice");
-        //SystemClock.elapsedRealtime()會回傳從開機到現在當下所花的時間,手機進入睡眠時間也算在內(單位milliseconds)
         long elapsed =  milliseconds;
-        // 發送一個broadcast,類似 Context.sendBroadcast()
-        // PendingIntent.FLAG_UPDATE_CURRENT參數表示,如果已存在 PendingIntent,就更新 extra data.
         PendingIntent pi = PendingIntent.getBroadcast(getApplicationContext(), 1, intent11,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-        am.set(AlarmManager.RTC_WAKEUP,elapsed , pi);
+            am.setRepeating(AlarmManager.RTC_WAKEUP, elapsed, AlarmManager.INTERVAL_DAY, pi);
         } catch (ParseException e) {
             e.printStackTrace();
         }

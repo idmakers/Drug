@@ -1,5 +1,8 @@
 package com.example.lab714_pc.drug;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +14,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 import static android.media.AudioAttributes.USAGE_NOTIFICATION;
+import static com.example.lab714_pc.drug.Base.notification;
 
 /**
  * Created by idmakers on 2017/10/26.
@@ -28,11 +34,12 @@ public class PlayReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         Bundle bData = intent.getExtras();
-
-
+        MediaPlayer mPlayer = new MediaPlayer();
 
         if (bData.get("msg").equals("play_voice")) {
 
+
+            Base.notificationManger.notify(0, notification);
             SoundPool sp = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
 
             /** soundId for Later handling of sound pool **/
@@ -40,22 +47,25 @@ public class PlayReceiver extends BroadcastReceiver {
 
             sp.play(soundId, 1, 1, 0, 0, 1);
 
-            MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.test); // in 2nd param u have to pass your desire ringtone
-            //mPlayer.prepare();
-            long tstart = System.currentTimeMillis();
-            long time  = tstart;
-            long timepass = 0;
-            mPlayer.start();
-            while (time < tstart+30000){
-                time = System.currentTimeMillis();
-                timepass = time-tstart;
-                Log.d("time","value "+timepass);
-            }
+//            mPlayer.create(context, R.raw.test); // in 2nd param u have to pass your desire ringtone
+//            //mPlayer.prepare();
+//            long tstart = System.currentTimeMillis();
+//            long time  = tstart;
+//            long timepass = 0;
+//            mPlayer.start();
+//            while (time < tstart+30000){
+//                time = System.currentTimeMillis();
+//                timepass = time-tstart;
+//                Log.d("time","value "+timepass);
+//            }
+
+
+
+
+
+        }
+        else if(bData.get("msg").equals("close")){
             mPlayer.stop();
-
-
-
-
         }
 
     }

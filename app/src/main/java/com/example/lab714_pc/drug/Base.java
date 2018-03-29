@@ -19,6 +19,7 @@ import android.app.Notification;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.RemoteViews;
 
 public class Base extends AppCompatActivity
 
@@ -26,8 +27,8 @@ public class Base extends AppCompatActivity
     public static Toolbar toolbar;
     private Button btadd, btitem, btOCR, btalarm,btalarmL,btnotify;
     private Context context = this;
-    private NotificationManager notificationManger;
-    private Notification notification;
+    static NotificationManager notificationManger;
+    static Notification notification;
     private static final int NOTIFICATION_ID = 0;
 
 
@@ -51,19 +52,24 @@ public class Base extends AppCompatActivity
         notificationManger = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Intent intent = new Intent();
-        intent.setClass(Base.this, Notification.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent =
-                PendingIntent.getActivity(this, NOTIFICATION_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
+        RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.activity_notification);
+        contentView.setTextViewText(R.id.title, "Custom notification");
+        contentView.setTextViewText(R.id.text, "This is a custom layout");
         notification = new Notification.Builder(this)
-                .setSmallIcon(android.R.drawable.sym_def_app_icon)
-                .setContentTitle("Hi")
-                .setContentText("Nice to meet you.")
-                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark_focused)
+                .setCustomBigContentView(contentView)
                 .build(); // available from API level 11 and onwards
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+
+
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+        notification.contentIntent = contentIntent;
+
+        notification.flags |= Notification.FLAG_NO_CLEAR; //Do not clear the notification
+        notification.defaults |= Notification.DEFAULT_LIGHTS; // LED
+        notification.defaults |= Notification.DEFAULT_VIBRATE; //Vibration
+        notification.defaults |= Notification.DEFAULT_SOUND; // Sound
         notification.flags = Notification.FLAG_AUTO_CANCEL;
 
 
