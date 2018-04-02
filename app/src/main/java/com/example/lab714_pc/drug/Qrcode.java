@@ -1,26 +1,35 @@
 package com.example.lab714_pc.drug;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
-public class ItemListView extends Base implements View.OnClickListener {
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+
+
+public class  Qrcode  extends Base implements View.OnClickListener{
+    private Button btn_scan;
+    private TextView txt_url;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_itemlistview);
+        setContentView(R.layout.activity_qrcode);
+        btn_scan = (Button)findViewById(R.id.btn_scan);
+        btn_scan.setOnClickListener(onClickListener);;
         btadd = (Button) findViewById(R.id.addh);
         btadd.setOnClickListener(onClickListener);
         btitem = (Button) findViewById(R.id.item);
@@ -33,18 +42,6 @@ public class ItemListView extends Base implements View.OnClickListener {
         btalarmL.setOnClickListener(onClickListener);
         btnotify = (Button) findViewById(R.id.Notification);
         btnotify.setOnClickListener(onClickListener);
-        ListView list = (ListView) findViewById(R.id.list);
-        MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-        Cursor c = helper.getReadableDatabase().query("MEDINFO", null, null, null, null, null, null);
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-                R.layout.content_itemlistview,
-                c,
-                new String[] {"_id", "amount","day","method"},
-                new int[] {R.id.item_id, R.id.item_amount, R.id.item_info, R.id.item_cdate}, 0);
-        //new String[] {"name", "amount"},
-        //new int[] {android.R.id.text1, android.R.id.text2},0);
-
-        list.setAdapter(adapter);
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -62,14 +59,37 @@ public class ItemListView extends Base implements View.OnClickListener {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-    }
 
+
+        this.txt_url = (TextView) findViewById(R.id.txt_url);
+
+
+
+    }
     @Override
     public void onClick (View v) {
         switch (v.getId()) {
-
+            case R.id.btn_scan:
+                new IntentIntegrator(Qrcode.this).initiateScan();
+                break;
         }
     }
+
+
+    //掃描完的結果回傳到Activity，要用onActivityResult這個方法
+    public void onActivityResult(int requestCode, int resultCode, Intent intent){
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if(result!=null){
+            String scanContent = result.getContents();
+            String scanFormat = result.getFormatName();
+            txt_url.setText(scanFormat+" \n"+scanContent); //將資料顯示到textView
+        }else{
+            Toast.makeText(getApplicationContext(), "nothing", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+
 
 
 }

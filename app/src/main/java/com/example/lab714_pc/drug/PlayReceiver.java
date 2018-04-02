@@ -28,24 +28,30 @@ public class PlayReceiver extends BroadcastReceiver {
 
     private SoundPool sp;
     private boolean spLoader = false;
+    MediaPlayer mPlayer = new MediaPlayer();
 
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
         Bundle bData = intent.getExtras();
-        MediaPlayer mPlayer = new MediaPlayer();
+
 
         if (bData.get("msg").equals("play_voice")) {
 
 
+//
+//            SoundPool sp = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+//
+//            /** soundId for Later handling of sound pool **/
+//            int soundId = sp.load(context, R.raw.test, 1); // in 2nd param u have to pass your desire ringtone
+//
+//            sp.play(soundId, 1, 1, 0, 0, 1);
+             this.mPlayer = MediaPlayer.create(context, R.raw.test); // in 2nd param u have to pass your desire ringtone
+            //mPlayer.prepare();
+            this.mPlayer.start();
+
             Base.notificationManger.notify(0, notification);
-            SoundPool sp = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
-
-            /** soundId for Later handling of sound pool **/
-            int soundId = sp.load(context, R.raw.test, 1); // in 2nd param u have to pass your desire ringtone
-
-            sp.play(soundId, 1, 1, 0, 0, 1);
 
 //            mPlayer.create(context, R.raw.test); // in 2nd param u have to pass your desire ringtone
 //            //mPlayer.prepare();
@@ -58,14 +64,14 @@ public class PlayReceiver extends BroadcastReceiver {
 //                timepass = time-tstart;
 //                Log.d("time","value "+timepass);
 //            }
-
-
-
-
-
         }
         else if(bData.get("msg").equals("close")){
-            mPlayer.stop();
+            Base.notificationManger.cancelAll();
+            if(this.mPlayer != null && this.mPlayer.isPlaying()){
+                this.mPlayer.stop();
+                this.mPlayer.release();
+            }
+
         }
 
     }

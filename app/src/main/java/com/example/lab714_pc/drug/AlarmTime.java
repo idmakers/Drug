@@ -36,13 +36,12 @@ public class AlarmTime extends Base
     private EditText day;
     private TextView displayedText;
     private EditText morning ,noon,night,midnight;
-    private Button btUP,btnMORNING,btnNOON,btnNIGHT,btnMIDNIGHT,btnotify;
+    private Button btUP,btnMORNING,btnNOON,btnNIGHT,btnMIDNIGHT;
     private int mHour, mMinute , mSecoond;
 
     static long id;
 
 
-    private Button btadd, btitem, btOCR, btalarm,btalarmL,btring;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,33 +121,6 @@ public class AlarmTime extends Base
     @Override
     public void onClick (View v) {
         switch (v.getId()) {
-            case R.id.addh:
-                Intent intent4 = new Intent();
-                intent4.setClass(this, AddByHand.class);
-                startActivity(intent4);
-                onBackPressed();
-                break;
-            case R.id.item:
-                Intent intenti = new Intent();
-                intenti.setClass(this, ItemListView.class);
-                startActivity(intenti);
-                onBackPressed();
-                break;
-            case R.id.Notification:
-                notificationManger.notify(0, notification);
-                break;
-            case R.id.auto:
-                Intent intentO = new Intent();
-                intentO.setClass(this, OCR.class);
-                startActivity(intentO);
-                onBackPressed();
-                break;
-            case R.id.alarm:
-                Intent intent1 = new Intent();
-                intent1.setClass(this, AlarmTime.class);
-                startActivity(intent1);
-                onBackPressed();
-                break;
 //                  case R.id.QRcode:
 //                 Intent intent = new Intent("com.google.zxing.client.android.SCAN");	//開啟條碼掃描器
 //                   intent.putExtra("SCAN_MODE", "QR_CODE_MODE");	//設定QR Code參數

@@ -22,10 +22,9 @@ import android.widget.Button;
 import android.widget.RemoteViews;
 
 public class Base extends AppCompatActivity
-
         implements NavigationView.OnNavigationItemSelectedListener {
     public static Toolbar toolbar;
-    private Button btadd, btitem, btOCR, btalarm,btalarmL,btnotify;
+    public Button btadd, btitem, btOCR, btalarm,btalarmL,btnotify,close;
     private Context context = this;
     static NotificationManager notificationManger;
     static Notification notification;
@@ -49,17 +48,20 @@ public class Base extends AppCompatActivity
         btalarmL.setOnClickListener(onClickListener);
         btnotify = (Button) findViewById(R.id.Notification);
         btnotify.setOnClickListener(onClickListener);
+        close = (Button) findViewById(R.id.close);
         notificationManger = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.activity_notification);
         contentView.setTextViewText(R.id.title, "Custom notification");
         contentView.setTextViewText(R.id.text, "This is a custom layout");
+        contentView.setOnClickPendingIntent(R.id.close,getPendingSelfIntent(context,"close"));
         notification = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark_focused)
                 .setCustomBigContentView(contentView)
                 .build(); // available from API level 11 and onwards
         notification.flags = Notification.FLAG_AUTO_CANCEL;
+
 
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
@@ -122,11 +124,11 @@ public class Base extends AppCompatActivity
                     onBackPressed();
                     break;
                 case R.id.QRcode:
-                 /* Intent intent = new Intent("com.google.zxing.client.android.SCAN");	//開啟條碼掃描器
-                   intent.putExtra("SCAN_MODE", "QR_CODE_MODE");	//設定QR Code參數
-                   startActivityForResult(intent, 1);	//要求回傳1
-                   break;
-                   */
+                    Intent intentQR = new Intent();
+                    intentQR.setClass(context, Qrcode.class);
+                    startActivity(intentQR);
+                    onBackPressed();
+                    break;
           /*     case R.id.AlarmRing :
                    Intent intent11 = new Intent(Main2Activity.context, PlayReceiver.class);
                    intent11.putExtra("msg", "play_voice");
@@ -151,6 +153,11 @@ public class Base extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp);
+    }
+    protected PendingIntent getPendingSelfIntent(Context context, String action) {
+        Intent intent = new Intent(context, PlayReceiver.class);
+        intent.putExtra("msg",action);
+        return PendingIntent.getBroadcast(context, 0, intent, 0);
     }
 
 

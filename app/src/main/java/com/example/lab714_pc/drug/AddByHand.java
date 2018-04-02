@@ -52,7 +52,6 @@ public class AddByHand extends Base
     private EditText tvTime ,afbf;
     private Button btTime, btAdd,btAf;
     private int mHour, mMinute;
-    private Button btadd, btitem, btOCR, btalarm,btalarmL,btnotify;
     Intent intent = new Intent();
 
 
@@ -116,37 +115,8 @@ public class AddByHand extends Base
     @Override
             public void onClick (View v) {
               switch (v.getId()) {
-                  case R.id.addh:
-                  Intent intent4 = new Intent();
-                  intent4.setClass(this, AddByHand.class);
-                  startActivity(intent4);
-                  onBackPressed();
-                  break;
-                  case R.id.item:
-                      Intent intenti = new Intent();
-                      intenti.setClass(this, ItemListView.class);
-                      startActivity(intenti);
-                      onBackPressed();
-                      break;
-                  case R.id.auto:
-                      Intent intentO = new Intent();
-                      intentO.setClass(this, OCR.class);
-                      startActivity(intentO);
-                      onBackPressed();
-                      break;
-                  case R.id.alarm:
-                      Intent intent1 = new Intent();
-                      intent1.setClass(this, AlarmTime.class);
-                      startActivity(intent1);
-                      onBackPressed();
-                      break;
                   case add:
                       add();
-                      intent.setClass(AddByHand.this, Base.class);
-                      startActivity(intent);
-                      break;
-                  case R.id.Notification:
-                      notificationManger.notify(0, notification);
                       break;
                   case time:
                       new AlertDialog.Builder(AddByHand.this)
@@ -290,9 +260,9 @@ public class AddByHand extends Base
             Date alarmtimeout = time.parse(times);
             long milliseconds = alarmtimeout.getTime();
         intent11.putExtra("msg", "play_voice");
+        final int _id = (int)System.currentTimeMillis();
         long elapsed =  milliseconds;
-        PendingIntent pi = PendingIntent.getBroadcast(getApplicationContext(), 1, intent11,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pi = PendingIntent.getBroadcast(this, _id, intent11,PendingIntent.FLAG_ONE_SHOT);
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
             am.setRepeating(AlarmManager.RTC_WAKEUP, elapsed, AlarmManager.INTERVAL_DAY, pi);
         } catch (ParseException e) {
