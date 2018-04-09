@@ -86,7 +86,7 @@ public class Qrcode extends Base{
     }
     void covert(TextView textView){
         String txt = textView.toString();
-        
+
 
     }
 }
