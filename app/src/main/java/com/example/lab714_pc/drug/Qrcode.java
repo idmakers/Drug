@@ -8,18 +8,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+public class Qrcode extends Base{
 
-
-public class  Qrcode  extends Base implements View.OnClickListener{
     private Button btn_scan;
     private TextView txt_url;
 
@@ -28,8 +25,10 @@ public class  Qrcode  extends Base implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
-        btn_scan = (Button)findViewById(R.id.btn_scan);
-        btn_scan.setOnClickListener(onClickListener);;
+
+
+        this.btn_scan = (Button)findViewById(R.id.scan);
+        this.txt_url = (TextView) findViewById(R.id.txt_url);
         btadd = (Button) findViewById(R.id.addh);
         btadd.setOnClickListener(onClickListener);
         btitem = (Button) findViewById(R.id.item);
@@ -42,6 +41,16 @@ public class  Qrcode  extends Base implements View.OnClickListener{
         btalarmL.setOnClickListener(onClickListener);
         btnotify = (Button) findViewById(R.id.Notification);
         btnotify.setOnClickListener(onClickListener);
+
+
+
+        //點擊Button用IntentIntegration的initiateScan方法開始掃描
+        this.btn_scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new IntentIntegrator(Qrcode.this).initiateScan();
+            }
+        });
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -59,20 +68,6 @@ public class  Qrcode  extends Base implements View.OnClickListener{
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-
-
-        this.txt_url = (TextView) findViewById(R.id.txt_url);
-
-
-
-    }
-    @Override
-    public void onClick (View v) {
-        switch (v.getId()) {
-            case R.id.btn_scan:
-                new IntentIntegrator(Qrcode.this).initiateScan();
-                break;
-        }
     }
 
 
@@ -83,13 +78,15 @@ public class  Qrcode  extends Base implements View.OnClickListener{
             String scanContent = result.getContents();
             String scanFormat = result.getFormatName();
             txt_url.setText(scanFormat+" \n"+scanContent); //將資料顯示到textView
+
         }else{
             Toast.makeText(getApplicationContext(), "nothing", Toast.LENGTH_LONG).show();
         }
 
     }
+    void covert(TextView textView){
+        String txt = textView.toString();
+        
 
-
-
-
+    }
 }

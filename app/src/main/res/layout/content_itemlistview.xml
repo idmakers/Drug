@@ -27,7 +27,7 @@
             android:layout_width="9dp"
             android:layout_height="wrap_content"
             android:text="New Text"
-            android:id="@+id/item_cdate"
+            android:id="@+id/item_name"
             android:layout_weight="1" />
 
         <TextView
