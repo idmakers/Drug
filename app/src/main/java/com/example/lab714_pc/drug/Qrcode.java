@@ -19,6 +19,7 @@ public class Qrcode extends Base{
 
     private Button btn_scan;
     private TextView txt_url;
+    private TextView name , time ,amount;
 
 
     @Override
@@ -26,9 +27,11 @@ public class Qrcode extends Base{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
 
-
         this.btn_scan = (Button)findViewById(R.id.scan);
         this.txt_url = (TextView) findViewById(R.id.txt_url);
+        this.name = (TextView) findViewById(R.id.name);
+        this.time = (TextView) findViewById(R.id.time);
+        this.amount = (TextView) findViewById(R.id.amount);
         btadd = (Button) findViewById(R.id.addh);
         btadd.setOnClickListener(onClickListener);
         btitem = (Button) findViewById(R.id.item);
@@ -78,6 +81,7 @@ public class Qrcode extends Base{
             String scanContent = result.getContents();
             String scanFormat = result.getFormatName();
             txt_url.setText(scanFormat+" \n"+scanContent); //將資料顯示到textView
+            covert(txt_url);
 
         }else{
             Toast.makeText(getApplicationContext(), "nothing", Toast.LENGTH_LONG).show();
@@ -86,6 +90,11 @@ public class Qrcode extends Base{
     }
     void covert(TextView textView){
         String txt = textView.toString();
+        if(txt.substring(0,1).equals("藥品")){
+                name.setText(txt.substring(3,4));
+        }
+
+
 
 
     }

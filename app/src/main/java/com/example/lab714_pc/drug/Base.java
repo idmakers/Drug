@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Build;
+
 import android.support.annotation.LayoutRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -56,11 +58,23 @@ public class Base extends AppCompatActivity
         contentView.setTextViewText(R.id.title, "Custom notification");
         contentView.setTextViewText(R.id.text, "This is a custom layout");
         contentView.setOnClickPendingIntent(R.id.close,getPendingSelfIntent(context,"close"));
-        notification = new Notification.Builder(this)
+     if(Build.VERSION.SDK_INT==Build.VERSION_CODES.N){
+             notification = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark_focused)
                 .setCustomBigContentView(contentView)
                 .build(); // available from API level 11 and onwards
         notification.flags = Notification.FLAG_AUTO_CANCEL;
+
+    }
+    else  if(Build.VERSION.SDK_INT==Build.VERSION_CODES.M){
+             notification = new Notification.Builder(this)
+                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark_focused)
+                .build(); // available from API level 11 and onwards
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+        notification.bigContentView = contentView;
+
+    }
+
 
 
 

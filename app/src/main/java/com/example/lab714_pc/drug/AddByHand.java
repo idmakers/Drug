@@ -229,6 +229,8 @@ public class AddByHand extends Base
                 alarm(mid.getString(1));
             }
         }
+        intent.setClass(AddByHand.this, Base.class);
+        startActivity(intent);
 
     }
 
