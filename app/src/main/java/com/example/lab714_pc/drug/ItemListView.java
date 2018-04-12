@@ -39,8 +39,8 @@ public class ItemListView extends Base implements View.OnClickListener {
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                 R.layout.content_itemlistview,
                 c,
-                new String[] {"_id", "amount","day","name"},
-                new int[] {R.id.item_id, R.id.item_amount, R.id.item_info, R.id.item_name}, 0);
+                new String[] {"_id", "tvTime","day","name","amount"},
+                new int[] {R.id.item_id, R.id.item_time, R.id.item_day, R.id.item_name,R.id.item_amount}, 0);
         //new String[] {"name", "amount"},
         //new int[] {android.R.id.text1, android.R.id.text2},0);
 

@@ -1,12 +1,15 @@
 package com.example.lab714_pc.drug;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,18 +18,19 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-public class Qrcode extends Base{
-
+public class Qrcode extends AddByHand{
+    private static final String TAG = Qrcode.class.getName();
     private Button btn_scan;
     private TextView txt_url;
     private TextView name , time ,amount;
+    private MyDBHelper helper;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
-
+        helper = new MyDBHelper(this,"expense.db",null,1);
         this.btn_scan = (Button)findViewById(R.id.scan);
         this.txt_url = (TextView) findViewById(R.id.txt_url);
         this.name = (TextView) findViewById(R.id.name);
@@ -80,19 +84,72 @@ public class Qrcode extends Base{
         if(result!=null){
             String scanContent = result.getContents();
             String scanFormat = result.getFormatName();
-            txt_url.setText(scanFormat+" \n"+scanContent); //將資料顯示到textView
-            covert(txt_url);
+            txt_url.setText(scanContent); //將資料顯示到textView
+
+            covert(scanContent);
 
         }else{
             Toast.makeText(getApplicationContext(), "nothing", Toast.LENGTH_LONG).show();
         }
 
     }
-    void covert(TextView textView){
-        String txt = textView.toString();
-        if(txt.substring(0,1).equals("藥品")){
-                name.setText(txt.substring(3,4));
+    void covert(String string){
+        String txt = string;
+        if(txt.substring(0,2).equals("藥品")){
+            name.setText(txt.substring(3,7 ));
         }
+
+            time.setText(txt.substring(15,16));
+            amount.setText(txt.substring(10,15));
+
+        ContentValues values = new ContentValues();
+        values.put("name",name.getText().toString());
+        values.put("method", 0);
+        values.put("amount",0);
+        values.put("day", 0);
+        values.put("tvTime", time.getText().toString());
+        long id = helper.getWritableDatabase().insert("MEDINFO", null, values);
+        if(helper.isEmpty()){
+            Cursor morn = helper.filList(1);
+            Cursor noo = helper.filList(2);
+            Cursor ni = helper.filList(3);
+            Cursor mid = helper.filList(4);
+            if(time.getText().toString().equals("早")){
+//                alarm(morn.getString(1));
+                Log.d(TAG,"covert: "+ morn.getString(1));
+            }
+//            else if(tvTime.getText().toString().equals("中午")){
+//                alarm(noo.getString(1));
+//            }
+//            else if(tvTime.getText().toString().equals("晚上")){
+//                alarm(ni.getString(1));
+//            }
+//
+//            else if(tvTime.getText().toString().equals("睡前")){
+//                alarm(mid.getString(1));
+//            }
+//
+//            else if(tvTime.getText().toString().equals("早上/晚上")){
+//                alarm(morn.getString(1));
+//                alarm(ni.getString(1));
+//
+//            }
+//
+//            else if(tvTime.getText().toString().equals("早上/中午/晚上")){
+//                alarm(morn.getString(1));
+//                alarm(noo.getString(1));
+//                alarm(ni.getString(1));
+//            }
+//
+//            else if(tvTime.getText().toString().equals("早上/中午/晚上/睡前")){
+//                alarm(morn.getString(1));
+//                alarm(noo.getString(1));
+//                alarm(ni.getString(1));
+//                alarm(mid.getString(1));
+//            }
+        }
+//        intent.setClass(Qrcode.this, Base.class);
+//        startActivity(intent);
 
 
 
