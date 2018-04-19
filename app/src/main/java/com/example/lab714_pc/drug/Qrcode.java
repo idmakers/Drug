@@ -25,7 +25,7 @@ public class Qrcode extends AddByHand{
     private TextView name , time ,amount;
     private MyDBHelper helper;
 
-
+//如QR SCAN 未掃瞄到結果跳出頁面 會強制中止程式
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
