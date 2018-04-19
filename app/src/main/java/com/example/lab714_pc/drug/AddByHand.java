@@ -261,6 +261,10 @@ public class AddByHand extends Base
             String times = s + " " + alarmtimein;
             Date alarmtimeout = time.parse(times);
             long milliseconds = alarmtimeout.getTime();
+
+
+
+
         intent11.putExtra("msg", "play_voice");
         final int _id = (int)System.currentTimeMillis();
         long elapsed =  milliseconds;

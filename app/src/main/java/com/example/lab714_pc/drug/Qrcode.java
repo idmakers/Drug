@@ -96,17 +96,49 @@ public class Qrcode extends AddByHand{
     void covert(String string){
         String txt = string;
         if(txt.substring(0,2).equals("藥品")){
-            name.setText(txt.substring(3,7 ));
+            Log.w("msg",txt.substring(0,2));
+            for(int first=2 ; first< txt.length(); first++){
+                int second = first+1;
+                Log.w("msg",txt.substring(first,second));
+                if(txt.substring(first ,second).equals("用")){
+                    name.setText(txt.substring(3,first));
+                    break;
+                }
+            }
         }
 
-            time.setText(txt.substring(15,16));
-            amount.setText(txt.substring(10,15));
+        for(int first=0 ; first< txt.length(); first++){
+            int second =  first +1;
+            if(txt.substring(first ,second).equals("早")){
+                time.setText(txt.substring(first,second));
+                break;
+            }
+            else  if(txt.substring(first ,second).equals("中")){
+                time.setText(txt.substring(first,second));
+                break;
+            }
+            else  if(txt.substring(first ,second).equals("晚")){
+                time.setText(txt.substring(first,second));
+                break;
+            }
+
+        }
+        for(int first=0 ; first< txt.length(); first++){
+            int second =  first +1;
+            Log.w("day","day" +txt.substring(first,second) + first + second );
+            if(txt.substring(first ,second).equals("份")){
+                amount.setText(txt.substring(first-3,second-2));
+                break;
+            }
+
+
+        }
 
         ContentValues values = new ContentValues();
         values.put("name",name.getText().toString());
         values.put("method", 0);
-        values.put("amount",0);
-        values.put("day", 0);
+        values.put("amount","每天1次");
+        values.put("day", amount.getText().toString());
         values.put("tvTime", time.getText().toString());
         long id = helper.getWritableDatabase().insert("MEDINFO", null, values);
         if(helper.isEmpty()){
@@ -114,10 +146,14 @@ public class Qrcode extends AddByHand{
             Cursor noo = helper.filList(2);
             Cursor ni = helper.filList(3);
             Cursor mid = helper.filList(4);
-            if(time.getText().toString().equals("早")){
+//            if(time.getText().toString().equals("早")){
+////                alarm(morn.getString(1));
+//                for(int i = 0; i<100 ; i++){
+//                    Log.w(TAG,"covert: "+ morn.getString(1));
+//                }
+//
 //                alarm(morn.getString(1));
-                Log.d(TAG,"covert: "+ morn.getString(1));
-            }
+//            }
 //            else if(tvTime.getText().toString().equals("中午")){
 //                alarm(noo.getString(1));
 //            }

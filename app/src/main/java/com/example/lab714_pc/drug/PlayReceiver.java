@@ -37,6 +37,8 @@ public class PlayReceiver extends BroadcastReceiver {
         Bundle bData = intent.getExtras();
 
 
+
+
         if (bData.get("msg").equals("play_voice")) {
 
 
@@ -47,30 +49,31 @@ public class PlayReceiver extends BroadcastReceiver {
 //            int soundId = sp.load(context, R.raw.test, 1); // in 2nd param u have to pass your desire ringtone
 //
 //            sp.play(soundId, 1, 1, 0, 0, 1);
-             this.mPlayer = MediaPlayer.create(context, R.raw.test); // in 2nd param u have to pass your desire ringtone
+            mPlayer = MediaPlayer.create(context, R.raw.test); // in 2nd param u have to pass your desire ringtone
             //mPlayer.prepare();
-            this.mPlayer.start();
+            mPlayer.start();
 
             Base.notificationManger.notify(0, notification);
 
-//            mPlayer.create(context, R.raw.test); // in 2nd param u have to pass your desire ringtone
-//            //mPlayer.prepare();
-//            long tstart = System.currentTimeMillis();
-//            long time  = tstart;
-//            long timepass = 0;
-//            mPlayer.start();
-//            while (time < tstart+30000){
-//                time = System.currentTimeMillis();
-//                timepass = time-tstart;
-//                Log.d("time","value "+timepass);
-//            }
+            //mPlayer.prepare();
+            long tstart = System.currentTimeMillis();
+            long time  = tstart;
+            long timepass = 0;
+            while (time < tstart+10000){
+                time = System.currentTimeMillis();
+                timepass = time-tstart;
+                Log.d("time","value "+timepass);
+            }
+            mPlayer.stop();
+            mPlayer.release();
+
+
+
+
         }
         else if(bData.get("msg").equals("close")){
             Base.notificationManger.cancelAll();
-            if(this.mPlayer != null && this.mPlayer.isPlaying()){
-                this.mPlayer.stop();
-                this.mPlayer.release();
-            }
+
 
         }
 
