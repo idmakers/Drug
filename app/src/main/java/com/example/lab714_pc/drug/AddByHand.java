@@ -268,7 +268,7 @@ public class AddByHand extends Base
         intent11.putExtra("msg", "play_voice");
         final int _id = (int)System.currentTimeMillis();
         long elapsed =  milliseconds;
-        PendingIntent pi = PendingIntent.getBroadcast(this, _id, intent11,PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pi = PendingIntent.getBroadcast(this, _id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
             am.setRepeating(AlarmManager.RTC_WAKEUP, elapsed, AlarmManager.INTERVAL_DAY, pi);
         } catch (ParseException e) {

@@ -31,7 +31,7 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".OCR" />
         <activity android:name=".AlarmTime" />
-        <activity android:name=".Qrcode"/>
+        <activity android:name=".Qrcode" />
 
         <!-- register receiver for alarm -->
         <!-- 定義鬧鐘接收器 -->
@@ -42,7 +42,7 @@
         </receiver>
 
         <activity android:name=".AlarmList" />
-
+        <activity android:name=".Update"></activity>
     </application>
 
 </manifest>

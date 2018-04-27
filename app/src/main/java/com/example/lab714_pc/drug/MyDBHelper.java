@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class MyDBHelper extends SQLiteOpenHelper  {
 
+
+
     private SQLiteDatabase db;
     public MyDBHelper(Context context, String name,
       SQLiteDatabase.CursorFactory factory, int version) {
@@ -19,7 +21,12 @@ public class MyDBHelper extends SQLiteOpenHelper  {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE  TABLE MEDINFO " +"(_id INTEGER PRIMARY KEY  NOT NULL, " + "name VARCHAR   , " +"method VAR,"+ "amount  INTEGER," +"day  INTEGER ," + "tvTime TIME)");
+        db.execSQL("CREATE  TABLE MEDINFO " +"(_id INTEGER PRIMARY KEY  NOT NULL, "
+                + "name VARCHAR   , "
+                +"method VAR,"
+                + "amount  INTEGER,"
+                +"day  INTEGER ,"
+                + "tvTime TIME)");
         db.execSQL("CREATE TABLE IF NOT EXISTS"+  " ALARM " +"(_id INTEGER PRIMARY KEY , " + "Aname VAR UNIQUE   , " +"Atime TIME)");
 
 
@@ -70,8 +77,24 @@ public class MyDBHelper extends SQLiteOpenHelper  {
         else
             return  true;
     }
+
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        if(newVersion >oldVersion){
+            db.beginTransaction();
+        }
+
+        boolean success = false;
+
+        switch(oldVersion){
+             case 2:
+      //           Cursor cursor = db.rawQuery("select")
+//               db.execSQL("ALTER TABLE newMemorandum ADD COLUMN name DEFAULT 0");
+//               db.execSQL("ALTER TABLE newMemorandum ADD COLUMN ");
+       }
+
 
     }
 

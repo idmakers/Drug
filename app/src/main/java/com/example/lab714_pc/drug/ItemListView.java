@@ -9,12 +9,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-public class ItemListView extends Base implements View.OnClickListener {
+public class ItemListView extends Base{
 
 
     @Override
@@ -62,14 +64,18 @@ public class ItemListView extends Base implements View.OnClickListener {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Intent intent = new Intent(ItemListView.this, Update.class);
+                intent.putExtra("msg", id);
+                startActivity(intent);
+            }
+        });
+
+
+
     }
-
-    @Override
-    public void onClick (View v) {
-        switch (v.getId()) {
-
-        }
-    }
-
 
 }

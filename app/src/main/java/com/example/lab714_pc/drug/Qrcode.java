@@ -85,12 +85,15 @@ public class Qrcode extends AddByHand{
             String scanContent = result.getContents();
             String scanFormat = result.getFormatName();
             txt_url.setText(scanContent); //將資料顯示到textView
+            if(scanContent !=null){
+                covert(scanContent);
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "nothing", Toast.LENGTH_LONG).show();
+            }
 
-            covert(scanContent);
-
-        }else{
-            Toast.makeText(getApplicationContext(), "nothing", Toast.LENGTH_LONG).show();
         }
+
 
     }
     void covert(String string){
@@ -146,20 +149,20 @@ public class Qrcode extends AddByHand{
             Cursor noo = helper.filList(2);
             Cursor ni = helper.filList(3);
             Cursor mid = helper.filList(4);
-//            if(time.getText().toString().equals("早")){
-////                alarm(morn.getString(1));
-//                for(int i = 0; i<100 ; i++){
-//                    Log.w(TAG,"covert: "+ morn.getString(1));
-//                }
-//
-//                alarm(morn.getString(1));
-//            }
-//            else if(tvTime.getText().toString().equals("中午")){
-//                alarm(noo.getString(1));
-//            }
-//            else if(tvTime.getText().toString().equals("晚上")){
-//                alarm(ni.getString(1));
-//            }
+            if(time.getText().toString().equals("早")){
+                alarm(morn.getString(1));
+                for(int i = 0; i<100 ; i++){
+                    Log.w(TAG,"covert: "+ morn.getString(1));
+                }
+
+                alarm(morn.getString(1));
+            }
+            else if(time.getText().toString().equals("中")){
+                alarm(noo.getString(1));
+            }
+            else if(time.getText().toString().equals("晚")){
+                alarm(ni.getString(1));
+            }
 //
 //            else if(tvTime.getText().toString().equals("睡前")){
 //                alarm(mid.getString(1));
