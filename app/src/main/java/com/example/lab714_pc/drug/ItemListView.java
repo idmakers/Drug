@@ -27,8 +27,6 @@ public class ItemListView extends Base{
         btadd.setOnClickListener(onClickListener);
         btitem = (Button) findViewById(R.id.item);
         btitem.setOnClickListener(onClickListener);
-        btOCR = (Button) findViewById(R.id.auto);
-        btOCR.setOnClickListener(onClickListener);
         btalarm = (Button) findViewById(R.id.alarm);
         btalarm.setOnClickListener(onClickListener);
         btalarmL = (Button) findViewById(R.id.QRcode);

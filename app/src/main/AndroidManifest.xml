@@ -29,7 +29,6 @@
             android:name=".ItemListView"
             android:label="@string/title_activity_item_list_view"
             android:theme="@style/AppTheme" />
-        <activity android:name=".OCR" />
         <activity android:name=".AlarmTime" />
         <activity android:name=".Qrcode" />
 

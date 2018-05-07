@@ -42,8 +42,6 @@ public class Base extends AppCompatActivity
         btadd.setOnClickListener(onClickListener);
         btitem = (Button) findViewById(R.id.item);
         btitem.setOnClickListener(onClickListener);
-        btOCR = (Button) findViewById(R.id.auto);
-        btOCR.setOnClickListener(onClickListener);
         btalarm = (Button) findViewById(R.id.alarm);
         btalarm.setOnClickListener(onClickListener);
         btalarmL = (Button) findViewById(R.id.QRcode);
@@ -120,12 +118,6 @@ public class Base extends AppCompatActivity
                     Intent intenti = new Intent();
                     intenti.setClass(context, ItemListView.class);
                     startActivity(intenti);
-                    onBackPressed();
-                    break;
-                case R.id.auto:
-                    Intent intentO = new Intent();
-                    intentO.setClass(context, OCR.class);
-                    startActivity(intentO);
                     onBackPressed();
                     break;
                 case R.id.Notification:
