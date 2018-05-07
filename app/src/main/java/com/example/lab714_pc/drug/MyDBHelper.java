@@ -87,7 +87,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
     public Cursor ItemfilList(long id) throws SQLException {
         Cursor cursor = db.query(
                 "MEDINFO",
-                new String[]{"_id", "tvTime","day","name","amount"},
+                new String[]{"_id", "tvTime","method" ,"day","name","amount"},
                 "_id =" + id,
                 null,
                 null,
