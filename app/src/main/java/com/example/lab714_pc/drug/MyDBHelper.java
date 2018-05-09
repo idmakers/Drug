@@ -24,7 +24,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE  TABLE MEDINFO " + "(_id INTEGER PRIMARY KEY  NOT NULL, "
                 + "name VARCHAR UNIQUE  , "
                 + "method VAR,"
-                + "amount  INTEGER,"
+                + "amount  VAR,"
                 + "day  INTEGER ,"
                 + "tvTime TIME)");
         db.execSQL("CREATE TABLE IF NOT EXISTS" + " ALARM " + "(_id INTEGER PRIMARY KEY , " + "Aname VAR UNIQUE   , " + "Atime TIME)");
@@ -101,15 +101,21 @@ public class MyDBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public int Itemupdate(long rowId, String value) {
-        ContentValues args = new ContentValues();
-        args.put("", value);
+    public int Itemupdate(long rowId, ContentValues value) {
+
+
 
         return db.update("MEDINFO",    //資料表名稱
-                args,                //VALUE
+                value,                //VALUE
                 "_id=" + rowId,            //WHERE
                 null                //WHERE的參數
         );
+    }
+    public int ItemDel(long rowId){
+        return db.delete("MEDINFO",    //資料表名稱
+                             //VALUE
+                "_id=" + rowId,            //WHERE
+                null             );
     }
 
     public boolean ItemisEmpty() {

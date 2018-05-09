@@ -76,7 +76,6 @@ public class AddByHand extends Base
         btadd.setOnClickListener(onClickListener);
         btitem = (Button) findViewById(R.id.item);
         btitem.setOnClickListener(onClickListener);
-
         btalarm = (Button) findViewById(R.id.alarm);
         btalarm.setOnClickListener(onClickListener);
         btalarmL = (Button) findViewById(R.id.QRcode);
