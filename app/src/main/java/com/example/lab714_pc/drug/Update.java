@@ -54,7 +54,7 @@ public class Update extends AddByHand
         btadd = (Button) findViewById(R.id.addh);
         btadd.setOnClickListener(onClickListener);
         deleteItem = (Button) findViewById(R.id.del);
-        deleteItem.setOnClickListener(onClickListener);
+        deleteItem.setOnClickListener(this);
         btitem = (Button) findViewById(R.id.item);
         btitem.setOnClickListener(onClickListener);
         btalarm = (Button) findViewById(R.id.alarm);
@@ -209,6 +209,8 @@ public class Update extends AddByHand
     public void Delete(){
         helper.getWritableDatabase();
         helper.ItemDel(name);
+        intent.setClass(this, Base.class);
+        startActivity(intent);
     }
     private void findViews() {
         Mname = (EditText) findViewById(R.id.name);
