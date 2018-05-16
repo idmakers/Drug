@@ -1,5 +1,6 @@
 package com.example.lab714_pc.drug;
 
+import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.support.annotation.LayoutRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -49,6 +51,17 @@ public class Base extends AppCompatActivity
         btnotify = (Button) findViewById(R.id.Notification);
         btnotify.setOnClickListener(onClickListener);
         close = (Button) findViewById(R.id.close);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+
+        Intent updateServiceIntent = new Intent(this, PlayReceiver.class);
+        PendingIntent pendingUpdateIntent = PendingIntent.getService(context, 0, updateServiceIntent, 0);
+
+        // Cancel alarms
+        try {
+            alarmManager.cancel(pendingUpdateIntent);
+        } catch (Exception e) {
+            Log.e("", "AlarmManager update was not canceled. " + e.toString());
+        }
         notificationManger = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

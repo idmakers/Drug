@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.util.LogWriter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -48,7 +49,7 @@ public class AddByHand extends Base
     private EditText day;
     private TextView displayedText;
     Button btn, btn1;
-
+    public int _id ;
     private EditText tvTime ,afbf;
     private Button btTime, btAdd,btAf;
     private int mHour, mMinute;
@@ -176,57 +177,120 @@ public class AddByHand extends Base
     }
 */
     public void add() {
+        SimpleDateFormat date = new SimpleDateFormat("yyyy MM dd");
+        Date today  = new Date();
+        String date_string= date.format(today);
         String mname = name.getText().toString();
         String mmethod = method.getText().toString();
         String mtime = tvTime.getText().toString();
         int mday = Integer.parseInt(day.getText().toString());
         int mamount = Integer.parseInt(amount.getText().toString());
         ContentValues values = new ContentValues();
-        values.put("name", mname);
-        values.put("method", mmethod);
-        values.put("amount", mamount);
-        values.put("day", mday);
-        values.put("tvTime", mtime);
-        long id = helper.getWritableDatabase().insert("MEDINFO", null, values);
-        Log.d("ADD", id + "" + mtime  +"");
+
         if(helper.isEmpty()){
             Cursor morn = helper.filList(1);
             Cursor noo = helper.filList(2);
             Cursor ni = helper.filList(3);
             Cursor mid = helper.filList(4);
             if(tvTime.getText().toString().equals("早上")){
-                alarm(morn.getString(1));
+                _id = (int)System.currentTimeMillis();
+                alarm(morn.getString(1),_id);
+                values.put("morning",_id);
+               // values.put("morning",0);
+                values.put("noon",0);
+                values.put("night",0);
+                values.put("midnight",0);
+
             }
             else if(tvTime.getText().toString().equals("中午")){
-                alarm(noo.getString(1));
+                _id = (int)System.currentTimeMillis();
+                alarm(noo.getString(1),_id);
+                values.put("noon",_id);
+                values.put("morning",0);
+               // values.put("noon",0);
+                values.put("night",0);
+                values.put("midnight",0);
+
             }
             else if(tvTime.getText().toString().equals("晚上")){
-                alarm(ni.getString(1));
+                _id = (int)System.currentTimeMillis();
+                alarm(ni.getString(1),_id);
+                values.put("night",_id);
+                values.put("morning",0);
+                values.put("noon",0);
+              //  values.put("night",0);
+                values.put("midnight",0);
+
             }
 
             else if(tvTime.getText().toString().equals("睡前")){
-                alarm(mid.getString(1));
+                _id = (int)System.currentTimeMillis();
+                alarm(mid.getString(1),_id);
+                values.put("midnight",_id);
+                values.put("morning",0);
+                values.put("noon",0);
+                values.put("night",0);
+              //  values.put("midnight",0);
+
             }
 
             else if(tvTime.getText().toString().equals("早上/晚上")){
-                alarm(morn.getString(1));
-                alarm(ni.getString(1));
+                _id = (int)System.currentTimeMillis();
+                alarm(morn.getString(1),_id);
+                values.put("morning",_id);
+                _id = (int)System.currentTimeMillis();
+                alarm(ni.getString(1),_id);
+                values.put("night",_id);
+                values.put("morning",0);
+               // values.put("noon",0);
+                values.put("night",0);
+                //values.put("midnight",0);
+
 
             }
 
             else if(tvTime.getText().toString().equals("早上/中午/晚上")){
-                alarm(morn.getString(1));
-                alarm(noo.getString(1));
-                alarm(ni.getString(1));
+                _id = (int)System.currentTimeMillis();
+                alarm(morn.getString(1),_id);
+                values.put("morning",_id);
+                _id = (int)System.currentTimeMillis();
+                alarm(noo.getString(1),_id);
+                values.put("noon",_id);
+                _id = (int)System.currentTimeMillis();
+                alarm(ni.getString(1),_id);
+                values.put("night",_id);
+//                values.put("morning",0);
+//                values.put("noon",0);
+//                values.put("night",0);
+                values.put("midnight",0);
+
+
             }
 
             else if(tvTime.getText().toString().equals("早上/中午/晚上/睡前")){
-                alarm(morn.getString(1));
-                alarm(noo.getString(1));
-                alarm(ni.getString(1));
-                alarm(mid.getString(1));
+                _id = (int)System.currentTimeMillis();
+                alarm(morn.getString(1),_id);
+                values.put("morning",_id);
+                _id = (int)System.currentTimeMillis();
+                alarm(noo.getString(1),_id);
+                values.put("noon",_id);
+                _id = (int)System.currentTimeMillis();
+                alarm(ni.getString(1),_id);
+                values.put("night",_id);
+                _id = (int)System.currentTimeMillis();
+                alarm(mid.getString(1),_id);
+
+
             }
         }
+
+        values.put("name", mname);
+        values.put("method", mmethod);
+        values.put("amount", mamount);
+        values.put("day", mday);
+        values.put("tvTime", mtime);
+        values.put("date",date_string);
+        long medinfo = helper.getWritableDatabase().insert("MEDINFO", null, values);
         intent.setClass(AddByHand.this, Base.class);
         startActivity(intent);
 
@@ -247,7 +311,7 @@ public class AddByHand extends Base
         tvTime.setText("123");
         afbf.setText("123");
     }
-    public void alarm (String alarmtimein) {
+    public void alarm (String alarmtimein , int id) {
 
 
         SimpleDateFormat time = new SimpleDateFormat("yyyy MM dd HH:mm");
@@ -259,14 +323,20 @@ public class AddByHand extends Base
             String times = s + " " + alarmtimein;
             Date alarmtimeout = time.parse(times);
             long milliseconds = alarmtimeout.getTime();
+            Log.w("msg", "Date s  " + s);
+            Log.w("msg", "Date d  " + today);
+            Log.w("msg", "time s  " + times);
+            Log.w("msg", "alarm time in  " + milliseconds);
+            Log.w("msg", "alarm time out  " + alarmtimeout);
+            Log.w("msg", "milliseconds  "   + milliseconds);
+            Log.w("msg", "id  "   + id);
 
 
 
+            intent11.putExtra("msg", "play_voice");
 
-        intent11.putExtra("msg", "play_voice");
-        final int _id = (int)System.currentTimeMillis();
         long elapsed =  milliseconds;
-        PendingIntent pi = PendingIntent.getBroadcast(this, _id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pi = PendingIntent.getBroadcast(this, id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
             am.setRepeating(AlarmManager.RTC_WAKEUP, elapsed, AlarmManager.INTERVAL_DAY, pi);
         } catch (ParseException e) {

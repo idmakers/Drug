@@ -1,6 +1,9 @@
 package com.example.lab714_pc.drug;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +21,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 
 import static com.example.lab714_pc.drug.R.id.add;
 import static com.example.lab714_pc.drug.R.id.befaf;
@@ -28,7 +32,7 @@ import static com.example.lab714_pc.drug.R.id.updateL;
 public class Update extends AddByHand
         implements View.OnClickListener{
 
-
+    private static Context context;
     private EditText amount;
     private MyDBHelper helper;
     private EditText Mname;
@@ -173,32 +177,7 @@ public class Update extends AddByHand
         long id = helper.getWritableDatabase().insert("MEDINFO", null, values);
         Log.d("ADD", id + "" + mtime + "");
         if (helper.isEmpty()) {
-            Cursor morn = helper.filList(1);
-            Cursor noo = helper.filList(2);
-            Cursor ni = helper.filList(3);
-            Cursor mid = helper.filList(4);
-            if (tvTime.getText().toString().equals("早上")) {
-                alarm(morn.getString(1));
-            } else if (tvTime.getText().toString().equals("中午")) {
-                alarm(noo.getString(1));
-            } else if (tvTime.getText().toString().equals("晚上")) {
-                alarm(ni.getString(1));
-            } else if (tvTime.getText().toString().equals("睡前")) {
-                alarm(mid.getString(1));
-            } else if (tvTime.getText().toString().equals("早上/晚上")) {
-                alarm(morn.getString(1));
-                alarm(ni.getString(1));
 
-            } else if (tvTime.getText().toString().equals("早上/中午/晚上")) {
-                alarm(morn.getString(1));
-                alarm(noo.getString(1));
-                alarm(ni.getString(1));
-            } else if (tvTime.getText().toString().equals("早上/中午/晚上/睡前")) {
-                alarm(morn.getString(1));
-                alarm(noo.getString(1));
-                alarm(ni.getString(1));
-                alarm(mid.getString(1));
-            }
         } else {
             id = helper.Itemupdate(name, values);
             intent.setClass(this, Base.class);
@@ -207,6 +186,42 @@ public class Update extends AddByHand
         }
     }
     public void Delete(){
+
+        Cursor cursor = helper.ItemfilList(name);
+        int alarmmorning = cursor.getInt(6);
+        int alarmnoon = cursor.getInt(7);
+        int alarmnight = cursor.getInt(8);
+        int alarmmid = cursor.getInt(9);
+        Log.w("msg"," morning " +alarmmorning);
+        if (alarmmorning != 0){
+            alarmCancel(1111);
+            alarmCancel(alarmmorning);
+        }
+        else{
+            Log.w("msg","alearm morning is empty");
+        }
+        if (alarmnoon != 0){
+            alarmCancel(alarmnoon);
+        }
+        else{
+            Log.w("msg","alearm noon is empty");
+        }
+
+        if (alarmnight != 0){
+            alarmCancel(alarmnight);
+        }
+        else{
+            Log.w("msg","alearm night is empty");
+        }
+
+        if (alarmmid != 0){
+            alarmCancel(alarmmid);
+        }
+        else{
+            Log.w("msg","alearm midnight is empty");
+        }
+
+
         helper.getWritableDatabase();
         helper.ItemDel(name);
         intent.setClass(this, Base.class);
@@ -222,7 +237,20 @@ public class Update extends AddByHand
         update = (Button)findViewById(R.id.updateL);
         deleteItem =(Button)findViewById(R.id.del);
     }
+    private  void alarmCancel(int id){
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 
+        Intent updateServiceIntent = new Intent(getApplicationContext(), PlayReceiver.class);
+        PendingIntent pendingUpdateIntent = PendingIntent.getService(this, id, updateServiceIntent, 0);
 
+        // Cancel alarms
+        try {
+            am.cancel(pendingUpdateIntent);
+        } catch (Exception e) {
+            Log.w("MSG", "AlarmManager update was not canceled. " + e.toString());
+        }
+    }
+
+//1526663220000
 
 }

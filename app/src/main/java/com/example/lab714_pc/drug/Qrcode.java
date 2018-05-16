@@ -18,6 +18,9 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Qrcode extends AddByHand{
     private static final String TAG = Qrcode.class.getName();
     private Button btn_scan;
@@ -97,10 +100,10 @@ public class Qrcode extends AddByHand{
     void covert(String string){
         String txt = string;
         if(txt.substring(0,2).equals("藥品")){
-            Log.w("msg",txt.substring(0,2));
+           Log.w("msg",txt.substring(0,2));
             for(int first=2 ; first< txt.length(); first++){
                 int second = first+1;
-                Log.w("msg",txt.substring(first,second));
+               Log.w("msg",txt.substring(first,second));
                 if(txt.substring(first ,second).equals("用")){
                     name.setText(txt.substring(3,first));
                     break;
@@ -134,57 +137,101 @@ public class Qrcode extends AddByHand{
 
 
         }
-
+        SimpleDateFormat date = new SimpleDateFormat("yyyy MM dd");
+        Date today  = new Date();
+        String date_string= date.format(today);
         ContentValues values = new ContentValues();
-        values.put("name",name.getText().toString());
-        values.put("method", 0);
-        values.put("amount","每天1次");
-        values.put("day", amount.getText().toString());
-        values.put("tvTime", time.getText().toString());
-        long id = helper.getWritableDatabase().insert("MEDINFO", null, values);
+        helper.getWritableDatabase();
+       
         if(helper.isEmpty()){
             Cursor morn = helper.filList(1);
             Cursor noo = helper.filList(2);
             Cursor ni = helper.filList(3);
             Cursor mid = helper.filList(4);
             if(time.getText().toString().equals("早")){
-                alarm(morn.getString(1));
-                for(int i = 0; i<100 ; i++){
-                    Log.w(TAG,"covert: "+ morn.getString(1));
-                }
+                _id = (int)System.currentTimeMillis();
+                alarm(morn.getString(1),_id);
+                values.put("morning",_id);
+               // values.put("morning",0);
+                values.put("noon",0);
+                //values.put("night",0);
+                values.put("midnight",0);
 
-                alarm(morn.getString(1));
             }
             else if(time.getText().toString().equals("中")){
-                alarm(noo.getString(1));
+                _id = (int)System.currentTimeMillis();
+                alarm(noo.getString(1),_id);
+                values.put("noon",_id);
+                values.put("morning",0);
+                values.put("noon",0);
+                values.put("night",0);
+                values.put("midnight",0);
+
             }
             else if(time.getText().toString().equals("晚")){
-                alarm(ni.getString(1));
+                _id = (int)System.currentTimeMillis();
+                alarm(ni.getString(1),_id);
+                values.put("night",_id);
+                values.put("morning",0);
+                values.put("noon",0);
+                //values.put("night",0);
+                values.put("midnight",0);
+
             }
+
+//            else if(time.getText().toString().equals("睡前")){
+//                _id = (int)System.currentTimeMillis();
+//                alarm(mid.getString(1),_id);
+//                values.put("midnight",_id);
+//            }
+
+//            else if(time.getText().toString().equals("早上/晚上")){
+//                _id = (int)System.currentTimeMillis();
+//                alarm(morn.getString(1),_id);
+//                values.put("morning",_id);
+//                _id = (int)System.currentTimeMillis();
+//                alarm(ni.getString(1),_id);
+//                values.put("night",_id);
 //
-//            else if(tvTime.getText().toString().equals("睡前")){
-//                alarm(mid.getString(1));
 //            }
 //
-//            else if(tvTime.getText().toString().equals("早上/晚上")){
-//                alarm(morn.getString(1));
-//                alarm(ni.getString(1));
+//            else if(time.getText().toString().equals("早上/中午/晚上")){
+//                _id = (int)System.currentTimeMillis();
+//                alarm(morn.getString(1),_id);
+//                values.put("morning",_id);
+//                _id = (int)System.currentTimeMillis();
+//                alarm(noo.getString(1),_id);
+//                values.put("noon",_id);
+//                _id = (int)System.currentTimeMillis();
+//                alarm(ni.getString(1),_id);
+//                values.put("night",_id);
 //
 //            }
 //
-//            else if(tvTime.getText().toString().equals("早上/中午/晚上")){
-//                alarm(morn.getString(1));
-//                alarm(noo.getString(1));
-//                alarm(ni.getString(1));
-//            }
-//
-//            else if(tvTime.getText().toString().equals("早上/中午/晚上/睡前")){
-//                alarm(morn.getString(1));
-//                alarm(noo.getString(1));
-//                alarm(ni.getString(1));
-//                alarm(mid.getString(1));
+//            else if(time.getText().toString().equals("早上/中午/晚上/睡前")){
+//                _id = (int)System.currentTimeMillis();
+//                alarm(morn.getString(1),_id);
+//                values.put("morning",_id);
+//                _id = (int)System.currentTimeMillis();
+//                alarm(noo.getString(1),_id);
+//                values.put("noon",_id);
+//                _id = (int)System.currentTimeMillis();
+//                alarm(ni.getString(1),_id);
+//                values.put("night",_id);
+//                _id = (int)System.currentTimeMillis();
+//                alarm(mid.getString(1),_id);
+//                values.put("midnight",_id);
 //            }
         }
+
+        values.put("name",name.getText().toString());
+        values.put("method", 0);
+        values.put("amount","每天1次");
+        values.put("day", amount.getText().toString());
+        values.put("tvTime", time.getText().toString());
+        values.put("date",date_string);
+       Log.w("msg" , "test  " + values);
+        long medinfo = helper.getWritableDatabase().insert("MEDINFO", null, values);
 //        intent.setClass(Qrcode.this, Base.class);
 //        startActivity(intent);
 

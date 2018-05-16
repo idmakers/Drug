@@ -21,11 +21,16 @@ public class MyDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE  TABLE MEDINFO " + "(_id INTEGER PRIMARY KEY  NOT NULL, "
-                + "name VARCHAR UNIQUE  , "
+        db.execSQL("CREATE TABLE  MEDINFO " + "(_id INTEGER PRIMARY KEY  NOT NULL, "
+                + "name VARCHAR, "
                 + "method VAR,"
                 + "amount  VAR,"
                 + "day  INTEGER ,"
+                + "morning LONG ,"
+                + "noon LONG ,"
+                + "night LONG ,"
+                + "midnight LONG ,"
+                + "DATE STRING ,"
                 + "tvTime TIME)");
         db.execSQL("CREATE TABLE IF NOT EXISTS" + " ALARM " + "(_id INTEGER PRIMARY KEY , " + "Aname VAR UNIQUE   , " + "Atime TIME)");
 
@@ -56,10 +61,10 @@ public class MyDBHelper extends SQLiteOpenHelper {
 
     public int update(long rowId, String value) {
         ContentValues args = new ContentValues();
-        args.put("tvTime", value);
-        args.put("day", value);
+        args.put("Aname", value);
+        args.put("Atime", value);
 
-        return db.update("Med",    //資料表名稱
+        return db.update("ALARM",    //資料表名稱
                 args,                //VALUE
                 "_id=" + rowId,            //WHERE
                 null                //WHERE的參數
@@ -87,7 +92,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
     public Cursor ItemfilList(long id) throws SQLException {
         Cursor cursor = db.query(
                 "MEDINFO",
-                new String[]{"_id", "tvTime","method" ,"day","name","amount"},
+                new String[]{"_id", "tvTime","method" ,"day","name","amount","morning","noon","night","midnight"},
                 "_id =" + id,
                 null,
                 null,
@@ -121,10 +126,15 @@ public class MyDBHelper extends SQLiteOpenHelper {
     public boolean ItemisEmpty() {
         db.execSQL("CREATE TABLE IF NOT EXISTS" + " MEDINFO "
                 + "(_id INTEGER PRIMARY KEY , "
-                + "name VAR UNIQUE   , "
+                + "name VARCHAR, "
                 + "method VAR,"
-                + "amount  INTEGER,"
+                + "amount  VAR,"
                 + "day  INTEGER ,"
+                + "morning LONG ,"
+                + "noon LONG ,"
+                + "night LONG ,"
+                + "midnight LONG ,"
+                + "DATE STRING ,"
                 + "tvTime TIME)");
         Cursor cursor = db.query(
                 "MEDINFO",
