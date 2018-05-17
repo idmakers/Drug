@@ -1,0 +1,10 @@
+ new String[]{"_id", "tvTime","method" ,"day","name","amount"},
+MEDINFO
+
+  db.execSQL("CREATE TABLE IF NOT EXISTS" + " MEDINFO "
+                + "(_id INTEGER PRIMARY KEY , "
+                + "name VAR UNIQUE   , "
+                + "method VAR,"
+                + "amount  INTEGER,"
+                + "day  INTEGER ,"
+                + "tvTime TIME)");

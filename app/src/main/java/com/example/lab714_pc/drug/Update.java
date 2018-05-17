@@ -67,6 +67,8 @@ public class Update extends AddByHand
         btalarmL.setOnClickListener(onClickListener);
         btnotify = (Button) findViewById(R.id.Notification);
         btnotify.setOnClickListener(onClickListener);
+        history = (Button) findViewById(R.id.history);
+        history.setOnClickListener(onClickListener);
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -118,6 +120,7 @@ public class Update extends AddByHand
         switch (v.getId()) {
             case updateL:
                 add();
+                Log.w("msg","update");
                 break;
             case del:
                 Delete();
@@ -163,6 +166,7 @@ public class Update extends AddByHand
         }
     }
     public void add() {
+        Log.w("msg","update1");
         String mname = Mname.getText().toString();
         String mmethod = method.getText().toString();
         String mtime = tvTime.getText().toString();
@@ -174,16 +178,15 @@ public class Update extends AddByHand
         values.put("amount", mamount);
         values.put("day", mday);
         values.put("tvTime", mtime);
-        long id = helper.getWritableDatabase().insert("MEDINFO", null, values);
-        Log.d("ADD", id + "" + mtime + "");
-        if (helper.isEmpty()) {
+        helper.getWritableDatabase();
 
-        } else {
-            id = helper.Itemupdate(name, values);
+
+            helper.Itemupdate(name, values);
+            Log.w("msg","update3");
             intent.setClass(this, Base.class);
             startActivity(intent);
 
-        }
+
     }
     public void Delete(){
 
@@ -194,7 +197,6 @@ public class Update extends AddByHand
         int alarmmid = cursor.getInt(9);
         Log.w("msg"," morning " +alarmmorning);
         if (alarmmorning != 0){
-            alarmCancel(1111);
             alarmCancel(alarmmorning);
         }
         else{
@@ -237,19 +239,7 @@ public class Update extends AddByHand
         update = (Button)findViewById(R.id.updateL);
         deleteItem =(Button)findViewById(R.id.del);
     }
-    private  void alarmCancel(int id){
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        Intent updateServiceIntent = new Intent(getApplicationContext(), PlayReceiver.class);
-        PendingIntent pendingUpdateIntent = PendingIntent.getService(this, id, updateServiceIntent, 0);
-
-        // Cancel alarms
-        try {
-            am.cancel(pendingUpdateIntent);
-        } catch (Exception e) {
-            Log.w("MSG", "AlarmManager update was not canceled. " + e.toString());
-        }
-    }
 
 //1526663220000
 

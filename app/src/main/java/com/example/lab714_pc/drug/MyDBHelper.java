@@ -22,7 +22,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE  MEDINFO " + "(_id INTEGER PRIMARY KEY  NOT NULL, "
-                + "name VARCHAR, "
+                + "name VARCHAR UNIQUE, "
                 + "method VAR,"
                 + "amount  VAR,"
                 + "day  INTEGER ,"
@@ -126,7 +126,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
     public boolean ItemisEmpty() {
         db.execSQL("CREATE TABLE IF NOT EXISTS" + " MEDINFO "
                 + "(_id INTEGER PRIMARY KEY , "
-                + "name VARCHAR, "
+                + "name VARCHAR UNIQUE, "
                 + "method VAR,"
                 + "amount  VAR,"
                 + "day  INTEGER ,"

@@ -49,7 +49,8 @@ public class Qrcode extends AddByHand{
         btalarmL.setOnClickListener(onClickListener);
         btnotify = (Button) findViewById(R.id.Notification);
         btnotify.setOnClickListener(onClickListener);
-
+        history = (Button) findViewById(R.id.history);
+        history.setOnClickListener(onClickListener);
 
 
         //點擊Button用IntentIntegration的initiateScan方法開始掃描

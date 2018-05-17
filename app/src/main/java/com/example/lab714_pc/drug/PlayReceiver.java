@@ -73,8 +73,8 @@ public class PlayReceiver extends BroadcastReceiver {
         }
         else if(bData.get("msg").equals("close")){
             Base.notificationManger.cancelAll();
-            mPlayer.stop();
-            mPlayer.release();
+
+
 
         }
 

@@ -41,6 +41,8 @@ import static com.example.lab714_pc.drug.R.id.time_eat;
 public class AddByHand extends Base
         implements View.OnClickListener{
 
+    public PendingIntent pi;
+    public  Intent intent11;
     private static Context context;
     private EditText amount;
     private MyDBHelper helper;
@@ -83,6 +85,8 @@ public class AddByHand extends Base
         btalarmL.setOnClickListener(onClickListener);
         btnotify = (Button) findViewById(R.id.Notification);
         btnotify.setOnClickListener(onClickListener);
+        history = (Button) findViewById(R.id.history);
+        history.setOnClickListener(onClickListener);
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -317,7 +321,7 @@ public class AddByHand extends Base
         SimpleDateFormat time = new SimpleDateFormat("yyyy MM dd HH:mm");
         SimpleDateFormat date = new SimpleDateFormat("yyyy MM dd");
         try {
-            Intent intent11 = new Intent(getApplicationContext(), PlayReceiver.class);
+            intent11 = new Intent(getApplicationContext(), PlayReceiver.class);
             Date today  = new Date();
             String s = date.format(today);
             String times = s + " " + alarmtimein;
@@ -336,11 +340,24 @@ public class AddByHand extends Base
             intent11.putExtra("msg", "play_voice");
 
         long elapsed =  milliseconds;
-        PendingIntent pi = PendingIntent.getBroadcast(this, id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
+        pi = PendingIntent.getBroadcast(this, id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
             am.setRepeating(AlarmManager.RTC_WAKEUP, elapsed, AlarmManager.INTERVAL_DAY, pi);
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+    }
+    public   void alarmCancel(int id){
+        intent11 = new Intent(getApplicationContext(), PlayReceiver.class);
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+        pi = PendingIntent.getBroadcast(this, id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        // Cancel alarms
+        try {
+            am.cancel( pi);
+        } catch (Exception e) {
+            Log.w("MSG", "AlarmManager update was not canceled. " + e.toString());
         }
     }
 

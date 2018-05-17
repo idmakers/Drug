@@ -74,6 +74,8 @@ public class AlarmTime extends Base
         btalarmL.setOnClickListener(onClickListener);
         btnotify = (Button) findViewById(R.id.Notification);
         btnotify.setOnClickListener(onClickListener);;
+        history = (Button) findViewById(R.id.history);
+        history.setOnClickListener(onClickListener);
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

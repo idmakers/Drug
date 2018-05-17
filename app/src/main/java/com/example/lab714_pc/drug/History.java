@@ -16,13 +16,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-public class ItemListView extends Base{
+public class History extends Base{
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_itemlistview);
+        setContentView(R.layout.activity_history);
         btadd = (Button) findViewById(R.id.addh);
         btadd.setOnClickListener(onClickListener);
         btitem = (Button) findViewById(R.id.item);
@@ -37,7 +37,7 @@ public class ItemListView extends Base{
         history.setOnClickListener(onClickListener);
         ListView list = (ListView) findViewById(R.id.list);
         MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-        Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE day >'" +0+ "'" , null);
+        Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE day ='" +0+ "'" , null);
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                 R.layout.content_itemlistview,
                 c,
@@ -64,15 +64,7 @@ public class ItemListView extends Base{
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-                Intent intent = new Intent(ItemListView.this, Update.class);
-                intent.putExtra("msg", id);
-                startActivity(intent);
-            }
-        });
+
 
 
 

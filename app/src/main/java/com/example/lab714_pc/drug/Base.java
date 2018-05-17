@@ -28,7 +28,7 @@ import android.widget.RemoteViews;
 public class Base extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public static Toolbar toolbar;
-    public Button btadd, btitem, btOCR, btalarm,btalarmL,btnotify,close;
+    public Button btadd, btitem, btOCR, btalarm,btalarmL,btnotify,close, history;
     private Context context = this;
     static NotificationManager notificationManger;
     static Notification notification;
@@ -50,6 +50,8 @@ public class Base extends AppCompatActivity
         btalarmL.setOnClickListener(onClickListener);
         btnotify = (Button) findViewById(R.id.Notification);
         btnotify.setOnClickListener(onClickListener);
+        history = (Button) findViewById(R.id.history);
+        history.setOnClickListener(onClickListener);
         close = (Button) findViewById(R.id.close);
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 
@@ -146,6 +148,12 @@ public class Base extends AppCompatActivity
                     Intent intentQR = new Intent();
                     intentQR.setClass(context, Qrcode.class);
                     startActivity(intentQR);
+                    onBackPressed();
+                    break;
+                case R.id.history:
+                    Intent intentH = new Intent();
+                    intentH.setClass(context, History.class);
+                    startActivity(intentH);
                     onBackPressed();
                     break;
           /*     case R.id.AlarmRing :
