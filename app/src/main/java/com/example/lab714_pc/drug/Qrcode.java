@@ -149,36 +149,36 @@ public class Qrcode extends AddByHand{
             Cursor noo = helper.filList(2);
             Cursor ni = helper.filList(3);
             Cursor mid = helper.filList(4);
-            if(time.getText().toString().equals("早")){
-                _id = (int)System.currentTimeMillis();
-                alarm(morn.getString(1),_id);
-                values.put("morning",_id);
-               // values.put("morning",0);
-                values.put("noon",0);
-                //values.put("night",0);
-                values.put("midnight",0);
-
-            }
-            else if(time.getText().toString().equals("中")){
-                _id = (int)System.currentTimeMillis();
-                alarm(noo.getString(1),_id);
-                values.put("noon",_id);
-                values.put("morning",0);
-                values.put("noon",0);
-                values.put("night",0);
-                values.put("midnight",0);
-
-            }
-            else if(time.getText().toString().equals("晚")){
-                _id = (int)System.currentTimeMillis();
-                alarm(ni.getString(1),_id);
-                values.put("night",_id);
-                values.put("morning",0);
-                values.put("noon",0);
-                //values.put("night",0);
-                values.put("midnight",0);
-
-            }
+//            if(time.getText().toString().equals("早")){
+//                _id = (int)System.currentTimeMillis();
+//                alarm(morn.getString(1),_id);
+//                values.put("morning",_id);
+//               // values.put("morning",0);
+//                values.put("noon",0);
+//                //values.put("night",0);
+//                values.put("midnight",0);
+//
+//            }
+//            else if(time.getText().toString().equals("中")){
+//                _id = (int)System.currentTimeMillis();
+//                alarm(noo.getString(1),_id);
+//                values.put("noon",_id);
+//                values.put("morning",0);
+//                values.put("noon",0);
+//                values.put("night",0);
+//                values.put("midnight",0);
+//
+//            }
+//            else if(time.getText().toString().equals("晚")){
+//                _id = (int)System.currentTimeMillis();
+//                alarm(ni.getString(1),_id);
+//                values.put("night",_id);
+//                values.put("morning",0);
+//                values.put("noon",0);
+//                //values.put("night",0);
+//                values.put("midnight",0);
+//
+//            }
 
 //            else if(time.getText().toString().equals("睡前")){
 //                _id = (int)System.currentTimeMillis();
