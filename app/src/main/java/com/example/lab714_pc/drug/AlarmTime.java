@@ -3,6 +3,8 @@ package com.example.lab714_pc.drug;
 /**
  * Created by 714B on 2017/10/30.
  */
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -19,8 +21,11 @@ import android.view.View;
 import android.widget.*;
 import android.widget.Toolbar;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import static com.example.lab714_pc.drug.R.id.btnmidnight;
 import static com.example.lab714_pc.drug.R.id.btnmorning;
@@ -32,6 +37,8 @@ import static com.example.lab714_pc.drug.R.id.update;
 public class AlarmTime extends Base
         implements View.OnClickListener{
 
+    public PendingIntent pi;
+    public  Intent intent11;
     private MyDBHelper helper;
     private EditText day;
     private TextView displayedText;
@@ -196,7 +203,15 @@ public class AlarmTime extends Base
                 break;
 
             case update:
+                Cursor morn = helper.filList(1);
+                Cursor noo = helper.filList(2);
+                Cursor ni = helper.filList(3);
+                Cursor mid = helper.filList(4);
                 add();
+                alarm(morn.getString(1),1);
+                alarm(noo.getString(1),2);
+                alarm(ni.getString(1),3);
+                alarm(mid.getString(1),4);
                 break;
 
         }
@@ -257,6 +272,51 @@ public class AlarmTime extends Base
         night = (EditText) findViewById(R.id.night);
         midnight =(EditText)findViewById(R.id.midnight);
 
+    }
+    public void alarm (String alarmtimein , int id) {
+
+
+        SimpleDateFormat time = new SimpleDateFormat("yyyy MM dd HH:mm");
+        SimpleDateFormat date = new SimpleDateFormat("yyyy MM dd");
+        try {
+            intent11 = new Intent(getApplicationContext(), PlayReceiver.class);
+            Date today  = new Date();
+            String s = date.format(today);
+            String times = s + " " + alarmtimein;
+            Date alarmtimeout = time.parse(times);
+            long milliseconds = alarmtimeout.getTime();
+            Log.w("msg", "Date s  " + s);
+            Log.w("msg", "Date d  " + today);
+            Log.w("msg", "time s  " + times);
+            Log.w("msg", "alarm time in  " + milliseconds);
+            Log.w("msg", "alarm time out  " + alarmtimeout);
+            Log.w("msg", "milliseconds  "   + milliseconds);
+            Log.w("msg", "id  "   + id);
+
+
+
+            intent11.putExtra("msg", "play_voice");
+
+            long elapsed =  milliseconds;
+            pi = PendingIntent.getBroadcast(this, id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+            am.setRepeating(AlarmManager.RTC_WAKEUP, elapsed, AlarmManager.INTERVAL_DAY, pi);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+    public   void alarmCancel(int id){
+        intent11 = new Intent(getApplicationContext(), PlayReceiver.class);
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+        pi = PendingIntent.getBroadcast(this, id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        // Cancel alarms
+        try {
+            am.cancel( pi);
+        } catch (Exception e) {
+            Log.w("MSG", "AlarmManager update was not canceled. " + e.toString());
+        }
     }
 
 

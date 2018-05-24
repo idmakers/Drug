@@ -37,7 +37,7 @@ public class History extends Base{
         history.setOnClickListener(onClickListener);
         ListView list = (ListView) findViewById(R.id.list);
         MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-        Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE day ='" +0+ "'" , null);
+        Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE day = '' +0+ ''  ORDER BY name  " , null);
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                 R.layout.content_itemlistview,
                 c,

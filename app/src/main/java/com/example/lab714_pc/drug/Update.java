@@ -196,32 +196,32 @@ public class Update extends AddByHand
         int alarmnight = cursor.getInt(8);
         int alarmmid = cursor.getInt(9);
         Log.w("msg"," morning " +alarmmorning);
-        if (alarmmorning != 0){
-            alarmCancel(alarmmorning);
-        }
-        else{
-            Log.w("msg","alearm morning is empty");
-        }
-        if (alarmnoon != 0){
-            alarmCancel(alarmnoon);
-        }
-        else{
-            Log.w("msg","alearm noon is empty");
-        }
-
-        if (alarmnight != 0){
-            alarmCancel(alarmnight);
-        }
-        else{
-            Log.w("msg","alearm night is empty");
-        }
-
-        if (alarmmid != 0){
-            alarmCancel(alarmmid);
-        }
-        else{
-            Log.w("msg","alearm midnight is empty");
-        }
+//        if (alarmmorning != 0){
+//            alarmCancel(alarmmorning);
+//        }
+//        else{
+//            Log.w("msg","alearm morning is empty");
+//        }
+//        if (alarmnoon != 0){
+//            alarmCancel(alarmnoon);
+//        }
+//        else{
+//            Log.w("msg","alearm noon is empty");
+//        }
+//
+//        if (alarmnight != 0){
+//            alarmCancel(alarmnight);
+//        }
+//        else{
+//            Log.w("msg","alearm night is empty");
+//        }
+//
+//        if (alarmmid != 0){
+//            alarmCancel(alarmmid);
+//        }
+//        else{
+//            Log.w("msg","alearm midnight is empty");
+//        }
 
 
         helper.getWritableDatabase();

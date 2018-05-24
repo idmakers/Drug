@@ -196,96 +196,96 @@ public class AddByHand extends Base
             Cursor noo = helper.filList(2);
             Cursor ni = helper.filList(3);
             Cursor mid = helper.filList(4);
-            if(tvTime.getText().toString().equals("早上")){
-                _id = (int)System.currentTimeMillis();
-                alarm(morn.getString(1),_id);
-                values.put("morning",_id);
-               // values.put("morning",0);
-                values.put("noon",0);
-                values.put("night",0);
-                values.put("midnight",0);
-
-            }
-            else if(tvTime.getText().toString().equals("中午")){
-                _id = (int)System.currentTimeMillis();
-                alarm(noo.getString(1),_id);
-                values.put("noon",_id);
-                values.put("morning",0);
-               // values.put("noon",0);
-                values.put("night",0);
-                values.put("midnight",0);
-
-            }
-            else if(tvTime.getText().toString().equals("晚上")){
-                _id = (int)System.currentTimeMillis();
-                alarm(ni.getString(1),_id);
-                values.put("night",_id);
-                values.put("morning",0);
-                values.put("noon",0);
-              //  values.put("night",0);
-                values.put("midnight",0);
-
-            }
-
-            else if(tvTime.getText().toString().equals("睡前")){
-                _id = (int)System.currentTimeMillis();
-                alarm(mid.getString(1),_id);
-                values.put("midnight",_id);
-                values.put("morning",0);
-                values.put("noon",0);
-                values.put("night",0);
-              //  values.put("midnight",0);
-
-            }
-
-            else if(tvTime.getText().toString().equals("早上/晚上")){
-                _id = (int)System.currentTimeMillis();
-                alarm(morn.getString(1),_id);
-                values.put("morning",_id);
-                _id = (int)System.currentTimeMillis();
-                alarm(ni.getString(1),_id);
-                values.put("night",_id);
-                values.put("morning",0);
-               // values.put("noon",0);
-                values.put("night",0);
-                //values.put("midnight",0);
-
-
-            }
-
-            else if(tvTime.getText().toString().equals("早上/中午/晚上")){
-                _id = (int)System.currentTimeMillis();
-                alarm(morn.getString(1),_id);
-                values.put("morning",_id);
-                _id = (int)System.currentTimeMillis();
-                alarm(noo.getString(1),_id);
-                values.put("noon",_id);
-                _id = (int)System.currentTimeMillis();
-                alarm(ni.getString(1),_id);
-                values.put("night",_id);
+//            if(tvTime.getText().toString().equals("早上")){
+//                _id = (int)System.currentTimeMillis();
+//                alarm(morn.getString(1),_id);
+//                values.put("morning",_id);
+//               // values.put("morning",0);
+//                values.put("noon",0);
+//                values.put("night",0);
+//                values.put("midnight",0);
+//
+//            }
+//            else if(tvTime.getText().toString().equals("中午")){
+//                _id = (int)System.currentTimeMillis();
+//                alarm(noo.getString(1),_id);
+//                values.put("noon",_id);
+//                values.put("morning",0);
+//               // values.put("noon",0);
+//                values.put("night",0);
+//                values.put("midnight",0);
+//
+//            }
+//            else if(tvTime.getText().toString().equals("晚上")){
+//                _id = (int)System.currentTimeMillis();
+//                alarm(ni.getString(1),_id);
+//                values.put("night",_id);
+//                values.put("morning",0);
+//                values.put("noon",0);
+//              //  values.put("night",0);
+//                values.put("midnight",0);
+//
+//            }
+//
+//            else if(tvTime.getText().toString().equals("睡前")){
+//                _id = (int)System.currentTimeMillis();
+//                alarm(mid.getString(1),_id);
+//                values.put("midnight",_id);
 //                values.put("morning",0);
 //                values.put("noon",0);
 //                values.put("night",0);
-                values.put("midnight",0);
-
-
-            }
-
-            else if(tvTime.getText().toString().equals("早上/中午/晚上/睡前")){
-                _id = (int)System.currentTimeMillis();
-                alarm(morn.getString(1),_id);
-                values.put("morning",_id);
-                _id = (int)System.currentTimeMillis();
-                alarm(noo.getString(1),_id);
-                values.put("noon",_id);
-                _id = (int)System.currentTimeMillis();
-                alarm(ni.getString(1),_id);
-                values.put("night",_id);
-                _id = (int)System.currentTimeMillis();
-                alarm(mid.getString(1),_id);
-
-
-            }
+//              //  values.put("midnight",0);
+//
+//            }
+//
+//            else if(tvTime.getText().toString().equals("早上/晚上")){
+//                _id = (int)System.currentTimeMillis();
+//                alarm(morn.getString(1),_id);
+//                values.put("morning",_id);
+//                _id = (int)System.currentTimeMillis();
+//                alarm(ni.getString(1),_id);
+//                values.put("night",_id);
+//                values.put("morning",0);
+//               // values.put("noon",0);
+//                values.put("night",0);
+//                //values.put("midnight",0);
+//
+//
+//            }
+//
+//            else if(tvTime.getText().toString().equals("早上/中午/晚上")){
+//                _id = (int)System.currentTimeMillis();
+//                alarm(morn.getString(1),_id);
+//                values.put("morning",_id);
+//                _id = (int)System.currentTimeMillis();
+//                alarm(noo.getString(1),_id);
+//                values.put("noon",_id);
+//                _id = (int)System.currentTimeMillis();
+//                alarm(ni.getString(1),_id);
+//                values.put("night",_id);
+////                values.put("morning",0);
+////                values.put("noon",0);
+////                values.put("night",0);
+//                values.put("midnight",0);
+//
+//
+//            }
+//
+//            else if(tvTime.getText().toString().equals("早上/中午/晚上/睡前")){
+//                _id = (int)System.currentTimeMillis();
+//                alarm(morn.getString(1),_id);
+//                values.put("morning",_id);
+//                _id = (int)System.currentTimeMillis();
+//                alarm(noo.getString(1),_id);
+//                values.put("noon",_id);
+//                _id = (int)System.currentTimeMillis();
+//                alarm(ni.getString(1),_id);
+//                values.put("night",_id);
+//                _id = (int)System.currentTimeMillis();
+//                alarm(mid.getString(1),_id);
+//
+//
+//            }
         }
 
         values.put("name", mname);
@@ -314,51 +314,6 @@ public class AddByHand extends Base
         day.setText("123");
         tvTime.setText("123");
         afbf.setText("123");
-    }
-    public void alarm (String alarmtimein , int id) {
-
-
-        SimpleDateFormat time = new SimpleDateFormat("yyyy MM dd HH:mm");
-        SimpleDateFormat date = new SimpleDateFormat("yyyy MM dd");
-        try {
-            intent11 = new Intent(getApplicationContext(), PlayReceiver.class);
-            Date today  = new Date();
-            String s = date.format(today);
-            String times = s + " " + alarmtimein;
-            Date alarmtimeout = time.parse(times);
-            long milliseconds = alarmtimeout.getTime();
-            Log.w("msg", "Date s  " + s);
-            Log.w("msg", "Date d  " + today);
-            Log.w("msg", "time s  " + times);
-            Log.w("msg", "alarm time in  " + milliseconds);
-            Log.w("msg", "alarm time out  " + alarmtimeout);
-            Log.w("msg", "milliseconds  "   + milliseconds);
-            Log.w("msg", "id  "   + id);
-
-
-
-            intent11.putExtra("msg", "play_voice");
-
-        long elapsed =  milliseconds;
-        pi = PendingIntent.getBroadcast(this, id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-            am.setRepeating(AlarmManager.RTC_WAKEUP, elapsed, AlarmManager.INTERVAL_DAY, pi);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-    public   void alarmCancel(int id){
-        intent11 = new Intent(getApplicationContext(), PlayReceiver.class);
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-        pi = PendingIntent.getBroadcast(this, id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-        // Cancel alarms
-        try {
-            am.cancel( pi);
-        } catch (Exception e) {
-            Log.w("MSG", "AlarmManager update was not canceled. " + e.toString());
-        }
     }
 
 
