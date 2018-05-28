@@ -4,12 +4,18 @@ package com.example.lab714_pc.drug;
  * Created by 714B on 2017/10/30.
  */
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -27,16 +33,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.example.lab714_pc.drug.R.id.btnmidnight;
-import static com.example.lab714_pc.drug.R.id.btnmorning;
-import static com.example.lab714_pc.drug.R.id.btnnight;
-import static com.example.lab714_pc.drug.R.id.btnnoon;
+import static com.example.lab714_pc.drug.R.id.btnbreakfestaf;
+import static com.example.lab714_pc.drug.R.id.btnbreakfestbf;
+
+import static com.example.lab714_pc.drug.R.id.btnnoonbf;
 import static com.example.lab714_pc.drug.R.id.update;
 
 
 public class AlarmTime extends Base
         implements View.OnClickListener{
 
+    private SoundPool sp;
+    private boolean spLoader = false;
+    MediaPlayer mPlayer = new MediaPlayer();
     public PendingIntent pi;
     public  Intent intent11;
     private MyDBHelper helper;
@@ -45,8 +54,9 @@ public class AlarmTime extends Base
     private EditText morning ,noon,night,midnight;
     private Button btUP,btnMORNING,btnNOON,btnNIGHT,btnMIDNIGHT;
     private int mHour, mMinute , mSecoond;
-
+    private EditText breakfestbf , breakfestaf , noonbf, noonaf, nightbf , nightaf ;
     static long id;
+    private  Button btbreakbf ,btbreakaf, btnoonbf , btnoonaf , btnightbf, btnightaf;
 
 
 
@@ -54,20 +64,41 @@ public class AlarmTime extends Base
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarmtime);
-        findViews();
+
         helper = new MyDBHelper(this,"expense.db",null,1);
-        morning = (EditText)findViewById(R.id.morining);
-        noon = (EditText)findViewById(R.id.noon);
-        night = (EditText)findViewById(R.id.night);
-        midnight = (EditText)findViewById(R.id.midnight);
-        btUP = (Button) findViewById(R.id.update);
-        btUP.setOnClickListener(this);
-        btnMORNING =(Button)findViewById(R.id.btnmorning);
-        btnMORNING.setOnClickListener(this);
-        btnNOON =(Button)findViewById(R.id.btnnoon);
-        btnNOON.setOnClickListener(this);
-        btnNIGHT =(Button)findViewById(R.id.btnnight);
-        btnNIGHT.setOnClickListener(this);
+          breakfestbf = (EditText)findViewById(R.id.breakfestbf);
+          breakfestaf = (EditText)findViewById(R.id.breakfestaf);
+        noonbf = (EditText)findViewById(R.id.noonbf);
+        noonaf = (EditText)findViewById(R.id.noonaf);
+        nightbf = (EditText)findViewById(R.id.nightbf);
+        nightaf = (EditText)findViewById(R.id.nightaf);
+//        morning = (EditText)findViewById(R.id.morining);
+//        noon = (EditText)findViewById(R.id.noon);
+//        night = (EditText)findViewById(R.id.night);
+//        midnight = (EditText)findViewById(R.id.midnight);
+//        btUP = (Button) findViewById(R.id.update);
+//        btUP.setOnClickListener(this);
+//        btnMORNING =(Button)findViewById(R.id.btnmorning);
+//        btnMORNING.setOnClickListener(this);
+//        btnNOON =(Button)findViewById(R.id.btnnoon);
+//        btnNOON.setOnClickListener(this);
+//        btnNIGHT =(Button)findViewById(R.id.btnnight);
+//        btnNIGHT.setOnClickListener(this);
+//        btnMIDNIGHT = (Button)findViewById(R.id.btnmidnight);
+//        btnMIDNIGHT.setOnClickListener(this);
+        btbreakbf = (Button)findViewById(R.id.btnbreakfestbf);
+        btbreakbf.setOnClickListener(this);
+        btbreakaf = (Button)findViewById(R.id.btnbreakfestaf);
+        btbreakaf.setOnClickListener(this);
+        btnoonbf = (Button)findViewById(R.id.btnnoonbf);
+        btnoonbf.setOnClickListener(this);
+        btnoonaf = (Button)findViewById(R.id.btnnoonaf);
+        btnoonaf.setOnClickListener(this);
+        btnightbf = (Button)findViewById(R.id.btnnightbf);
+        btnightbf.setOnClickListener(this);
+        btnightaf = (Button)findViewById(R.id.btnnightaf);
+        btnightaf.setOnClickListener(this);
+
         btnMIDNIGHT = (Button)findViewById(R.id.btnmidnight);
         btnMIDNIGHT.setOnClickListener(this);
         btadd = (Button) findViewById(R.id.addh);
@@ -134,7 +165,7 @@ public class AlarmTime extends Base
 //                   intent.putExtra("SCAN_MODE", "QR_CODE_MODE");	//設定QR Code參數
 //                   startActivityForResult(intent, 1);	//要求回傳1
 //                   break;
-            case btnmorning:
+            case btnbreakfestbf:
                 // 設定初始時間
                 final Calendar c = Calendar.getInstance();
                 mHour = c.get(Calendar.HOUR_OF_DAY);
@@ -152,7 +183,7 @@ public class AlarmTime extends Base
                         }, mHour, mMinute, true);
                 tpd.show();
                 break;
-            case btnnoon:
+            case btnbreakfestaf:
                 // 設定初始時間
                 final Calendar d = Calendar.getInstance();
                 mHour = d.get(Calendar.HOUR_OF_DAY);
@@ -169,7 +200,7 @@ public class AlarmTime extends Base
                         }, mHour, mMinute, false);
                 tpdnoon.show();
                 break;
-            case btnnight:
+            case R.id.btnnoonbf:
                 // 設定初始時間
                 final Calendar e = Calendar.getInstance();
                 mHour = e.get(Calendar.HOUR_OF_DAY);
@@ -185,7 +216,7 @@ public class AlarmTime extends Base
                         }, mHour, mMinute, false);
                 tpdnight.show();
                 break;
-            case btnmidnight:
+            case R.id.btnnoonaf:
                 // 設定初始時間
                 final Calendar f = Calendar.getInstance();
                 mHour = f.get(Calendar.HOUR_OF_DAY);
@@ -202,15 +233,72 @@ public class AlarmTime extends Base
                 tpdmidnight.show();
                 break;
 
+            case R.id.btnmidnight:
+                // 設定初始時間
+                final Calendar f1 = Calendar.getInstance();
+                mHour = f1.get(Calendar.HOUR_OF_DAY);
+                mMinute = f1.get(Calendar.MINUTE);
+                // 跳出時間選擇器
+                TimePickerDialog tpdmidnight1 = new TimePickerDialog(this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+                                // 完成選擇，顯示時間
+                                midnight.setText(hourOfDay + ":" + minute);
+                            }
+                        }, mHour, mMinute, false);
+                tpdmidnight1.show();
+                break;
+
+            case R.id.btnnightbf:
+                // 設定初始時間
+                final Calendar f2 = Calendar.getInstance();
+                mHour = f2.get(Calendar.HOUR_OF_DAY);
+                mMinute = f2.get(Calendar.MINUTE);
+                // 跳出時間選擇器
+                TimePickerDialog tpdmidnight2 = new TimePickerDialog(this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+                                // 完成選擇，顯示時間
+                                midnight.setText(hourOfDay + ":" + minute);
+                            }
+                        }, mHour, mMinute, false);
+                tpdmidnight2.show();
+                break;
+
+            case R.id.btnnightaf:
+                // 設定初始時間
+                final Calendar f3 = Calendar.getInstance();
+                mHour = f3.get(Calendar.HOUR_OF_DAY);
+                mMinute = f3.get(Calendar.MINUTE);
+                // 跳出時間選擇器
+                TimePickerDialog tpdmidnight3 = new TimePickerDialog(this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+                                // 完成選擇，顯示時間
+                                midnight.setText(hourOfDay + ":" + minute);
+                            }
+                        }, mHour, mMinute, false);
+                tpdmidnight3.show();
+                break;
+
             case update:
-                Cursor morn = helper.filList(1);
-                Cursor noo = helper.filList(2);
-                Cursor ni = helper.filList(3);
-                Cursor mid = helper.filList(4);
+                Cursor breakbfc = helper.filList(1);
+                Cursor breakafc = helper.filList(2);
+                Cursor noonbfc = helper.filList(3);
+                Cursor noonafc = helper.filList(4);
+                Cursor nightbfc = helper.filList(5);
+                Cursor nightafc = helper.filList(6);
+                Cursor mid = helper.filList(7);
                 add();
-                alarm(morn.getString(1),1);
-                alarm(noo.getString(1),2);
-                alarm(ni.getString(1),3);
+                alarm(breakbfc.getString(1),1);
+                alarm(breakafc.getString(1),1);
+                alarm(noonbfc.getString(1),1);
+                alarm(noonafc.getString(1),1);
+                alarm(nightbfc.getString(1),1);
+                alarm(nightafc.getString(1),1);
                 alarm(mid.getString(1),4);
                 break;
 
@@ -219,9 +307,14 @@ public class AlarmTime extends Base
 
     private void add() {
         Intent intent = new Intent();
-        String mmoring = morning.getText().toString();
-        String mnoon = noon.getText().toString();
-        String mnight = night.getText().toString();
+        String breakfestbf0 = breakfestbf.getText().toString();
+        String breakfestaf0 = breakfestaf.getText().toString();
+        String noonbf0 = noonbf.getText().toString();
+        String noonaf0 = noonaf.getText().toString();
+        String nightbf0 = nightbf.getText().toString();
+        String nightaf0 = nightaf.getText().toString();
+//        String mnoon = noon.getText().toString();
+ //       String mnight = night.getText().toString();
         String mmidnight = midnight.getText().toString();
         ContentValues values = new ContentValues();
         //java.util.Date mnoon= new java.util.Date();
@@ -231,33 +324,47 @@ public class AlarmTime extends Base
         // java.util.Date mnoon= new java.util.Date();
 
     if(!helper.isEmpty()){
-        values.put("Aname","morning");
-        values.put("Atime", mmoring);
-        long id = helper.getWritableDatabase().insert("ALARM", null, values);
+        values.put("Aname","breakfestbf");
+        values.put("Atime", breakfestbf0);
+        helper.getWritableDatabase().insert("ALARM", null, values);
         values.clear();
-        Log.d("ADD", id + "");
-        values.put("Aname","noon");
-        values.put("Atime", mnoon);
-        id = helper.getWritableDatabase().insert("ALARM", null, values);
-        Log.d("ADD", id + "");
+        values.put("Aname","breakfestaf");
+        values.put("Atime", breakfestaf0);
+        helper.getWritableDatabase().insert("ALARM", null, values);
         values.clear();
-        values.put("Aname","night");
-        values.put("Atime", mnight);
-        id = helper.getWritableDatabase().insert("ALARM", null, values);
-        Log.d("ADD", id + "");
+        values.put("Aname","noonbf");
+        values.put("Atime", noonbf0);
+        helper.getWritableDatabase().insert("ALARM", null, values);
+        values.clear();
+        values.put("Aname","noonaf");
+        values.put("Atime", noonaf0);
+        helper.getWritableDatabase().insert("ALARM", null, values);
+        values.clear();
+        values.put("Aname","nightbf");
+        values.put("Atime", nightbf0);
+        helper.getWritableDatabase().insert("ALARM", null, values);
+        values.clear();
+        values.put("Aname","nightaf");
+        values.put("Atime", nightaf0);
+        helper.getWritableDatabase().insert("ALARM", null, values);
         values.clear();
         values.put("Aname","midnight");
         values.put("Atime", mmidnight);
-        id = helper.getWritableDatabase().insert("ALARM", null, values);
-        Log.d("ADD", id + "");
+        helper.getWritableDatabase().insert("ALARM", null, values);
         values.clear();
+
+
+
     }
     else
     {
-        id = helper.update(1,mmoring);
-        id = helper.update(2,mnoon);
-        id = helper.update(3,mnight);
-        id = helper.update(4,mmidnight);
+        id = helper.update(1,breakfestbf0);
+        id = helper.update(2,breakfestaf0);
+        id = helper.update(3,noonbf0);
+        id = helper.update(4,noonaf0);
+        id = helper.update(5,nightbf0);
+        id = helper.update(6,nightaf0);
+        id = helper.update(7,mmidnight);
 
     }
 
@@ -266,13 +373,7 @@ public class AlarmTime extends Base
     }
 
 
-    private void findViews() {
-        morning = (EditText) findViewById(R.id.morining);
-        noon = (EditText) findViewById(R.id.noon);
-        night = (EditText) findViewById(R.id.night);
-        midnight =(EditText)findViewById(R.id.midnight);
 
-    }
     public void alarm (String alarmtimein , int id) {
 
 
@@ -295,7 +396,7 @@ public class AlarmTime extends Base
 
 
 
-            intent11.putExtra("msg", "play_voice");
+            intent11.putExtra("msg", "play_voice"+id);
 
             long elapsed =  milliseconds;
             pi = PendingIntent.getBroadcast(this, id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
@@ -318,6 +419,27 @@ public class AlarmTime extends Base
             Log.w("MSG", "AlarmManager update was not canceled. " + e.toString());
         }
     }
+    private void displayAlert()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to exit?").setCancelable(
+                false).setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                }).setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
 
-}
+    }
+
+
+
