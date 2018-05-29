@@ -31,6 +31,8 @@ public class MyDBHelper extends SQLiteOpenHelper {
                 + "night LONG ,"
                 + "midnight LONG ,"
                 + "DATE STRING ,"
+                + "why STRING ,"
+                + "stop STRING ,"
                 + "tvTime TIME)");
         db.execSQL("CREATE TABLE IF NOT EXISTS" + " ALARM " + "(_id INTEGER PRIMARY KEY , " + "Aname VAR UNIQUE   , " + "Atime TIME)");
 
@@ -92,7 +94,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
     public Cursor ItemfilList(long id) throws SQLException {
         Cursor cursor = db.query(
                 "MEDINFO",
-                new String[]{"_id", "tvTime","method" ,"day","name","amount","morning","noon","night","midnight"},
+                new String[]{"_id", "tvTime","method" ,"day","name","amount","stop","why","morning","noon","night","midnight"},
                 "_id =" + id,
                 null,
                 null,
@@ -135,6 +137,8 @@ public class MyDBHelper extends SQLiteOpenHelper {
                 + "night LONG ,"
                 + "midnight LONG ,"
                 + "DATE STRING ,"
+                + "why STRING ,"
+                + "stop STRING ,"
                 + "tvTime TIME)");
         Cursor cursor = db.query(
                 "MEDINFO",

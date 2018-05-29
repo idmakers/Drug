@@ -39,6 +39,8 @@ public class Update extends AddByHand
     private EditText method ,afbf;
     private EditText day;
     private EditText tvTime;
+    private EditText stop;
+    private EditText why;
     private Button btTime, update,btAf,deleteItem;
     private long name;
 
@@ -170,6 +172,8 @@ public class Update extends AddByHand
         String mname = Mname.getText().toString();
         String mmethod = method.getText().toString();
         String mtime = tvTime.getText().toString();
+        String mstop = stop.getText().toString();
+        String mwhy = why.getText().toString();
         int mday = Integer.parseInt(day.getText().toString());
         String mamount = amount.getText().toString();
         ContentValues values = new ContentValues();
@@ -178,6 +182,8 @@ public class Update extends AddByHand
         values.put("amount", mamount);
         values.put("day", mday);
         values.put("tvTime", mtime);
+        values.put("stop",mstop);
+        values.put("why",mwhy);
         helper.getWritableDatabase();
 
 
@@ -238,6 +244,8 @@ public class Update extends AddByHand
         tvTime = (EditText)findViewById(R.id.time_eat);
         update = (Button)findViewById(R.id.updateL);
         deleteItem =(Button)findViewById(R.id.del);
+        stop = (EditText)findViewById(R.id.stop);
+        why =(EditText)findViewById(R.id.why);
     }
 
 
