@@ -1,5 +1,6 @@
 package com.example.lab714_pc.drug;
 
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,6 +14,7 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+
 
 
 import static android.content.Context.NOTIFICATION_SERVICE;
@@ -42,7 +44,7 @@ public class PlayReceiver extends BroadcastReceiver {
         if (bData.get("msg").equals("play_voice")) {
 
 
-//
+
 //            SoundPool sp = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
 //
 //            /** soundId for Later handling of sound pool **/
@@ -52,20 +54,24 @@ public class PlayReceiver extends BroadcastReceiver {
             mPlayer = MediaPlayer.create(context, R.raw.test); // in 2nd param u have to pass your desire ringtone
             //mPlayer.prepare();
             mPlayer.start();
-
-            Base.notificationManger.notify(0, notification);
-
-            //mPlayer.prepare();
             long tstart = System.currentTimeMillis();
             long time  = tstart;
             long timepass = 0;
-            while (time < tstart+10000){
-                time = System.currentTimeMillis();
-                timepass = time-tstart;
-                Log.d("time","value "+timepass);
-            }
+            Intent intentDialog = new Intent();
+            intentDialog.setClass(context,DIalog.class);
+            intentDialog.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intentDialog.putExtra("message","Dialog");
+//            while (time < tstart+10000){
+//                time = System.currentTimeMillis();
+//                //timepass = time-tstart;
+//                //Log.d("time","value "+timepass);
+//            }
+            context.startActivity(intentDialog);
             mPlayer.stop();
             mPlayer.release();
+
+
+            //mPlayer.prepare();
 
 
 

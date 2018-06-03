@@ -1,9 +1,12 @@
 package com.example.lab714_pc.drug;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.assist.AssistContent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Build;
@@ -24,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 public class Base extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,17 +57,18 @@ public class Base extends AppCompatActivity
         history = (Button) findViewById(R.id.history);
         history.setOnClickListener(onClickListener);
         close = (Button) findViewById(R.id.close);
-        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 
-        Intent updateServiceIntent = new Intent(this, PlayReceiver.class);
-        PendingIntent pendingUpdateIntent = PendingIntent.getService(context, 0, updateServiceIntent, 0);
-
-        // Cancel alarms
-        try {
-            alarmManager.cancel(pendingUpdateIntent);
-        } catch (Exception e) {
-            Log.e("", "AlarmManager update was not canceled. " + e.toString());
-        }
+//        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+//
+//        Intent updateServiceIntent = new Intent(this, PlayReceiver.class);
+//        PendingIntent pendingUpdateIntent = PendingIntent.getService(context, 0, updateServiceIntent, 0);
+//
+//        // Cancel alarms
+//        try {
+//            alarmManager.cancel(pendingUpdateIntent);
+//        } catch (Exception e) {
+//            Log.e("", "AlarmManager update was not canceled. " + e.toString());
+//        }
         notificationManger = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -87,6 +92,7 @@ public class Base extends AppCompatActivity
         notification.bigContentView = contentView;
 
     }
+
 
 
 
