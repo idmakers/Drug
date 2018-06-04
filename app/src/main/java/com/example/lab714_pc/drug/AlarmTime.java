@@ -255,9 +255,14 @@ public class AlarmTime extends Base
     else
     {
         id = helper.update(1,mmoring);
+        Log.w("update","times" +id);
         id = helper.update(2,mnoon);
+        Log.w("update","times" +id);
         id = helper.update(3,mnight);
+        Log.w("update","times" +id);
         id = helper.update(4,mmidnight);
+        Log.w("update","times" +id);
+
 
     }
 
@@ -293,6 +298,7 @@ public class AlarmTime extends Base
             Log.w("msg", "milliseconds  "   + milliseconds);
             Log.w("msg", "id  "   + id);
             intent11.putExtra("msg", "play_voice"+id);
+            intent11.putExtra("time","time "+times);
 
             long elapsed =  milliseconds;
             pi = PendingIntent.getBroadcast(this, id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);

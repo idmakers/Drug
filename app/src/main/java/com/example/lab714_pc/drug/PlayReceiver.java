@@ -37,7 +37,7 @@ public class PlayReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         Bundle bData = intent.getExtras();
-
+        Log.w("time", "onReceive: " + bData.get("time") );
 
 
 
@@ -66,6 +66,7 @@ public class PlayReceiver extends BroadcastReceiver {
                 //timepass = time-tstart;
                 //Log.d("time","value "+timepass);
             }
+            Log.w("MSG", "onReceive: +1" );
             context.startActivity(intentDialog);
             mPlayer.stop();
             mPlayer.release();
@@ -84,6 +85,8 @@ public class PlayReceiver extends BroadcastReceiver {
             long tstart = System.currentTimeMillis();
             long time  = tstart;
             long timepass = 0;
+
+            Log.w("MSG", "onReceive: +2" );
             Intent intentDialog = new Intent();
             intentDialog.setClass(context,DIalog.class);
             intentDialog.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -102,6 +105,7 @@ public class PlayReceiver extends BroadcastReceiver {
             mPlayer = MediaPlayer.create(context, R.raw.test); // in 2nd param u have to pass your desire ringtone
             //mPlayer.prepare();
             mPlayer.start();
+            Log.w("MSG", "onReceive: +3" );
             long tstart = System.currentTimeMillis();
             long time  = tstart;
             long timepass = 0;
@@ -123,6 +127,7 @@ public class PlayReceiver extends BroadcastReceiver {
             mPlayer = MediaPlayer.create(context, R.raw.test); // in 2nd param u have to pass your desire ringtone
             //mPlayer.prepare();
             mPlayer.start();
+            Log.w("MSG", "onReceive: +4" );
             long tstart = System.currentTimeMillis();
             long time  = tstart;
             long timepass = 0;

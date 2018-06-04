@@ -40,7 +40,6 @@
             </intent-filter>
         </receiver>
         <activity android:name=".DIalog"/>
-        <activity android:name=".AlarmList" />
         <activity android:name=".Update" />
         <activity android:name=".History"></activity>
     </application>

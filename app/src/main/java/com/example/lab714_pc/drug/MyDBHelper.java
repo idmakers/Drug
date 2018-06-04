@@ -34,7 +34,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
                 + "why STRING ,"
                 + "stop STRING ,"
                 + "tvTime TIME)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS" + " ALARM " + "(_id INTEGER PRIMARY KEY , " + "Aname VAR    , " + "Atime TIME)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS" + " ALARM " + "(_id INTEGER PRIMARY KEY , " + "Aname VAR UNIQUE   , " + "Atime TIME)");
 
 
     }
@@ -61,9 +61,9 @@ public class MyDBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public int update(long rowId, String value) {
+    public int update(long rowId,String value) {
         ContentValues args = new ContentValues();
-        args.put("Aname", value);
+
         args.put("Atime", value);
 
         return db.update("ALARM",    //資料表名稱
