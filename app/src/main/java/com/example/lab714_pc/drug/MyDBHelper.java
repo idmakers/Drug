@@ -34,7 +34,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
                 + "why STRING ,"
                 + "stop STRING ,"
                 + "tvTime TIME)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS" + " ALARM " + "(_id INTEGER PRIMARY KEY , " + "Aname VAR UNIQUE   , " + "Atime TIME)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS" + " ALARM " + "(_id INTEGER PRIMARY KEY , " + "Aname VAR    , " + "Atime TIME)");
 
 
     }

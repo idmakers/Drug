@@ -292,10 +292,7 @@ public class AlarmTime extends Base
             Log.w("msg", "alarm time out  " + alarmtimeout);
             Log.w("msg", "milliseconds  "   + milliseconds);
             Log.w("msg", "id  "   + id);
-
-
-
-            intent11.putExtra("msg", "play_voice");
+            intent11.putExtra("msg", "play_voice"+id);
 
             long elapsed =  milliseconds;
             pi = PendingIntent.getBroadcast(this, id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);

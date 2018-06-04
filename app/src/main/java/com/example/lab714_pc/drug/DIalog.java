@@ -18,9 +18,99 @@ public class DIalog  extends AppCompatActivity{
         setContentView(R.layout.activity_base);
         Intent intent00 = getIntent();
         String msg = intent00.getStringExtra("message");
-        if (msg.equals("Dialog")) {
+        if (msg.equals("Dialog1")) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(DIalog.this);
-            dialog.setTitle("基本訊息對話按鈕");
+            dialog.setTitle("基本訊息對話按鈕1");
+            dialog.setMessage("基本訊息對話功能介紹");
+            dialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    // TODO Auto-generated method stub
+                    Toast.makeText(DIalog.this, "我還尚未了解", Toast.LENGTH_SHORT).show();
+                }
+
+            });
+            dialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    // TODO Auto-generated method stub
+                    Toast.makeText(DIalog.this, "我了解了", Toast.LENGTH_SHORT).show();
+                }
+
+            });
+            dialog.setNeutralButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    // TODO Auto-generated method stub
+                    Toast.makeText(DIalog.this, "取消", Toast.LENGTH_SHORT).show();
+                }
+
+            });
+            dialog.show();
+        }
+        else if (msg.equals("Dialog2")) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(DIalog.this);
+            dialog.setTitle("基本訊息對話按鈕2");
+            dialog.setMessage("基本訊息對話功能介紹");
+            dialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    // TODO Auto-generated method stub
+                    Toast.makeText(DIalog.this, "我還尚未了解", Toast.LENGTH_SHORT).show();
+                }
+
+            });
+            dialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    // TODO Auto-generated method stub
+                    Toast.makeText(DIalog.this, "我了解了", Toast.LENGTH_SHORT).show();
+                }
+
+            });
+            dialog.setNeutralButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    // TODO Auto-generated method stub
+                    Toast.makeText(DIalog.this, "取消", Toast.LENGTH_SHORT).show();
+                }
+
+            });
+            dialog.show();
+        }
+        else if (msg.equals("Dialog3")) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(DIalog.this);
+            dialog.setTitle("基本訊息對話按鈕3");
+            dialog.setMessage("基本訊息對話功能介紹");
+            dialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    // TODO Auto-generated method stub
+                    Toast.makeText(DIalog.this, "我還尚未了解", Toast.LENGTH_SHORT).show();
+                }
+
+            });
+            dialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    // TODO Auto-generated method stub
+                    Toast.makeText(DIalog.this, "我了解了", Toast.LENGTH_SHORT).show();
+                }
+
+            });
+            dialog.setNeutralButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    // TODO Auto-generated method stub
+                    Toast.makeText(DIalog.this, "取消", Toast.LENGTH_SHORT).show();
+                }
+
+            });
+            dialog.show();
+        }
+        else if (msg.equals("Dialog4")) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(DIalog.this);
+            dialog.setTitle("基本訊息對話按鈕4");
             dialog.setMessage("基本訊息對話功能介紹");
             dialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                 @Override

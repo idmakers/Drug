@@ -97,15 +97,15 @@ public class Base extends AppCompatActivity
 
 
 
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-        notification.contentIntent = contentIntent;
-
-        notification.flags |= Notification.FLAG_NO_CLEAR; //Do not clear the notification
-        notification.defaults |= Notification.DEFAULT_LIGHTS; // LED
-        notification.defaults |= Notification.DEFAULT_VIBRATE; //Vibration
-        notification.defaults |= Notification.DEFAULT_SOUND; // Sound
-        notification.flags = Notification.FLAG_AUTO_CANCEL;
+//        Intent notificationIntent = new Intent(this, MainActivity.class);
+//        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+//        notification.contentIntent = contentIntent;
+//
+//        notification.flags |= Notification.FLAG_NO_CLEAR; //Do not clear the notification
+//        notification.defaults |= Notification.DEFAULT_LIGHTS; // LED
+//        notification.defaults |= Notification.DEFAULT_VIBRATE; //Vibration
+//        notification.defaults |= Notification.DEFAULT_SOUND; // Sound
+//        notification.flags = Notification.FLAG_AUTO_CANCEL;
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
