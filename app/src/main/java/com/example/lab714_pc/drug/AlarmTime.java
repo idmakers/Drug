@@ -203,11 +203,12 @@ public class AlarmTime extends Base
                 break;
 
             case update:
+
+                add();
                 Cursor morn = helper.filList(1);
                 Cursor noo = helper.filList(2);
                 Cursor ni = helper.filList(3);
                 Cursor mid = helper.filList(4);
-                add();
                 alarm(morn.getString(1),1);
                 alarm(noo.getString(1),2);
                 alarm(ni.getString(1),3);

@@ -51,9 +51,7 @@ public class PlayReceiver extends BroadcastReceiver {
 //            int soundId = sp.load(context, R.raw.test, 1); // in 2nd param u have to pass your desire ringtone
 //
 //            sp.play(soundId, 1, 1, 0, 0, 1);
-            mPlayer = MediaPlayer.create(context, R.raw.test); // in 2nd param u have to pass your desire ringtone
-            //mPlayer.prepare();
-            mPlayer.start();
+
             long tstart = System.currentTimeMillis();
             long time  = tstart;
             long timepass = 0;
@@ -61,15 +59,14 @@ public class PlayReceiver extends BroadcastReceiver {
             intentDialog.setClass(context,DIalog.class);
             intentDialog.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intentDialog.putExtra("message","Dialog1");
-            while (time < tstart+10000){
-                time = System.currentTimeMillis();
-                //timepass = time-tstart;
-                //Log.d("time","value "+timepass);
-            }
+//            while (time < tstart+10000){
+//                time = System.currentTimeMillis();
+//                //timepass = time-tstart;
+//                //Log.d("time","value "+timepass);
+//            }
             Log.w("MSG", "onReceive: +1" );
             context.startActivity(intentDialog);
-            mPlayer.stop();
-            mPlayer.release();
+
 
 
             //mPlayer.prepare();
@@ -79,9 +76,6 @@ public class PlayReceiver extends BroadcastReceiver {
 
         }
         else if (bData.get("msg").equals("play_voice"+2)){
-            mPlayer = MediaPlayer.create(context, R.raw.test); // in 2nd param u have to pass your desire ringtone
-            //mPlayer.prepare();
-            mPlayer.start();
             long tstart = System.currentTimeMillis();
             long time  = tstart;
             long timepass = 0;
@@ -97,14 +91,9 @@ public class PlayReceiver extends BroadcastReceiver {
 //                //Log.d("time","value "+timepass);
 //            }
             context.startActivity(intentDialog);
-            mPlayer.stop();
-            mPlayer.release();
 
         }
         else if (bData.get("msg").equals("play_voice"+3)){
-            mPlayer = MediaPlayer.create(context, R.raw.test); // in 2nd param u have to pass your desire ringtone
-            //mPlayer.prepare();
-            mPlayer.start();
             Log.w("MSG", "onReceive: +3" );
             long tstart = System.currentTimeMillis();
             long time  = tstart;
@@ -119,14 +108,10 @@ public class PlayReceiver extends BroadcastReceiver {
 //                //Log.d("time","value "+timepass);
 //            }
             context.startActivity(intentDialog);
-            mPlayer.stop();
-            mPlayer.release();
+
 
         }
         else if (bData.get("msg").equals("play_voice"+4)){
-            mPlayer = MediaPlayer.create(context, R.raw.test); // in 2nd param u have to pass your desire ringtone
-            //mPlayer.prepare();
-            mPlayer.start();
             Log.w("MSG", "onReceive: +4" );
             long tstart = System.currentTimeMillis();
             long time  = tstart;
@@ -141,8 +126,6 @@ public class PlayReceiver extends BroadcastReceiver {
 //                //Log.d("time","value "+timepass);
 //            }
             context.startActivity(intentDialog);
-            mPlayer.stop();
-            mPlayer.release();
 
         }
         else if(bData.get("msg").equals("close")){
