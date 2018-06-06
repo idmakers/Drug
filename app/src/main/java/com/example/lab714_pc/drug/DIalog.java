@@ -63,7 +63,7 @@ public class DIalog  extends AppCompatActivity{
                     ListViewItemDTO itemDto = (ListViewItemDTO)itemObject;
 
                     // Get the checkbox.
-                    CheckBox itemCheckbox = (CheckBox) view.findViewById(R.id.);
+                    CheckBox itemCheckbox = (CheckBox) view.findViewById(R.id.CheckBOX);
 
                     // Reverse the checkbox and clicked item check state.
                     if(itemDto.isChecked())
