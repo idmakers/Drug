@@ -9,6 +9,9 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -50,6 +53,32 @@ public class DIalog  extends AppCompatActivity{
             //new int[] {android.R.id.text1, android.R.id.text2},0);
 
             listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int itemIndex, long l) {
+                    // Get user selected item.
+                    Object itemObject = adapterView.getAdapter().getItem(itemIndex);
+
+                    // Translate the selected item to DTO object.
+                    ListViewItemDTO itemDto = (ListViewItemDTO)itemObject;
+
+                    // Get the checkbox.
+                    CheckBox itemCheckbox = (CheckBox) view.findViewById(R.id.);
+
+                    // Reverse the checkbox and clicked item check state.
+                    if(itemDto.isChecked())
+                    {
+                        itemCheckbox.setChecked(false);
+                        itemDto.setChecked(false);
+                    }else
+                    {
+                        itemCheckbox.setChecked(true);
+                        itemDto.setChecked(true);
+                    }
+
+                    //Toast.makeText(getApplicationContext(), "select item text : " + itemDto.getItemText(), Toast.LENGTH_SHORT).show();
+                }
+            });
             AlertDialog.Builder dialog = new AlertDialog.Builder(DIalog.this);
             dialog.setTitle("基本訊息對話按鈕1");
             dialog.setView(linearLayoutMain);
@@ -184,6 +213,7 @@ public class DIalog  extends AppCompatActivity{
             //new int[] {android.R.id.text1, android.R.id.text2},0);
 
             listView.setAdapter(adapter);
+
             AlertDialog.Builder dialog = new AlertDialog.Builder(DIalog.this);
             dialog.setTitle("基本訊息對話按鈕4");
             dialog.setView(linearLayoutMain);
@@ -215,6 +245,28 @@ public class DIalog  extends AppCompatActivity{
 
             });
             dialog.show();
+        }
+    }
+    public class ListViewItemDTO {
+
+        private boolean checked = false;
+
+        private String itemText = "";
+
+        public boolean isChecked() {
+            return checked;
+        }
+
+        public void setChecked(boolean checked) {
+            this.checked = checked;
+        }
+
+        public String getItemText() {
+            return itemText;
+        }
+
+        public void setItemText(String itemText) {
+            this.itemText = itemText;
         }
     }
 }
