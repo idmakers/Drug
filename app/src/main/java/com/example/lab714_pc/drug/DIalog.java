@@ -2,6 +2,7 @@ package com.example.lab714_pc.drug;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -30,6 +31,7 @@ public class DIalog  extends AppCompatActivity{
         mPlayer = MediaPlayer.create(this, R.raw.test); // in 2nd param u have to pass your desire ringtone
         //mPlayer.prepare();
         mPlayer.start();
+        long itemid;
         LinearLayout linearLayoutMain = new LinearLayout(this);//自定义一个布局文件
         linearLayoutMain.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -42,7 +44,8 @@ public class DIalog  extends AppCompatActivity{
         linearLayoutMain.addView(listView);//往这个布局中加入listview
         String msg = intent00.getStringExtra("message");
         if (msg.equals("Dialog1")) {
-            MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
+
+            final MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
             Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='早'  ORDER BY name  " , null);
             SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                     R.layout.content_listname,
@@ -55,7 +58,7 @@ public class DIalog  extends AppCompatActivity{
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int itemIndex, long l) {
+                public void onItemClick(AdapterView<?> adapterView, View view, int itemIndex, long id) {
                     // Get user selected item.
                     Object itemObject = adapterView.getAdapter().getItem(itemIndex);
 
@@ -63,21 +66,30 @@ public class DIalog  extends AppCompatActivity{
                     ListViewItemDTO itemDto = (ListViewItemDTO)itemObject;
 
                     // Get the checkbox.
-                    CheckBox itemCheckbox = (CheckBox) view.findViewById(R.id.CheckBOX);
+                    CheckBox itemCheckbox = (CheckBox) findViewById(R.id.check);
 
                     // Reverse the checkbox and clicked item check state.
                     if(itemDto.isChecked())
                     {
                         itemCheckbox.setChecked(false);
                         itemDto.setChecked(false);
+                        Cursor cursor = helper.ItemfilListName(itemDto.getItemText());
+                        ContentValues values = new ContentValues();
+                        values.put("name", cursor.getInt(5)-1);
+                        Log.w("MSG", "amount " +cursor.getInt(5));
+                        helper.ItemCounter(itemDto.getItemText(),values);
+
                     }else
                     {
                         itemCheckbox.setChecked(true);
                         itemDto.setChecked(true);
                     }
 
-                    //Toast.makeText(getApplicationContext(), "select item text : " + itemDto.getItemText(), Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(getApplicationContext(), "select item text : " + itemDto.getItemText(), Toast.LENGTH_SHORT).show();
                 }
+
+
             });
             AlertDialog.Builder dialog = new AlertDialog.Builder(DIalog.this);
             dialog.setTitle("基本訊息對話按鈕1");
@@ -98,6 +110,9 @@ public class DIalog  extends AppCompatActivity{
                     // TODO Auto-generated method stub
                     mPlayer.stop();
                     mPlayer.release();
+
+
+
                     Toast.makeText(DIalog.this, "我了解了", Toast.LENGTH_SHORT).show();
                 }
 
@@ -142,6 +157,7 @@ public class DIalog  extends AppCompatActivity{
                     // TODO Auto-generated method stub
                     mPlayer.stop();
                     mPlayer.release();
+
                     Toast.makeText(DIalog.this, "我了解了", Toast.LENGTH_SHORT).show();
                 }
 

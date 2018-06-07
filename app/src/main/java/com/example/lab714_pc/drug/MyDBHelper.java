@@ -24,7 +24,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE  MEDINFO " + "(_id INTEGER PRIMARY KEY  NOT NULL, "
                 + "name VARCHAR , "
                 + "method VAR,"
-                + "amount  VAR,"
+                + "amount  INTEGER,"
                 + "day  INTEGER ,"
                 + "morning LONG ,"
                 + "noon LONG ,"
@@ -107,6 +107,23 @@ public class MyDBHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
+    public Cursor ItemfilListName(String Name) throws SQLException {
+        Cursor cursor = db.query(
+                "MEDINFO",
+                new String[]{"_id", "tvTime","method" ,"day","name","amount","stop","why","morning","noon","night","midnight"},
+                "name=Name",
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        if (cursor != null) {
+            cursor.moveToFirst();    //將指標移到第一筆資料
+        }
+        return cursor;
+    }
+
 
     public int Itemupdate(long rowId, ContentValues value) {
 
@@ -115,6 +132,16 @@ public class MyDBHelper extends SQLiteOpenHelper {
         return db.update("MEDINFO",    //資料表名稱
                 value,                //VALUE
                 "_id=" + rowId,            //WHERE
+                null                //WHERE的參數
+        );
+    }
+    public int ItemCounter(String Name, ContentValues value) {
+
+
+
+        return db.update("MEDINFO",    //資料表名稱
+                value,                //VALUE
+                "name=Name",            //WHERE
                 null                //WHERE的參數
         );
     }
