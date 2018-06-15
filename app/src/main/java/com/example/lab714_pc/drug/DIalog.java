@@ -22,15 +22,16 @@ import android.widget.Toast;
  * Created by idmakers on 2018/6/3.
  */
 
-public class DIalog  extends AppCompatActivity{
+public class DIalog  extends AppCompatActivity {
     MediaPlayer mPlayer = new MediaPlayer();
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         Intent intent00 = getIntent();
         mPlayer = MediaPlayer.create(this, R.raw.test); // in 2nd param u have to pass your desire ringtone
         //mPlayer.prepare();
-        mPlayer.start();
+        //mPlayer.start();
         long itemid;
         LinearLayout linearLayoutMain = new LinearLayout(this);//自定义一个布局文件
         linearLayoutMain.setLayoutParams(new LinearLayout.LayoutParams(
@@ -46,61 +47,29 @@ public class DIalog  extends AppCompatActivity{
         if (msg.equals("Dialog1")) {
 
             final MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='早'  ORDER BY name  " , null);
+            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='早'  ORDER BY name  ", null);
             SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                     R.layout.content_listname,
                     c,
-                    new String[] {"name"},
-                    new int[] {R.id.name}, 0);
+                    new String[]{"name"},
+                    new int[]{R.id.name}, 0);
             //new String[] {"name", "amount"},
             //new int[] {android.R.id.text1, android.R.id.text2},0);
 
             listView.setAdapter(adapter);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int itemIndex, long id) {
-                    // Get user selected item.
-                    Object itemObject = adapterView.getAdapter().getItem(itemIndex);
-
-                    // Translate the selected item to DTO object.
-                    ListViewItemDTO itemDto = (ListViewItemDTO)itemObject;
-
-                    // Get the checkbox.
-                    CheckBox itemCheckbox = (CheckBox) findViewById(R.id.check);
-
-                    // Reverse the checkbox and clicked item check state.
-                    if(itemDto.isChecked())
-                    {
-                        itemCheckbox.setChecked(false);
-                        itemDto.setChecked(false);
-                        Cursor cursor = helper.ItemfilListName(itemDto.getItemText());
-                        ContentValues values = new ContentValues();
-                        values.put("name", cursor.getInt(5)-1);
-                        Log.w("MSG", "amount " +cursor.getInt(5));
-                        helper.ItemCounter(itemDto.getItemText(),values);
-
-                    }else
-                    {
-                        itemCheckbox.setChecked(true);
-                        itemDto.setChecked(true);
-                    }
+            final CheckBox itemcheckbox = (CheckBox)findViewById(R.id.check);
 
 
-                    Toast.makeText(getApplicationContext(), "select item text : " + itemDto.getItemText(), Toast.LENGTH_SHORT).show();
-                }
-
-
-            });
             AlertDialog.Builder dialog = new AlertDialog.Builder(DIalog.this);
             dialog.setTitle("基本訊息對話按鈕1");
             dialog.setView(linearLayoutMain);
-            Log.w("msg", "123 " );
+            Log.w("msg", "123 ");
             dialog.setMessage("基本訊息對話功能介紹");
             dialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface arg0, int arg1) {
                     // TODO Auto-generated method stub
-                    Toast.makeText(DIalog.this, "我還尚未了解", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DIalog.this, "未服用", Toast.LENGTH_SHORT).show();
                 }
 
             });
@@ -111,9 +80,14 @@ public class DIalog  extends AppCompatActivity{
                     mPlayer.stop();
                     mPlayer.release();
 
+                    if(itemcheckbox.isChecked()){
+                        Log.w("msg","true");
+                    }
+                    else{
+                        Log.w("msg","false");
+                    }
 
-
-                    Toast.makeText(DIalog.this, "我了解了", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DIalog.this, "已服用", Toast.LENGTH_SHORT).show();
                 }
 
             });
@@ -126,15 +100,14 @@ public class DIalog  extends AppCompatActivity{
 
             });
             dialog.show();
-        }
-        else if (msg.equals("Dialog2")) {
+        } else if (msg.equals("Dialog2")) {
             MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='中'  ORDER BY name  " , null);
+            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='中'  ORDER BY name  ", null);
             SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                     R.layout.content_listname,
                     c,
-                    new String[] {"name"},
-                    new int[] {R.id.name}, 0);
+                    new String[]{"name"},
+                    new int[]{R.id.name}, 0);
             //new String[] {"name", "amount"},
             //new int[] {android.R.id.text1, android.R.id.text2},0);
 
@@ -171,15 +144,14 @@ public class DIalog  extends AppCompatActivity{
 
             });
             dialog.show();
-        }
-        else if (msg.equals("Dialog3")) {
+        } else if (msg.equals("Dialog3")) {
             MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='晚'  ORDER BY name  " , null);
+            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='晚'  ORDER BY name  ", null);
             SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                     R.layout.content_listname,
                     c,
-                    new String[] {"name"},
-                    new int[] {R.id.name}, 0);
+                    new String[]{"name"},
+                    new int[]{R.id.name}, 0);
             //new String[] {"name", "amount"},
             //new int[] {android.R.id.text1, android.R.id.text2},0);
 
@@ -216,15 +188,14 @@ public class DIalog  extends AppCompatActivity{
 
             });
             dialog.show();
-        }
-        else if (msg.equals("Dialog4")) {
+        } else if (msg.equals("Dialog4")) {
             MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='睡'  ORDER BY name  " , null);
+            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='睡'  ORDER BY name  ", null);
             SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                     R.layout.content_listname,
                     c,
-                    new String[] {"name"},
-                    new int[] {R.id.name}, 0);
+                    new String[]{"name"},
+                    new int[]{R.id.name}, 0);
             //new String[] {"name", "amount"},
             //new int[] {android.R.id.text1, android.R.id.text2},0);
 
@@ -261,28 +232,6 @@ public class DIalog  extends AppCompatActivity{
 
             });
             dialog.show();
-        }
-    }
-    public class ListViewItemDTO {
-
-        private boolean checked = false;
-
-        private String itemText = "";
-
-        public boolean isChecked() {
-            return checked;
-        }
-
-        public void setChecked(boolean checked) {
-            this.checked = checked;
-        }
-
-        public String getItemText() {
-            return itemText;
-        }
-
-        public void setItemText(String itemText) {
-            this.itemText = itemText;
         }
     }
 }
