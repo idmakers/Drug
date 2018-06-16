@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -47,7 +48,7 @@ public class DIalog  extends AppCompatActivity {
         if (msg.equals("Dialog1")) {
 
             final MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='早'  ORDER BY name  ", null);
+            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='早' and stop = '1' ORDER BY name  ", null);
             SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                     R.layout.content_listname,
                     c,
@@ -57,7 +58,16 @@ public class DIalog  extends AppCompatActivity {
             //new int[] {android.R.id.text1, android.R.id.text2},0);
 
             listView.setAdapter(adapter);
-            final CheckBox itemcheckbox = (CheckBox)findViewById(R.id.check);
+//            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> parent, View view, int position,
+//                                        long id) {
+//                    CheckBox  itemCheckbox = (CheckBox)findViewById(R.id.check);
+//                    itemCheckbox.setOnCheckedChangeListener();
+//
+//                }
+//            });
+
 
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(DIalog.this);
@@ -65,6 +75,7 @@ public class DIalog  extends AppCompatActivity {
             dialog.setView(linearLayoutMain);
             Log.w("msg", "123 ");
             dialog.setMessage("基本訊息對話功能介紹");
+
             dialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface arg0, int arg1) {
@@ -79,14 +90,6 @@ public class DIalog  extends AppCompatActivity {
                     // TODO Auto-generated method stub
                     mPlayer.stop();
                     mPlayer.release();
-
-                    if(itemcheckbox.isChecked()){
-                        Log.w("msg","true");
-                    }
-                    else{
-                        Log.w("msg","false");
-                    }
-
                     Toast.makeText(DIalog.this, "已服用", Toast.LENGTH_SHORT).show();
                 }
 
@@ -102,7 +105,7 @@ public class DIalog  extends AppCompatActivity {
             dialog.show();
         } else if (msg.equals("Dialog2")) {
             MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='中'  ORDER BY name  ", null);
+            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='中' and stop='1' ORDER BY name  ", null);
             SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                     R.layout.content_listname,
                     c,
@@ -112,6 +115,7 @@ public class DIalog  extends AppCompatActivity {
             //new int[] {android.R.id.text1, android.R.id.text2},0);
 
             listView.setAdapter(adapter);
+
             AlertDialog.Builder dialog = new AlertDialog.Builder(DIalog.this);
             dialog.setTitle("基本訊息對話按鈕2");
             dialog.setView(linearLayoutMain);
@@ -142,11 +146,12 @@ public class DIalog  extends AppCompatActivity {
                     Toast.makeText(DIalog.this, "取消", Toast.LENGTH_SHORT).show();
                 }
 
+
             });
             dialog.show();
         } else if (msg.equals("Dialog3")) {
             MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='晚'  ORDER BY name  ", null);
+            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='晚' and stop='1'  ORDER BY name  ", null);
             SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                     R.layout.content_listname,
                     c,
@@ -190,7 +195,7 @@ public class DIalog  extends AppCompatActivity {
             dialog.show();
         } else if (msg.equals("Dialog4")) {
             MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='睡'  ORDER BY name  ", null);
+            Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='睡' and stop='1' ORDER BY name  ", null);
             SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                     R.layout.content_listname,
                     c,

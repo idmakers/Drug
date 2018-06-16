@@ -106,6 +106,9 @@ public class Update extends AddByHand
             tvTime.setText(cursor.getString(1));
             day.setText(cursor.getString(3));
             method.setText(cursor.getString(2));
+            stop.setText(cursor.getString(6));
+            why.setText(cursor.getString(7));
+
 
 
 
