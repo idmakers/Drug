@@ -41,6 +41,7 @@ public class AlarmTime extends Base
     public  Intent intent11;
     private MyDBHelper helper;
     private EditText day;
+    public  String name;
     private TextView displayedText;
     private EditText morning ,noon,night,midnight;
     private Button btUP,btnMORNING,btnNOON,btnNIGHT,btnMIDNIGHT;
@@ -114,6 +115,7 @@ public class AlarmTime extends Base
         noon.setText(noo.getString(1));
         night.setText(ni.getString(1));
         midnight.setText(mid.getString(1));
+
 
     }
 
@@ -309,19 +311,7 @@ public class AlarmTime extends Base
             e.printStackTrace();
         }
     }
-    public   void alarmCancel(int id){
-        intent11 = new Intent(getApplicationContext(), PlayReceiver.class);
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-        pi = PendingIntent.getBroadcast(this, id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
 
-
-        // Cancel alarms
-        try {
-            am.cancel( pi);
-        } catch (Exception e) {
-            Log.w("MSG", "AlarmManager update was not canceled. " + e.toString());
-        }
-    }
 
 
 }

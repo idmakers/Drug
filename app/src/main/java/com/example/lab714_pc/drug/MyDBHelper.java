@@ -29,6 +29,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
                 + "morning LONG ,"
                 + "noon LONG ,"
                 + "night LONG ,"
+                + "bf VAR ,"
                 + "midnight LONG ,"
                 + "DATE STRING ,"
                 + "why STRING ,"
@@ -94,7 +95,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
     public Cursor ItemfilList(long id) throws SQLException {
         Cursor cursor = db.query(
                 "MEDINFO",
-                new String[]{"_id", "tvTime","method" ,"day","name","amount","stop","why","morning","noon","night","midnight"},
+                new String[]{"_id", "tvTime","method" ,"day","name","amount","stop","why","bf","morning","noon","night","midnight"},
                 "_id =" + id,
                 null,
                 null,
@@ -110,7 +111,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
     public Cursor ItemfilListName(String Name) throws SQLException {
         Cursor cursor = db.query(
                 "MEDINFO",
-                new String[]{"_id", "tvTime","method" ,"day","name","amount","stop","why","morning","noon","night","midnight"},
+                new String[]{"_id", "tvTime","method" ,"day","name","amount","stop","why","bf","morning","noon","night","midnight"},
                 "name=Name",
                 null,
                 null,

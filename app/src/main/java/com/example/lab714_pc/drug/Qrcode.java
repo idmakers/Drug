@@ -25,7 +25,7 @@ public class Qrcode extends AddByHand{
     private static final String TAG = Qrcode.class.getName();
     private Button btn_scan;
     private TextView txt_url;
-    private TextView name , time ,amount;
+    private TextView name , time ,amount ,before;
     private MyDBHelper helper;
 
 //如QR SCAN 未掃瞄到結果跳出頁面 會強制中止程式
@@ -130,6 +130,18 @@ public class Qrcode extends AddByHand{
         }
         for(int first=0 ; first< txt.length(); first++){
             int second =  first +1;
+            if(txt.substring(first ,second).equals("前")){
+                before.setText(txt.substring(first,second));
+                break;
+            }
+            else  if(txt.substring(first ,second).equals("後")) {
+                before.setText(txt.substring(first, second));
+                break;
+            }
+
+        }
+        for(int first=0 ; first< txt.length(); first++){
+            int second =  first +1;
             Log.w("day","day" +txt.substring(first,second) + first + second );
             if(txt.substring(first ,second).equals("份")){
                 amount.setText(txt.substring(first-3,second-2));
@@ -228,6 +240,7 @@ public class Qrcode extends AddByHand{
         values.put("name",name.getText().toString());
         values.put("method", 0);
         values.put("amount","每天1次");
+        values.put("bf",before.getText().toString());
         values.put("day", amount.getText().toString());
         values.put("tvTime", time.getText().toString());
         values.put("date",date_string);

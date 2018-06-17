@@ -41,8 +41,7 @@ import static com.example.lab714_pc.drug.R.id.time_eat;
 public class AddByHand extends Base
         implements View.OnClickListener{
 
-    public PendingIntent pi;
-    public  Intent intent11;
+
     private static Context context;
     private EditText amount;
     private MyDBHelper helper;
@@ -187,6 +186,7 @@ public class AddByHand extends Base
         String mname = name.getText().toString();
         String mmethod = method.getText().toString();
         String mtime = tvTime.getText().toString();
+        String maf = afbf.getText().toString();
         int mday = Integer.parseInt(day.getText().toString());
         int mamount = Integer.parseInt(amount.getText().toString());
         ContentValues values = new ContentValues();
@@ -294,6 +294,7 @@ public class AddByHand extends Base
         values.put("day", mday);
         values.put("tvTime", mtime);
         values.put("date",date_string);
+        values.put("bf",maf);
         long medinfo = helper.getWritableDatabase().insert("MEDINFO", null, values);
         intent.setClass(AddByHand.this, Base.class);
         startActivity(intent);
@@ -312,8 +313,7 @@ public class AddByHand extends Base
         amount.setText("123");
         method.setText("123");
         day.setText("123");
-        tvTime.setText("123");
-        afbf.setText("123");
+
     }
 
 

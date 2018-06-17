@@ -108,6 +108,7 @@ public class Update extends AddByHand
             method.setText(cursor.getString(2));
             stop.setText(cursor.getString(6));
             why.setText(cursor.getString(7));
+            afbf.setText(cursor.getString(8));
 
 
 
@@ -176,6 +177,7 @@ public class Update extends AddByHand
         String mmethod = method.getText().toString();
         String mtime = tvTime.getText().toString();
         String mstop = stop.getText().toString();
+        String maf = afbf.getText().toString();
         String mwhy = why.getText().toString();
         int mday = Integer.parseInt(day.getText().toString());
         String mamount = amount.getText().toString();
@@ -186,6 +188,7 @@ public class Update extends AddByHand
         values.put("day", mday);
         values.put("tvTime", mtime);
         values.put("stop",mstop);
+        values.put("bf",maf);
         values.put("why",mwhy);
         helper.getWritableDatabase();
 

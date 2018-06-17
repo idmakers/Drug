@@ -1,7 +1,9 @@
 package com.example.lab714_pc.drug;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,7 +27,8 @@ import android.widget.Toast;
 
 public class DIalog  extends AppCompatActivity {
     MediaPlayer mPlayer = new MediaPlayer();
-
+    public PendingIntent pi;
+    public  Intent intent11;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
@@ -99,6 +102,10 @@ public class DIalog  extends AppCompatActivity {
                 public void onClick(DialogInterface arg0, int arg1) {
                     // TODO Auto-generated method stub
                     Toast.makeText(DIalog.this, "取消", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(DIalog.this, alarmdelay.class);
+                    intent.putExtra("msg", "susepend");
+                    startActivity(intent);
+
                 }
 
             });
@@ -239,4 +246,7 @@ public class DIalog  extends AppCompatActivity {
             dialog.show();
         }
     }
+
+
+
 }
