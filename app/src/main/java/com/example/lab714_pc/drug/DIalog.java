@@ -97,14 +97,12 @@ public class DIalog  extends AppCompatActivity {
                 }
 
             });
-            dialog.setNeutralButton("取消", new DialogInterface.OnClickListener() {
+            dialog.setNeutralButton("延後提醒", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface arg0, int arg1) {
                     // TODO Auto-generated method stub
-                    Toast.makeText(DIalog.this, "取消", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(DIalog.this, alarmdelay.class);
-                    intent.putExtra("msg", "susepend");
-                    startActivity(intent);
+                    Toast.makeText(DIalog.this, "提醒服務已延後", Toast.LENGTH_SHORT).show();
+                    alarmCancel(1);
 
                 }
 
@@ -246,7 +244,19 @@ public class DIalog  extends AppCompatActivity {
             dialog.show();
         }
     }
+    public   void alarmCancel(int id){
+        intent11 = new Intent(getApplicationContext(), PlayReceiver.class);
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+        intent11.putExtra("msg", "play_voice"+id);
+        pi = PendingIntent.getBroadcast(this, id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
 
+        // Cancel alarms
+        try {
+            am.setExact(AlarmManager.RTC_WAKEUP, 30000, pi);
+        } catch (Exception e) {
+            Log.w("MSG", "AlarmManager update was not canceled. " + e.toString());
+        }
+    }
 
 
 }

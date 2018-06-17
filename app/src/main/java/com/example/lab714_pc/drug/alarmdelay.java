@@ -17,30 +17,8 @@ public  class alarmdelay extends AppCompatActivity {
 
 
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        Bundle extras = getIntent().getExtras();
-        name = extras.getString("msg");
-        Log.w("msg",name);
-        if(name =="susepend"){
-            alarmCancel(1);
-        }
-
-    }
 
 
-    public   void alarmCancel(int id){
-        intent11 = new Intent(getApplicationContext(), PlayReceiver.class);
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-        pi = PendingIntent.getBroadcast(this, id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-        // Cancel alarms
-        try {
-            am.setExact(AlarmManager.RTC_WAKEUP, 30000, pi);
-        } catch (Exception e) {
-            Log.w("MSG", "AlarmManager update was not canceled. " + e.toString());
-        }
-    }
 }
