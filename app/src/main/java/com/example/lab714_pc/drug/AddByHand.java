@@ -295,6 +295,7 @@ public class AddByHand extends Base
         values.put("tvTime", mtime);
         values.put("date",date_string);
         values.put("bf",maf);
+        values.put("stop",1);
         long medinfo = helper.getWritableDatabase().insert("MEDINFO", null, values);
         intent.setClass(AddByHand.this, Base.class);
         startActivity(intent);

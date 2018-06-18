@@ -22,7 +22,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE  MEDINFO " + "(_id INTEGER PRIMARY KEY  NOT NULL, "
-                + "name VARCHAR , "
+                + "name VARCHAR  , "
                 + "method VAR,"
                 + "amount  INTEGER,"
                 + "day  INTEGER ,"
@@ -136,6 +136,18 @@ public class MyDBHelper extends SQLiteOpenHelper {
                 null                //WHERE的參數
         );
     }
+
+    public int ItemupdateName(String name, ContentValues value) {
+
+
+
+        return db.update("MEDINFO",    //資料表名稱
+                value,                //VALUE
+
+                "name= name"  ,            //WHERE
+                null                //WHERE的參數
+        );
+    }
     public int ItemCounter(String Name, ContentValues value) {
 
 
@@ -158,11 +170,12 @@ public class MyDBHelper extends SQLiteOpenHelper {
                 + "(_id INTEGER PRIMARY KEY , "
                 + "name VARCHAR , "
                 + "method VAR,"
-                + "amount  VAR,"
+                + "amount  INTEGER,"
                 + "day  INTEGER ,"
                 + "morning LONG ,"
                 + "noon LONG ,"
                 + "night LONG ,"
+                +  "bf VAR,"
                 + "midnight LONG ,"
                 + "DATE STRING ,"
                 + "why STRING ,"

@@ -17,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.*;
 import android.util.Log;
+import android.util.TimeUtils;
 import android.view.View;
 import android.widget.*;
 import android.widget.Toolbar;
@@ -26,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static com.example.lab714_pc.drug.R.id.btnmidnight;
 import static com.example.lab714_pc.drug.R.id.btnmorning;
@@ -55,6 +57,7 @@ public class AlarmTime extends Base
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarmtime);
+        setTitle("作息時間");
         findViews();
         helper = new MyDBHelper(this,"expense.db",null,1);
         morning = (EditText)findViewById(R.id.morining);
@@ -211,10 +214,13 @@ public class AlarmTime extends Base
                 Cursor noo = helper.filList(2);
                 Cursor ni = helper.filList(3);
                 Cursor mid = helper.filList(4);
-                alarm(morn.getString(1),1);
-                alarm(noo.getString(1),2);
-                alarm(ni.getString(1),3);
-                alarm(mid.getString(1),4);
+                alarm(morn.getString(1),1,1);
+                alarm(morn.getString(1),1,2);
+                alarm(noo.getString(1),2,1);
+                alarm(noo.getString(1),2,2);
+                alarm(ni.getString(1),3,1);
+                alarm(noo.getString(1),2,2);
+                alarm(mid.getString(1),4,1);
                 break;
 
         }
@@ -281,7 +287,7 @@ public class AlarmTime extends Base
         midnight =(EditText)findViewById(R.id.midnight);
 
     }
-    public void alarm (String alarmtimein , int id) {
+    public void alarm (String alarmtimein , int id ,int tag) {
 
 
         SimpleDateFormat time = new SimpleDateFormat("yyyy MM dd HH:mm");
@@ -300,13 +306,23 @@ public class AlarmTime extends Base
             Log.w("msg", "alarm time out  " + alarmtimeout);
             Log.w("msg", "milliseconds  "   + milliseconds);
             Log.w("msg", "id  "   + id);
-            intent11.putExtra("msg", "play_voice"+id);
+            intent11.putExtra("msg", "play_voice"+id+tag);
             intent11.putExtra("time","time "+times);
 
+
             long elapsed =  milliseconds;
-            pi = PendingIntent.getBroadcast(this, id, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
-            AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-            am.setRepeating(AlarmManager.RTC_WAKEUP, elapsed, AlarmManager.INTERVAL_DAY, pi);
+            if (tag == 1){
+                pi = PendingIntent.getBroadcast(this, id+tag, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
+                AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+                am.setRepeating(AlarmManager.RTC_WAKEUP, elapsed- TimeUnit.MINUTES.toMillis(30), AlarmManager.INTERVAL_DAY, pi);
+            }
+            else if(tag == 2){
+                pi = PendingIntent.getBroadcast(this, id+tag, intent11,PendingIntent.FLAG_UPDATE_CURRENT);
+                AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+                am.setRepeating(AlarmManager.RTC_WAKEUP, elapsed+ TimeUnit.MINUTES.toMillis(60), AlarmManager.INTERVAL_DAY, pi);
+            }
+
+
         } catch (ParseException e) {
             e.printStackTrace();
         }

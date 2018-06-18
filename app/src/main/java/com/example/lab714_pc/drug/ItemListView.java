@@ -23,6 +23,7 @@ public class ItemListView extends Base{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itemlistview);
+        setTitle("藥物資訊");
         btadd = (Button) findViewById(R.id.addh);
         btadd.setOnClickListener(onClickListener);
         btitem = (Button) findViewById(R.id.item);
@@ -37,7 +38,7 @@ public class ItemListView extends Base{
         history.setOnClickListener(onClickListener);
         ListView list = (ListView) findViewById(R.id.list);
         MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-        Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE day >'" +0+ "'" , null);
+        Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE amount >'" +0+ "'" , null);
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                 R.layout.content_itemlistview,
                 c,

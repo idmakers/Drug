@@ -41,7 +41,7 @@ public class PlayReceiver extends BroadcastReceiver {
 
 
 
-        if (bData.get("msg").equals("play_voice"+1)) {
+        if (bData.get("msg").equals("play_voice"+1+1)) {
 
 
 
@@ -75,7 +75,7 @@ public class PlayReceiver extends BroadcastReceiver {
 
 
         }
-        else if (bData.get("msg").equals("play_voice"+2)){
+        else if (bData.get("msg").equals("play_voice"+2+1)){
             long tstart = System.currentTimeMillis();
             long time  = tstart;
             long timepass = 0;
@@ -93,7 +93,7 @@ public class PlayReceiver extends BroadcastReceiver {
             context.startActivity(intentDialog);
 
         }
-        else if (bData.get("msg").equals("play_voice"+3)){
+        else if (bData.get("msg").equals("play_voice"+3+1)){
             Log.w("MSG", "onReceive: +3" );
             long tstart = System.currentTimeMillis();
             long time  = tstart;
@@ -111,7 +111,7 @@ public class PlayReceiver extends BroadcastReceiver {
 
 
         }
-        else if (bData.get("msg").equals("play_voice"+4)){
+        else if (bData.get("msg").equals("play_voice"+4+1)){
             Log.w("MSG", "onReceive: +4" );
             long tstart = System.currentTimeMillis();
             long time  = tstart;
@@ -128,14 +128,61 @@ public class PlayReceiver extends BroadcastReceiver {
             context.startActivity(intentDialog);
 
         }
-        else if(bData.get("msg").equals("close")){
-            Base.notificationManger.cancelAll();
-
-
+        else if (bData.get("msg").equals("play_voice"+1+2)){
+            Log.w("MSG", "onReceive: +4" );
+            long tstart = System.currentTimeMillis();
+            long time  = tstart;
+            long timepass = 0;
+            Intent intentDialog = new Intent();
+            intentDialog.setClass(context,DIalog.class);
+            intentDialog.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intentDialog.putExtra("message","Dialog5");
+//            while (time < tstart+10000){
+//                time = System.currentTimeMillis();
+//                //timepass = time-tstart;
+//                //Log.d("time","value "+timepass);
+//            }
+            context.startActivity(intentDialog);
 
         }
+        else if (bData.get("msg").equals("play_voice"+2+2)){
+            Log.w("MSG", "onReceive: +4" );
+            long tstart = System.currentTimeMillis();
+            long time  = tstart;
+            long timepass = 0;
+            Intent intentDialog = new Intent();
+            intentDialog.setClass(context,DIalog.class);
+            intentDialog.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intentDialog.putExtra("message","Dialog6");
+//            while (time < tstart+10000){
+//                time = System.currentTimeMillis();
+//                //timepass = time-tstart;
+//                //Log.d("time","value "+timepass);
+//            }
+            context.startActivity(intentDialog);
 
+        }
+        else if (bData.get("msg").equals("play_voice"+3+2)){
+            Log.w("MSG", "onReceive: +4" );
+            long tstart = System.currentTimeMillis();
+            long time  = tstart;
+            long timepass = 0;
+            Intent intentDialog = new Intent();
+            intentDialog.setClass(context,DIalog.class);
+            intentDialog.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intentDialog.putExtra("message","Dialog7");
+//            while (time < tstart+10000){
+//                time = System.currentTimeMillis();
+//                //timepass = time-tstart;
+//                //Log.d("time","value "+timepass);
+//            }
+            context.startActivity(intentDialog);
+
+        }
     }
+}
+
+
 /*
     public void playSounds(int repeatTime, Context context) {
         AudioManager am = (AudioManager) context.getApplicationContext()
@@ -149,4 +196,3 @@ public class PlayReceiver extends BroadcastReceiver {
         // 下面參數分別為播放音頻，左聲道,右聲道，設置優先級，重撥次數，速率(速率最低0.5，最高為2，1代表正常速度)
         sp.play(R.raw.test, volRatio, volRatio, 1, repeatTime, 1);
     }*/
-}

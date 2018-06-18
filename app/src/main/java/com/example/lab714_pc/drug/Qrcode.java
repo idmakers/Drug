@@ -38,6 +38,7 @@ public class Qrcode extends AddByHand{
         this.txt_url = (TextView) findViewById(R.id.txt_url);
         this.name = (TextView) findViewById(R.id.name);
         this.time = (TextView) findViewById(R.id.time);
+        this.before = (TextView)findViewById(R.id.before);
         this.amount = (TextView) findViewById(R.id.amount);
         btadd = (Button) findViewById(R.id.addh);
         btadd.setOnClickListener(onClickListener);
@@ -239,11 +240,12 @@ public class Qrcode extends AddByHand{
 
         values.put("name",name.getText().toString());
         values.put("method", 0);
-        values.put("amount","每天1次");
+        values.put("amount",28);
         values.put("bf",before.getText().toString());
         values.put("day", amount.getText().toString());
         values.put("tvTime", time.getText().toString());
         values.put("date",date_string);
+        values.put("stop",1);
        Log.w("msg" , "test  " + values);
         long medinfo = helper.getWritableDatabase().insert("MEDINFO", null, values);
 //        intent.setClass(Qrcode.this, Base.class);

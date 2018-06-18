@@ -37,12 +37,12 @@ public class History extends Base{
         history.setOnClickListener(onClickListener);
         ListView list = (ListView) findViewById(R.id.list);
         MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-        Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE day = '' +0+ ''  ORDER BY name  " , null);
+        Cursor c = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE amount < '' +0+ ''  ORDER BY name  " , null);
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                 R.layout.content_itemlistview,
                 c,
                 new String[] { "tvTime","day","name","amount","DATE"},
-                new int[] { R.id.item_time, R.id.item_day, R.id.item_name,R.id.item_amount,R.id.item_date}, 0);
+                new int[] { R.id.item_time, R.id.item_day, R.id.item_name,R.id.amount,R.id.item_date}, 0);
         //new String[] {"name", "amount"},
         //new int[] {android.R.id.text1, android.R.id.text2},0);
 
