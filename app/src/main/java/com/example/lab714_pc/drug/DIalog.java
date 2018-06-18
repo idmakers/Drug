@@ -55,7 +55,7 @@ public class DIalog  extends AppCompatActivity {
         if (msg.equals("Dialog1")) {
 
             final MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-            final Cursor cursor = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='早' and stop = '1' and  bf='前' ORDER BY name  ", null);
+            final Cursor cursor = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='早' and stop = '1' and  bf='前' and amount > '' +0+ ''  ORDER BY name  ", null);
 //            final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
 //                    R.layout.content_listname,
 //                    c,
@@ -157,7 +157,7 @@ public class DIalog  extends AppCompatActivity {
         }
             else if (msg.equals("Dialog2")) {
              final   MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-             final   Cursor cursor = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='中' and stop='1'  and bf='前'ORDER BY name  ", null);
+             final   Cursor cursor = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='中' and stop='1'  and bf='前' and amount > '' +0+ ''    ORDER BY name  ", null);
 //                SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
 //                        R.layout.content_listname,
 //                        c,
@@ -242,7 +242,7 @@ public class DIalog  extends AppCompatActivity {
             }
          else if (msg.equals("Dialog3")) {
             final MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-            final Cursor cursor = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='晚' and stop='1' and bf='前'  ORDER BY name  ", null);
+            final Cursor cursor = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='晚' and stop='1' and bf='前' and amount > '' +0+ ''  ORDER BY name  ", null);
             final ArrayList<String> mArrayList = new ArrayList<String>();
             if (cursor != null && cursor.getCount()>0){
                 cursor.moveToFirst();
@@ -314,7 +314,7 @@ public class DIalog  extends AppCompatActivity {
             dialog.show();
         } else if (msg.equals("Dialog4")) {
            final MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-           final Cursor cursor = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='睡' and stop='1' ORDER BY name  ", null);
+           final Cursor cursor = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='睡' and stop='1' and amount > '' +0+ ''  ORDER BY name  ", null);
 
             final ArrayList<String> mArrayList = new ArrayList<String>();
             //new int[] {android.R.id.text1, android.R.id.text2},0);
@@ -357,6 +357,14 @@ public class DIalog  extends AppCompatActivity {
 
                 }
             });
+            dialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    // TODO Auto-generated method stub
+                    Toast.makeText(DIalog.this, "未服用", Toast.LENGTH_SHORT).show();
+                }
+
+            });
 
 
             dialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -386,7 +394,7 @@ public class DIalog  extends AppCompatActivity {
         else if (msg.equals("Dialog5")) {
 
             final MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-            Cursor cursor = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='早' and stop = '1' and  bf='後' ORDER BY name  ", null);
+            Cursor cursor = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='早' and stop = '1' and  bf='後' and amount > '' +0+ ''   ORDER BY name  ", null);
 
             //new int[] {android.R.id.text1, android.R.id.text2},0);
 
@@ -478,7 +486,7 @@ public class DIalog  extends AppCompatActivity {
         else if (msg.equals("Dialog6")) {
 
             final MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-            Cursor cursor = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='' and stop = '1' and  bf='後' ORDER BY name  ", null);
+            Cursor cursor = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='' and stop = '1' and  bf='後' and amount > '' +0+ ''  ORDER BY name  ", null);
 
 
             //new String[] {"name", "amount"},       new int[]{R.id.name}, 0);
@@ -572,7 +580,7 @@ public class DIalog  extends AppCompatActivity {
         else if (msg.equals("Dialog7")) {
 
             final MyDBHelper helper = new MyDBHelper(this, "expense.db", null, 1);
-            Cursor cursor = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='晚' and stop = '1' and  bf='後' ORDER BY name  ", null);
+            Cursor cursor = helper.getReadableDatabase().rawQuery("SELECT * FROM  MEDINFO WHERE tvTime ='晚' and stop = '1' and  bf='後' and amount > '' +0+ ''  ORDER BY name  ", null);
 
 //            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //                @Override
